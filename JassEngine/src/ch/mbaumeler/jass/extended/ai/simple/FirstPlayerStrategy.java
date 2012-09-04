@@ -1,4 +1,4 @@
-package ch.mbaumeler.jass.extended.ai;
+package ch.mbaumeler.jass.extended.ai.simple;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.PlayedCard;
 
-public class FirstPlayerStrategy implements CardStrategy {
+public class FirstPlayerStrategy implements SimpleCardStrategy {
 
 	private StrategyUtil strategyUtil = new StrategyUtil();
 

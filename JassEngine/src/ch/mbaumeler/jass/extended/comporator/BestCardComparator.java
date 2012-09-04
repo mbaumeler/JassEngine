@@ -6,7 +6,6 @@ import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.game.Ansage;
 
-/** TO REFACTOR */
 public class BestCardComparator implements Comparator<Card> {
 
 	private final Ansage ansage;
@@ -19,7 +18,8 @@ public class BestCardComparator implements Comparator<Card> {
 
 	@Override
 	public int compare(Card card1, Card card2) {
-		return suit != null ? compareSuitSensitiv(card1, card2) : compareSuitUnsensitiv(card1, card2);
+		return suit != null ? compareSuitSensitiv(card1, card2)
+				: compareSuitUnsensitiv(card1, card2);
 	}
 
 	private int compareSuitSensitiv(Card card1, Card card2) {

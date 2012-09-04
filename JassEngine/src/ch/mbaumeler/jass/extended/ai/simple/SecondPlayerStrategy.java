@@ -1,4 +1,4 @@
-package ch.mbaumeler.jass.extended.ai;
+package ch.mbaumeler.jass.extended.ai.simple;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +8,9 @@ import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayedCard;
 
-public class ThirdPlayerStrategy implements CardStrategy {
+public class SecondPlayerStrategy implements SimpleCardStrategy {
 
-	private StrategyUtil util = new StrategyUtil();
+	private StrategyUtil strategyUtil = new StrategyUtil();
 
 	@Override
 	public Card getPlayableCard(List<Card> cardsInHand, Match match) {
@@ -19,20 +19,16 @@ public class ThirdPlayerStrategy implements CardStrategy {
 		Ansage trumpf = match.getAnsage();
 		Card firstPlayedCard = cardsOnTable.isEmpty() ? null : cardsOnTable.get(0).getCard();
 
-		boolean alreadyWinning = util.alreadyWinning(cardsOnTable, trumpf);
-
-		if (alreadyWinning) {
-			return util.getCardWithMostScoreWhichIsPlayable(cardsInHand, trumpf, match);
-		} else if (util.getHighestCardOfSameColor(firstPlayedCard, trumpf, cardsInHand) != null) {
-			return util.getHighestCardOfSameColor(firstPlayedCard, trumpf, cardsInHand);
+		if (strategyUtil.getHighestCardOfSameColor(firstPlayedCard, trumpf, cardsInHand) != null) {
+			return strategyUtil.getHighestCardOfSameColor(firstPlayedCard, trumpf, cardsInHand);
 		} else {
-			return util.firstPlayableWinnercardOfAnySuit(cardsInHand, match);
+			return strategyUtil.getFirstPlayableCard(cardsInHand, match);
 		}
 	}
 
 	@Override
 	public boolean isResponsible(List<PlayedCard> cardsOnTable) {
-		return cardsOnTable.size() == 2;
+		return cardsOnTable.size() == 1;
 	}
 
 }

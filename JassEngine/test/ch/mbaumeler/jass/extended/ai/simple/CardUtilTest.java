@@ -1,4 +1,4 @@
-package ch.mbaumeler.jass.extended.ai;
+package ch.mbaumeler.jass.extended.ai.simple;
 
 import static ch.mbaumeler.jass.core.card.CardSuit.CLUBS;
 import static ch.mbaumeler.jass.core.card.CardSuit.DIAMONDS;
@@ -20,6 +20,7 @@ import org.junit.Test;
 
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
+import ch.mbaumeler.jass.extended.ai.simple.CardUtil;
 
 public class CardUtilTest {
 

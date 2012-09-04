@@ -1,4 +1,4 @@
-package ch.mbaumeler.jass.extended.ai;
+package ch.mbaumeler.jass.extended.ai.simple;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,10 +6,12 @@ import java.util.List;
 import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.PlayerToken;
+import ch.mbaumeler.jass.extended.ai.PlayStrategy;
 
-public class SelectCardStrategy {
+public class SelectCardStrategy implements PlayStrategy {
 
-	private List<CardStrategy> strategies = new ArrayList<CardStrategy>(4);
+	private List<SimpleCardStrategy> strategies = new ArrayList<SimpleCardStrategy>(
+			4);
 
 	public SelectCardStrategy() {
 		strategies.add(new FirstPlayerStrategy());
@@ -18,15 +20,17 @@ public class SelectCardStrategy {
 		strategies.add(new FourthPlayerStrategy());
 	}
 
-	public Card getCard(Match match) {
+	public Card getCardToPlay(Match match) {
 		PlayerToken activePlayer = match.getActivePlayer();
 		List<Card> cardsInHand = match.getCards(activePlayer);
 
-		for (CardStrategy strategy : strategies) {
+		for (SimpleCardStrategy strategy : strategies) {
 			if (strategy.isResponsible(match.getCardsOnTable())) {
-				return strategy.getPlayableCard(new ArrayList<Card>(cardsInHand), match);
+				return strategy.getPlayableCard(
+						new ArrayList<Card>(cardsInHand), match);
 			}
 		}
 		throw new IllegalStateException("No strategy to play");
 	}
+
 }

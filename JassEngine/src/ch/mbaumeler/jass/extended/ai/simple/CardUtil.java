@@ -1,4 +1,4 @@
-package ch.mbaumeler.jass.extended.ai;
+package ch.mbaumeler.jass.extended.ai.simple;
 
 import static ch.mbaumeler.jass.core.card.CardSuit.CLUBS;
 import static ch.mbaumeler.jass.core.card.CardSuit.DIAMONDS;

@@ -1,6 +1,7 @@
 package ch.mbaumeler.jass.core.game.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +48,7 @@ public class MatchImpl implements Match {
 	/**
 	 * Map between players and the cards in their hands.
 	 */
-	private final Map<PlayerToken, List<Card>> cards = new HashMap<PlayerToken, List<Card>>();
+	private final Map<PlayerToken, List<Card>> cardsMap = new HashMap<PlayerToken, List<Card>>();
 
 	/**
 	 * The players of the match.
@@ -73,23 +74,25 @@ public class MatchImpl implements Match {
 
 	private WysStore wysStore;
 
-	public MatchImpl(PlayerTokenRepository playerRepository, PlayerToken startingPlayer, ScoreUtil scoreUtil,
-			JassRules jassRules, List<Card> shuffledDeck, ScoreRules scoreRules, WysRules wysRule,
-			WysScoreRule wysScoreRule) {
+	public MatchImpl(PlayerTokenRepository playerRepository,
+			PlayerToken startingPlayer, ScoreUtil scoreUtil,
+			JassRules jassRules, List<Card> shuffledDeck,
+			ScoreRules scoreRules, WysRules wysRule, WysScoreRule wysScoreRule) {
 		this.players = playerRepository.getAll();
 		this.startingPlayerOffset = players.indexOf(startingPlayer);
 		this.scoreUtil = scoreUtil;
 		this.jassRules = jassRules;
 		this.wysStore = new WysStore(wysRule, wysScoreRule, this);
 		for (int i = 0; i < PLAYERS; i++) {
-			List<Card> subList = shuffledDeck.subList(i * CARDS_PER_PLAYER, i * CARDS_PER_PLAYER + CARDS_PER_PLAYER);
-			cards.put(players.get(i), new ArrayList<Card>(subList));
+			List<Card> subList = shuffledDeck.subList(i * CARDS_PER_PLAYER, i
+					* CARDS_PER_PLAYER + CARDS_PER_PLAYER);
+			cardsMap.put(players.get(i), new ArrayList<Card>(subList));
 		}
 	}
 
 	@Override
 	public List<Card> getCards(PlayerToken player) {
-		return cards.get(player);
+		return Collections.unmodifiableList(cardsMap.get(player));
 	}
 
 	@Override
@@ -99,7 +102,8 @@ public class MatchImpl implements Match {
 			int fromIndex = (getRoundsCompleted() - 1) * PLAYERS;
 			return playedCards.subList(fromIndex, fromIndex + PLAYERS);
 		}
-		return playedCards.subList(getRoundsCompleted() * PLAYERS, playedCards.size());
+		return playedCards.subList(getRoundsCompleted() * PLAYERS,
+				playedCards.size());
 	}
 
 	private boolean isNewRoundStarted() {
@@ -114,7 +118,8 @@ public class MatchImpl implements Match {
 	@Override
 	public void setAnsage(Ansage ansage) {
 		if (this.ansage != null) {
-			throw new IllegalArgumentException("Ansage already set to " + this.ansage);
+			throw new IllegalArgumentException("Ansage already set to "
+					+ this.ansage);
 		}
 		this.ansage = ansage;
 	}
@@ -124,7 +129,8 @@ public class MatchImpl implements Match {
 
 		int index = playedCards.size();
 		boolean firstRound = getRoundsCompleted() == 0;
-		index += (firstRound) ? startingPlayerOffset : players.indexOf(getWinnerlastRound());
+		index += (firstRound) ? startingPlayerOffset : players
+				.indexOf(getWinnerlastRound());
 		return players.get(index % 4);
 	}
 
@@ -135,13 +141,14 @@ public class MatchImpl implements Match {
 
 	private CardSuit getCurrentSuit() {
 		List<PlayedCard> cardsOnTable = getCardsOnTable();
-		return cardsOnTable.isEmpty() ? null : cardsOnTable.get(0).getCard().getSuit();
+		return cardsOnTable.isEmpty() ? null : cardsOnTable.get(0).getCard()
+				.getSuit();
 	}
 
 	@Override
 	public boolean isCardPlayable(Card card) {
-		return jassRules.isCardPlayable(card, getCards(getActivePlayer()), getCurrentSuit(), ansage,
-				isNewRoundStarted());
+		return jassRules.isCardPlayable(card, getCards(getActivePlayer()),
+				getCurrentSuit(), ansage, isNewRoundStarted());
 	}
 
 	@Override
@@ -155,7 +162,7 @@ public class MatchImpl implements Match {
 			throw new IllegalArgumentException("Card is not playable: " + card);
 		}
 		PlayerToken activePlayer = getActivePlayer();
-		getCards(activePlayer).remove(card);
+		cardsMap.get(activePlayer).remove(card);
 		playedCards.add(new PlayedCard(card, activePlayer));
 	}
 

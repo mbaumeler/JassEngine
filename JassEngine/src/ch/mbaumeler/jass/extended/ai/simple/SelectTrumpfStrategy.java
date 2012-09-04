@@ -1,26 +1,30 @@
-package ch.mbaumeler.jass.extended.ai;
+package ch.mbaumeler.jass.extended.ai.simple;
 
 import static ch.mbaumeler.jass.core.card.CardSuit.CLUBS;
 import static ch.mbaumeler.jass.core.card.CardSuit.DIAMONDS;
 import static ch.mbaumeler.jass.core.card.CardSuit.HEARTS;
 import static ch.mbaumeler.jass.core.card.CardSuit.SPADES;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.ScoreRules;
+import ch.mbaumeler.jass.extended.ai.AnsageStrategy;
 
-public class SelectTrumpfStrategy {
+public class SelectTrumpfStrategy implements AnsageStrategy {
 
 	private ScoreRules scoreUtil = new ScoreRules();
 
 	private Map<CardSuit, List<Card>> map;
 
-	public Ansage getTrumpf(List<Card> cards) {
-
+	public Ansage getAnsage(Match match) {
+		List<Card> cards = new ArrayList<Card>(match.getCards(match
+				.getActivePlayer()));
 		map = new CardUtil().createCardMap(cards);
 
 		int scoreClubs = getScore(CLUBS);

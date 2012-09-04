@@ -1,4 +1,4 @@
-package ch.mbaumeler.jass.extended.ai;
+package ch.mbaumeler.jass.extended.ai.simple;
 
 import static ch.mbaumeler.jass.test.util.CardDomain.DIAMONDS_ACE;
 import static ch.mbaumeler.jass.test.util.CardDomain.DIAMONDS_EIGHT;
@@ -25,6 +25,7 @@ import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayedCard;
 import ch.mbaumeler.jass.core.game.PlayerToken;
+import ch.mbaumeler.jass.extended.ai.simple.FirstPlayerStrategy;
 
 public class FirstPlayerStrategyTest {
 

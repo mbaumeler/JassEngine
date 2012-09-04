@@ -1,4 +1,4 @@
-package ch.mbaumeler.jass.extended.ai;
+package ch.mbaumeler.jass.extended.ai.simple;
 
 import static ch.mbaumeler.jass.test.util.CardDomain.DIAMONDS_ACE;
 import static ch.mbaumeler.jass.test.util.CardDomain.DIAMONDS_KING;
@@ -24,8 +24,9 @@ import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.card.CardValue;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.impl.MatchImpl;
+import ch.mbaumeler.jass.extended.ai.simple.StrategyUtil;
 
-/** TO REFACTOR */ public class  StrategyUtilTest {
+public class StrategyUtilTest {
 
 	private StrategyUtil strategyUtil;
 	private Match match;
@@ -41,8 +42,10 @@ import ch.mbaumeler.jass.core.game.impl.MatchImpl;
 
 		Card firstPlayedCard = new Card(CardSuit.DIAMONDS, CardValue.JACK);
 
-		List<Card> cardsInHand = Arrays.asList(DIAMONDS_SIX, DIAMONDS_SEVEN, DIAMONDS_QUEEN);
-		Card highestCardOfSameColor = strategyUtil.getHighestCardOfSameColor(firstPlayedCard, new Ansage(CardSuit.CLUBS), cardsInHand);
+		List<Card> cardsInHand = Arrays.asList(DIAMONDS_SIX, DIAMONDS_SEVEN,
+				DIAMONDS_QUEEN);
+		Card highestCardOfSameColor = strategyUtil.getHighestCardOfSameColor(
+				firstPlayedCard, new Ansage(CardSuit.CLUBS), cardsInHand);
 
 		assertEquals(highestCardOfSameColor, DIAMONDS_QUEEN);
 	}
@@ -53,7 +56,8 @@ import ch.mbaumeler.jass.core.game.impl.MatchImpl;
 		when(match.getAnsage()).thenReturn(new Ansage(CardSuit.HEARTS));
 		when(match.isCardPlayable(any(Card.class))).thenReturn(true);
 
-		List<Card> cardsInHand = Arrays.asList(DIAMONDS_KING, DIAMONDS_ACE, DIAMONDS_SIX, DIAMONDS_SEVEN, DIAMONDS_QUEEN);
+		List<Card> cardsInHand = Arrays.asList(DIAMONDS_KING, DIAMONDS_ACE,
+				DIAMONDS_SIX, DIAMONDS_SEVEN, DIAMONDS_QUEEN);
 
 		Card card = strategyUtil.getLeastPlayableCard(cardsInHand, match);
 		assertEquals(DIAMONDS_SIX, card);
@@ -62,18 +66,17 @@ import ch.mbaumeler.jass.core.game.impl.MatchImpl;
 
 	@Test
 	public void testGetLeastValueableCard_withTrumpf() {
-		
+
 		when(match.getAnsage()).thenReturn(new Ansage(CardSuit.HEARTS));
 		when(match.isCardPlayable(any(Card.class))).thenReturn(true);
-		
-		List<Card> cardsInHand = Arrays.asList(DIAMONDS_KING, HEARTS_SIX, DIAMONDS_ACE, HEARTS_JACK, DIAMONDS_SIX, DIAMONDS_SEVEN, DIAMONDS_QUEEN);
-		
+
+		List<Card> cardsInHand = Arrays.asList(DIAMONDS_KING, HEARTS_SIX,
+				DIAMONDS_ACE, HEARTS_JACK, DIAMONDS_SIX, DIAMONDS_SEVEN,
+				DIAMONDS_QUEEN);
+
 		Card card = strategyUtil.getLeastPlayableCard(cardsInHand, match);
 		assertEquals(DIAMONDS_SIX, card);
-		
+
 	}
-	
-	
-	
-	
+
 }

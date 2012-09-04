@@ -18,8 +18,8 @@ import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.core.game.Score;
 import ch.mbaumeler.jass.core.game.impl.GameImpl;
-import ch.mbaumeler.jass.extended.ai.SelectCardStrategy;
-import ch.mbaumeler.jass.extended.ai.SelectTrumpfStrategy;
+import ch.mbaumeler.jass.extended.ai.simple.SelectCardStrategy;
+import ch.mbaumeler.jass.extended.ai.simple.SelectTrumpfStrategy;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -63,13 +63,18 @@ public class AITests {
 
 		int scoreTeam1 = score.getPlayerScore(firstPlayer);
 		int scoreTeam2 = score.getOppositeScore(firstPlayer);
-		assertTrue("The strategy got worse!", (scoreTeam1 - scoreTeam2 >= (currentTeam1Score - currentTeam2Score)));
+		assertTrue(
+				"The strategy got worse!",
+				(scoreTeam1 - scoreTeam2 >= (currentTeam1Score - currentTeam2Score)));
 
 		boolean changed = currentTeam1Score != scoreTeam1;
 		if (changed) {
-			System.out.println("***************************************************************");
-			System.out.println("* Adjust " + scoreTeam1 + " as new scoreValue and " + scoreTeam2 + " *");
-			System.out.println("***************************************************************");
+			System.out
+					.println("***************************************************************");
+			System.out.println("* Adjust " + scoreTeam1
+					+ " as new scoreValue and " + scoreTeam2 + " *");
+			System.out
+					.println("***************************************************************");
 		}
 		assertFalse(changed);
 	}
@@ -84,18 +89,18 @@ public class AITests {
 
 	private void playStrategy(Match match) {
 		if (game.getPlayerRepository().isTeam1(match.getActivePlayer())) {
-			match.playCard(selectCardStrategy.getCard(match));
+			match.playCard(selectCardStrategy.getCardToPlay(match));
 		} else {
 			match.playCard(getFirstPlayableCard(match));
 		}
 	}
 
-	private void ansageStrategy(Match round, PlayerToken player) {
-		if (round.getAnsage() == null) {
+	private void ansageStrategy(Match match, PlayerToken player) {
+		if (match.getAnsage() == null) {
 			if (game.getPlayerRepository().isTeam1(player)) {
-				round.setAnsage(selectTrumpfStrategy.getTrumpf(round.getCards(round.getActivePlayer())));
+				match.setAnsage(selectTrumpfStrategy.getAnsage(match));
 			} else {
-				round.setAnsage(new Ansage(CardSuit.HEARTS));
+				match.setAnsage(new Ansage(CardSuit.HEARTS));
 			}
 		}
 	}
@@ -109,7 +114,8 @@ public class AITests {
 				return card;
 			}
 		}
-		throw new IllegalStateException("Player does not have a playable card: " + cards);
+		throw new IllegalStateException(
+				"Player does not have a playable card: " + cards);
 	}
 
 }
