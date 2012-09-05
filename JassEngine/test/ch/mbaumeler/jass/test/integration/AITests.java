@@ -18,8 +18,8 @@ import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.core.game.Score;
 import ch.mbaumeler.jass.core.game.impl.GameImpl;
-import ch.mbaumeler.jass.extended.ai.simple.SelectCardStrategy;
-import ch.mbaumeler.jass.extended.ai.simple.SelectTrumpfStrategy;
+import ch.mbaumeler.jass.extended.ai.simple.SimpleStrategy;
+import ch.mbaumeler.jass.extended.ai.simple.SimpleStrategyEngine;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -30,8 +30,7 @@ public class AITests {
 
 	private Game game;
 
-	private SelectCardStrategy selectCardStrategy;
-	private SelectTrumpfStrategy selectTrumpfStrategy;
+	private SimpleStrategy simpleStrategy;
 
 	private final int currentTeam1Score = 185546;
 	private final int currentTeam2Score = 133154;
@@ -47,8 +46,7 @@ public class AITests {
 		});
 		game = injector.getInstance(GameImpl.class);
 
-		selectCardStrategy = new SelectCardStrategy();
-		selectTrumpfStrategy = new SelectTrumpfStrategy();
+		simpleStrategy = new SimpleStrategyEngine().create();
 	}
 
 	@Test
@@ -89,7 +87,7 @@ public class AITests {
 
 	private void playStrategy(Match match) {
 		if (game.getPlayerRepository().isTeam1(match.getActivePlayer())) {
-			match.playCard(selectCardStrategy.getCardToPlay(match));
+			match.playCard(simpleStrategy.getCardToPlay(match));
 		} else {
 			match.playCard(getFirstPlayableCard(match));
 		}
@@ -98,7 +96,7 @@ public class AITests {
 	private void ansageStrategy(Match match, PlayerToken player) {
 		if (match.getAnsage() == null) {
 			if (game.getPlayerRepository().isTeam1(player)) {
-				match.setAnsage(selectTrumpfStrategy.getAnsage(match));
+				match.setAnsage(simpleStrategy.getAnsage(match));
 			} else {
 				match.setAnsage(new Ansage(CardSuit.HEARTS));
 			}
