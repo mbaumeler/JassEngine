@@ -34,14 +34,22 @@ public class ObservableGameTest {
 	public void testGetPlayer() {
 		observerableGame.getPlayerRepository();
 		verify(gameMock).getPlayerRepository();
-		verify(observerMock, times(0)).updated(any(Event.class), any(PlayerToken.class), anyObject());
+		verify(observerMock, times(0)).updated(any(Event.class),
+				any(PlayerToken.class), anyObject());
 	}
 
 	@Test
 	public void testGetTotalScore() {
 		observerableGame.getTotalScore();
 		verify(gameMock).getTotalScore();
-		verify(observerMock, times(0)).updated(any(Event.class), any(PlayerToken.class), anyObject());
+		verify(observerMock, times(0)).updated(any(Event.class),
+				any(PlayerToken.class), anyObject());
+	}
+
+	@Test
+	public void testNotifyObservers() {
+		observerableGame.notifyObservers();
+		verify(observerMock).updated(null, null, null);
 	}
 
 	@Test
@@ -49,6 +57,7 @@ public class ObservableGameTest {
 		Match currentMatch = observerableGame.getCurrentMatch();
 		assertNotSame(currentMatch, matchMock);
 		verify(gameMock).getCurrentMatch();
-		verify(observerMock, times(0)).updated(any(Event.class), any(PlayerToken.class), anyObject());
+		verify(observerMock, times(0)).updated(any(Event.class),
+				any(PlayerToken.class), anyObject());
 	}
 }

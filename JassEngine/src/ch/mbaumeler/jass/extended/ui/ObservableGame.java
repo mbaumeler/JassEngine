@@ -39,4 +39,10 @@ public class ObservableGame implements Game {
 		return delegate.getTotalScore();
 	}
 
+	public void notifyObservers() {
+		for (JassModelObserver jassObserver : observers) {
+			jassObserver.updated(null, null, null);
+		}
+	}
+
 }
