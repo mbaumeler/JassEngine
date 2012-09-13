@@ -10,10 +10,9 @@ import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayerToken;
-import ch.mbaumeler.jass.extended.ai.AnsageStrategy;
-import ch.mbaumeler.jass.extended.ai.PlayStrategy;
+import ch.mbaumeler.jass.extended.ai.JassStrategy;
 
-public class SimpleStrategy implements PlayStrategy, AnsageStrategy {
+public class SimpleStrategy implements JassStrategy {
 
 	@Inject
 	private SelectTrumpfStrategy selectTrumpfStrategy;

@@ -25,5 +25,4 @@ public interface Game {
 	 * @return score of all matches.
 	 */
 	Score getTotalScore();
-
 }

@@ -14,9 +14,8 @@ import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.ScoreRules;
-import ch.mbaumeler.jass.extended.ai.AnsageStrategy;
 
-public class SelectTrumpfStrategy implements AnsageStrategy {
+public class SelectTrumpfStrategy {
 
 	private ScoreRules scoreUtil = new ScoreRules();
 
