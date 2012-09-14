@@ -15,14 +15,18 @@ public class SecondPlayerStrategy implements SimpleCardStrategy {
 	@Override
 	public Card getPlayableCard(List<Card> cardsInHand, Match match) {
 
-		List<PlayedCard> cardsOnTable = new ArrayList<PlayedCard>(match.getCardsOnTable());
+		List<PlayedCard> cardsOnTable = new ArrayList<PlayedCard>(
+				match.getCardsOnTable());
 		Ansage trumpf = match.getAnsage();
-		Card firstPlayedCard = cardsOnTable.isEmpty() ? null : cardsOnTable.get(0).getCard();
+		Card firstPlayedCard = cardsOnTable.isEmpty() ? null : cardsOnTable
+				.get(0).getCard();
 
-		if (strategyUtil.getHighestCardOfSameColor(firstPlayedCard, trumpf, cardsInHand) != null) {
-			return strategyUtil.getHighestCardOfSameColor(firstPlayedCard, trumpf, cardsInHand);
+		if (strategyUtil.getHighestCardOfSameColor(firstPlayedCard, trumpf,
+				cardsInHand) != null) {
+			return strategyUtil.getHighestCardOfSameColor(firstPlayedCard,
+					trumpf, cardsInHand);
 		} else {
-			return strategyUtil.getFirstPlayableCard(cardsInHand, match);
+			return strategyUtil.getLeastPlayableCard(cardsInHand, match);
 		}
 	}
 

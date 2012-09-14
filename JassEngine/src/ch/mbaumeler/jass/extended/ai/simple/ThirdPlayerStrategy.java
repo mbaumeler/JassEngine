@@ -15,18 +15,23 @@ public class ThirdPlayerStrategy implements SimpleCardStrategy {
 	@Override
 	public Card getPlayableCard(List<Card> cardsInHand, Match match) {
 
-		List<PlayedCard> cardsOnTable = new ArrayList<PlayedCard>(match.getCardsOnTable());
+		List<PlayedCard> cardsOnTable = new ArrayList<PlayedCard>(
+				match.getCardsOnTable());
 		Ansage trumpf = match.getAnsage();
-		Card firstPlayedCard = cardsOnTable.isEmpty() ? null : cardsOnTable.get(0).getCard();
+		Card firstPlayedCard = cardsOnTable.isEmpty() ? null : cardsOnTable
+				.get(0).getCard();
 
 		boolean alreadyWinning = util.alreadyWinning(cardsOnTable, trumpf);
 
 		if (alreadyWinning) {
-			return util.getCardWithMostScoreWhichIsPlayable(cardsInHand, trumpf, match);
-		} else if (util.getHighestCardOfSameColor(firstPlayedCard, trumpf, cardsInHand) != null) {
-			return util.getHighestCardOfSameColor(firstPlayedCard, trumpf, cardsInHand);
+			return util.getCardWithMostScoreWhichIsPlayable(cardsInHand,
+					trumpf, match);
+		} else if (util.getHighestCardOfSameColor(firstPlayedCard, trumpf,
+				cardsInHand) != null) {
+			return util.getHighestCardOfSameColor(firstPlayedCard, trumpf,
+					cardsInHand);
 		} else {
-			return util.firstPlayableWinnercardOfAnySuit(cardsInHand, match);
+			return util.getLeastPlayableCard(cardsInHand, match);
 		}
 	}
 
