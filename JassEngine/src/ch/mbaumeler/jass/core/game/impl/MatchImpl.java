@@ -9,7 +9,6 @@ import java.util.Set;
 
 import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.Card;
-import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.JassRules;
 import ch.mbaumeler.jass.core.game.PlayedCard;
@@ -139,16 +138,10 @@ public class MatchImpl implements Match {
 		return scoreUtil.getWinnerCard(cardsFromRound, ansage).getPlayer();
 	}
 
-	private CardSuit getCurrentSuit() {
-		List<PlayedCard> cardsOnTable = getCardsOnTable();
-		return cardsOnTable.isEmpty() ? null : cardsOnTable.get(0).getCard()
-				.getSuit();
-	}
-
 	@Override
 	public boolean isCardPlayable(Card card) {
 		return jassRules.isCardPlayable(card, getCards(getActivePlayer()),
-				getCurrentSuit(), ansage, isNewRoundStarted());
+				getCardsOnTable(), ansage, isNewRoundStarted());
 	}
 
 	@Override

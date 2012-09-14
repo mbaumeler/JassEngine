@@ -32,8 +32,8 @@ public class AITests {
 
 	private SimpleStrategy simpleStrategy;
 
-	private final int currentTeam1Score = 185546;
-	private final int currentTeam2Score = 133154;
+	private final int currentTeam1Score = 185377;
+	private final int currentTeam2Score = 133323;
 
 	@Before
 	public void setup() {
