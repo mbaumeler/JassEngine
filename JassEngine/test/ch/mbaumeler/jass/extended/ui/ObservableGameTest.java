@@ -1,8 +1,6 @@
 package ch.mbaumeler.jass.extended.ui;
 
 import static org.junit.Assert.assertNotSame;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -13,8 +11,6 @@ import org.junit.Test;
 
 import ch.mbaumeler.jass.core.Game;
 import ch.mbaumeler.jass.core.Match;
-import ch.mbaumeler.jass.core.game.PlayerToken;
-import ch.mbaumeler.jass.extended.ui.ObserverableMatch.Event;
 
 public class ObservableGameTest {
 
@@ -34,22 +30,20 @@ public class ObservableGameTest {
 	public void testGetPlayer() {
 		observerableGame.getPlayerRepository();
 		verify(gameMock).getPlayerRepository();
-		verify(observerMock, times(0)).updated(any(Event.class),
-				any(PlayerToken.class), anyObject());
+		verify(observerMock, times(0)).jassModelChanged();
 	}
 
 	@Test
 	public void testGetTotalScore() {
 		observerableGame.getTotalScore();
 		verify(gameMock).getTotalScore();
-		verify(observerMock, times(0)).updated(any(Event.class),
-				any(PlayerToken.class), anyObject());
+		verify(observerMock, times(0)).jassModelChanged();
 	}
 
 	@Test
 	public void testNotifyObservers() {
 		observerableGame.notifyObservers();
-		verify(observerMock).updated(null, null, null);
+		verify(observerMock).jassModelChanged();
 	}
 
 	@Test
@@ -57,7 +51,6 @@ public class ObservableGameTest {
 		Match currentMatch = observerableGame.getCurrentMatch();
 		assertNotSame(currentMatch, matchMock);
 		verify(gameMock).getCurrentMatch();
-		verify(observerMock, times(0)).updated(any(Event.class),
-				any(PlayerToken.class), anyObject());
+		verify(observerMock, times(0)).jassModelChanged();
 	}
 }

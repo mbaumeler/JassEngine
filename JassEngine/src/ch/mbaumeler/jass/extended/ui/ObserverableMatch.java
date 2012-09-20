@@ -1,9 +1,5 @@
 package ch.mbaumeler.jass.extended.ui;
 
-import static ch.mbaumeler.jass.extended.ui.ObserverableMatch.Event.ANSAGE;
-import static ch.mbaumeler.jass.extended.ui.ObserverableMatch.Event.PLAYED_CARD;
-import static ch.mbaumeler.jass.extended.ui.ObserverableMatch.Event.WYS;
-
 import java.util.List;
 import java.util.Set;
 
@@ -17,16 +13,16 @@ import ch.mbaumeler.jass.core.game.wys.Wys;
 
 public class ObserverableMatch implements Match {
 
-	private List<JassModelObserver> observers;
 	private Match delegate;
+	private ObserverRepository observerRepository;
 
 	public enum Event {
 		PLAYED_CARD, WYS, ANSAGE
 	};
 
-	public ObserverableMatch(Match match, List<JassModelObserver> observers) {
+	public ObserverableMatch(Match match, ObserverRepository observerRepository) {
 		this.delegate = match;
-		this.observers = observers;
+		this.observerRepository = observerRepository;
 	}
 
 	@Override
@@ -47,7 +43,7 @@ public class ObserverableMatch implements Match {
 	@Override
 	public void setAnsage(Ansage ansage) {
 		delegate.setAnsage(ansage);
-		updateObserver(ANSAGE, delegate.getActivePlayer(), ansage);
+		observerRepository.notifyObservers();
 	}
 
 	@Override
@@ -67,9 +63,8 @@ public class ObserverableMatch implements Match {
 
 	@Override
 	public void playCard(Card card) {
-		PlayerToken activePlayer = delegate.getActivePlayer();
 		delegate.playCard(card);
-		updateObserver(PLAYED_CARD, activePlayer, card);
+		observerRepository.notifyObservers();
 	}
 
 	@Override
@@ -82,12 +77,6 @@ public class ObserverableMatch implements Match {
 		return delegate.getScore();
 	}
 
-	private void updateObserver(Event event, PlayerToken activePlayer, Object object) {
-		for (JassModelObserver observer : observers) {
-			observer.updated(event, activePlayer, object);
-		}
-	}
-
 	@Override
 	public int getRoundsCompleted() {
 		return delegate.getRoundsCompleted();
@@ -96,7 +85,7 @@ public class ObserverableMatch implements Match {
 	@Override
 	public void wys(Set<Wys> wysSet) {
 		delegate.wys(wysSet);
-		updateObserver(WYS, delegate.getActivePlayer(), wysSet);
+		observerRepository.notifyObservers();
 	}
 
 }

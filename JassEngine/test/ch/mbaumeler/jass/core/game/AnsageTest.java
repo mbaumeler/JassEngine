@@ -19,8 +19,8 @@ public class AnsageTest {
 	@Test
 	public void testIsTrumpf() {
 		Ansage ansage = new Ansage(CLUBS);
-		assertTrue(ansage.isTrumpf(CLUBS));
-		assertFalse(ansage.isTrumpf(HEARTS));
+		assertTrue(ansage.is(CLUBS));
+		assertFalse(ansage.is(HEARTS));
 		assertEquals(SpielModi.TRUMPF, ansage.getSpielModi());
 	}
 
@@ -33,13 +33,13 @@ public class AnsageTest {
 	public void testIsSpielModi() {
 		Ansage ansage = new Ansage(UNDEUFE);
 		assertEquals(UNDEUFE, ansage.getSpielModi());
-		assertFalse(ansage.isTrumpf(CLUBS));
+		assertFalse(ansage.is(CLUBS));
 	}
 
 	@Test
 	public void testNullIsNeverTrumpf() {
 		Ansage ansage = new Ansage(UNDEUFE);
-		assertFalse(ansage.isTrumpf(null));
+		assertFalse(ansage.is((SpielModi) null));
 	}
 
 	@Test(expected = IllegalArgumentException.class)

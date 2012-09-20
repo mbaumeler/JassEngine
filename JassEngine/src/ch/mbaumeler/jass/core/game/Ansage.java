@@ -21,7 +21,8 @@ public class Ansage {
 	public Ansage(SpielModi spielModi) {
 		assertNotNull(spielModi);
 		if (spielModi == TRUMPF) {
-			throw new IllegalArgumentException("Trumpf is not allowed as spielmodi. Use CardSuit constructor instead.");
+			throw new IllegalArgumentException(
+					"Trumpf is not allowed as spielmodi. Use CardSuit constructor instead.");
 		}
 		this.spielModi = spielModi;
 		this.cardSuit = null;
@@ -33,8 +34,23 @@ public class Ansage {
 		}
 	}
 
+	/**
+	 * Use is() instead.
+	 * 
+	 * @param cardSuit
+	 * @return
+	 */
+	@Deprecated
 	public boolean isTrumpf(CardSuit cardSuit) {
 		return spielModi == TRUMPF && this.cardSuit == cardSuit;
+	}
+
+	public boolean is(CardSuit cardSuit) {
+		return spielModi == TRUMPF && this.cardSuit == cardSuit;
+	}
+
+	public boolean is(SpielModi spielModi) {
+		return spielModi == this.spielModi;
 	}
 
 	public SpielModi getSpielModi() {
@@ -45,8 +61,10 @@ public class Ansage {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((cardSuit == null) ? 0 : cardSuit.hashCode());
-		result = prime * result + ((spielModi == null) ? 0 : spielModi.hashCode());
+		result = prime * result
+				+ ((cardSuit == null) ? 0 : cardSuit.hashCode());
+		result = prime * result
+				+ ((spielModi == null) ? 0 : spielModi.hashCode());
 		return result;
 	}
 
@@ -68,7 +86,8 @@ public class Ansage {
 
 	@Override
 	public String toString() {
-		return spielModi == TRUMPF ? TRUMPF.name() + " - " + cardSuit.name() : spielModi.name();
+		return spielModi == TRUMPF ? TRUMPF.name() + " - " + cardSuit.name()
+				: spielModi.name();
 	}
 
 	public boolean isTrumpf() {

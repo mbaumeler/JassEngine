@@ -61,7 +61,7 @@ public class WysRules {
 	private void analyseForStoeck(Set<Wys> foundWyss, Card card, Ansage trumpf, Set<Card> stoeck) {
 		CardSuit suit = card.getSuit();
 		CardValue value = card.getValue();
-		if (trumpf.isTrumpf(suit) && (value == KING || value == QUEEN)) {
+		if (trumpf.is(suit) && (value == KING || value == QUEEN)) {
 			stoeck.add(card);
 		}
 		if (stoeck.size() == 2) {

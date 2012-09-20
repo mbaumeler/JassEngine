@@ -18,8 +18,7 @@ public class BestCardComparator implements Comparator<Card> {
 
 	@Override
 	public int compare(Card card1, Card card2) {
-		return suit != null ? compareSuitSensitiv(card1, card2)
-				: compareSuitUnsensitiv(card1, card2);
+		return suit != null ? compareSuitSensitiv(card1, card2) : compareSuitUnsensitiv(card1, card2);
 	}
 
 	private int compareSuitSensitiv(Card card1, Card card2) {
@@ -51,7 +50,7 @@ public class BestCardComparator implements Comparator<Card> {
 	}
 
 	private boolean isTrumpf(Card card) {
-		return ansage.isTrumpf(card.getSuit());
+		return ansage.is(card.getSuit());
 	}
 
 	private boolean isSuit(Card card) {

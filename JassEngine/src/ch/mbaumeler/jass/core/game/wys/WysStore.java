@@ -84,7 +84,7 @@ public class WysStore {
 					} else if (isBlattWys(wys) && isBlattWys(currentMaxWys) && isHigher(wys, currentMaxWys)) {
 						bestPlayer = entry.getKey();
 						currentMaxWys = wys;
-					} else if (ansage.isTrumpf(wys.getCards().iterator().next().getSuit())) {
+					} else if (ansage.is(wys.getCards().iterator().next().getSuit())) {
 						bestPlayer = entry.getKey();
 						currentMaxWys = wys;
 					}

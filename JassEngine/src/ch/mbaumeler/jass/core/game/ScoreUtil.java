@@ -110,18 +110,18 @@ public class ScoreUtil {
 
 	private int getValue(Ansage ansage, PlayedCard playedCard) {
 		Card card = playedCard.getCard();
-		if (ansage.isTrumpf(card.getSuit()) && card.getValue() == JACK) {
+		if (ansage.is(card.getSuit()) && card.getValue() == JACK) {
 			return 20;
 		}
 
-		if (ansage.isTrumpf(card.getSuit()) && card.getValue() == NINE) {
+		if (ansage.is(card.getSuit()) && card.getValue() == NINE) {
 			return 14;
 		}
 		return card.getValue().ordinal();
 	}
 
 	private boolean isTrumpf(Ansage ansage, PlayedCard playedCard) {
-		return ansage.isTrumpf(playedCard.getCard().getSuit());
+		return ansage.is(playedCard.getCard().getSuit());
 	}
 
 	private boolean isSameSuit(PlayedCard playedCard, PlayedCard playedCard2) {

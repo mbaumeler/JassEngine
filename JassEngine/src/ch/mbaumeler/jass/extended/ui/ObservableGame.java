@@ -1,8 +1,5 @@
 package ch.mbaumeler.jass.extended.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ch.mbaumeler.jass.core.Game;
 import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.game.PlayerTokenRepository;
@@ -12,16 +9,11 @@ public class ObservableGame implements Game {
 
 	private Game delegate;
 
-	private List<JassModelObserver> observers = new ArrayList<JassModelObserver>();
+	private ObserverRepository observerRepository;
 
 	public ObservableGame(Game jassGame) {
 		this.delegate = jassGame;
-	}
-
-	public void addObserver(JassModelObserver observer) {
-		if (!observers.contains(observer)) {
-			observers.add(observer);
-		}
+		this.observerRepository = new ObserverRepository();
 	}
 
 	@Override
@@ -31,7 +23,7 @@ public class ObservableGame implements Game {
 
 	@Override
 	public Match getCurrentMatch() {
-		return new ObserverableMatch(delegate.getCurrentMatch(), observers);
+		return new ObserverableMatch(delegate.getCurrentMatch(), observerRepository);
 	}
 
 	@Override
@@ -39,10 +31,16 @@ public class ObservableGame implements Game {
 		return delegate.getTotalScore();
 	}
 
+	public void addObserver(JassModelObserver observer) {
+		observerRepository.addObserver(observer);
+	}
+
+	public void removeObserver(JassModelObserver observer) {
+		observerRepository.removeObserver(observer);
+	}
+
 	public void notifyObservers() {
-		for (JassModelObserver jassObserver : observers) {
-			jassObserver.updated(null, null, null);
-		}
+		observerRepository.notifyObservers();
 	}
 
 }

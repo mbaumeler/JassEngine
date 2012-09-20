@@ -35,7 +35,7 @@ public class ScoreRules {
 	}
 
 	private boolean isTrumpf(Card card, Ansage ansage) {
-		return ansage.isTrumpf(card.getSuit());
+		return ansage.is(card.getSuit());
 	}
 
 }
