@@ -50,7 +50,7 @@ public class WysStoreTest {
 	private Match matchMock = mock(Match.class);
 	private WysRules wysRuleMock = mock(WysRules.class);
 	private WysScoreRule wysScoreRuleMock = mock(WysScoreRule.class);
-	private PlayerToken playerTokenMock = mock(PlayerToken.class);
+	private PlayerToken playerTokenMock = PlayerToken.PLAYER0;
 
 	@Before
 	public void setUp() throws Exception {
@@ -181,7 +181,7 @@ public class WysStoreTest {
 		wys = createWys(BLATT, CLUBS_QUEEN, CLUBS_KING, CLUBS_JACK, CLUBS_TEN);
 		wysSet.add(wys);
 
-		PlayerToken playerToken = new PlayerToken("winner");
+		PlayerToken playerToken = PlayerToken.PLAYER0;
 		when(matchMock.getActivePlayer()).thenReturn(playerToken);
 		when(wysRuleMock.findWyss(anyListOf(Card.class), any(Ansage.class))).thenReturn(wysSet);
 		when(wysScoreRuleMock.getScoreFore(wys)).thenReturn(456);
@@ -205,7 +205,7 @@ public class WysStoreTest {
 		wys = createWys(BLATT, CLUBS_QUEEN, CLUBS_KING, CLUBS_JACK, CLUBS_TEN, CLUBS_NINE);
 		wysSet.add(wys);
 
-		PlayerToken playerToken = new PlayerToken("winner");
+		PlayerToken playerToken = PlayerToken.PLAYER0;
 		when(matchMock.getActivePlayer()).thenReturn(playerToken);
 		when(wysRuleMock.findWyss(anyListOf(Card.class), any(Ansage.class))).thenReturn(wysSet);
 		when(wysScoreRuleMock.getScoreFore(wys)).thenReturn(100);
@@ -229,7 +229,7 @@ public class WysStoreTest {
 		wys = createWys(BLATT, CLUBS_ACE, CLUBS_QUEEN, CLUBS_KING, CLUBS_JACK, CLUBS_TEN);
 		wysSet.add(wys);
 
-		PlayerToken playerToken = new PlayerToken("winner");
+		PlayerToken playerToken = PlayerToken.PLAYER0;
 		when(matchMock.getActivePlayer()).thenReturn(playerToken);
 		when(wysRuleMock.findWyss(anyListOf(Card.class), any(Ansage.class))).thenReturn(wysSet);
 		when(wysScoreRuleMock.getScoreFore(wys)).thenReturn(100);
@@ -253,7 +253,7 @@ public class WysStoreTest {
 		wys = createWys(BLATT, HEARTS_QUEEN, HEARTS_KING, HEARTS_JACK, HEARTS_TEN, HEARTS_NINE);
 		wysSet.add(wys);
 
-		PlayerToken playerToken = new PlayerToken("winner");
+		PlayerToken playerToken = PlayerToken.PLAYER0;
 		when(matchMock.getActivePlayer()).thenReturn(playerToken);
 		when(wysRuleMock.findWyss(anyListOf(Card.class), any(Ansage.class))).thenReturn(wysSet);
 		when(wysScoreRuleMock.getScoreFore(wys)).thenReturn(100);
@@ -277,7 +277,7 @@ public class WysStoreTest {
 		wys = createWys(BLATT, HEARTS_QUEEN, HEARTS_KING, HEARTS_JACK, HEARTS_TEN, HEARTS_NINE);
 		wysSet.add(wys);
 
-		PlayerToken playerToken = new PlayerToken("winner");
+		PlayerToken playerToken = PlayerToken.PLAYER0;
 		when(matchMock.getActivePlayer()).thenReturn(playerToken);
 		when(wysRuleMock.findWyss(anyListOf(Card.class), any(Ansage.class))).thenReturn(wysSet);
 		when(wysScoreRuleMock.getScoreFore(wys)).thenReturn(100);

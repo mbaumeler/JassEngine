@@ -60,7 +60,7 @@ public class ScoreUtilTest {
 	public void setUp() throws Exception {
 		matchMock = mock(Match.class);
 		wysStoreMock = mock(WysStore.class);
-		playerMock = mock(PlayerToken.class);
+		playerMock = PlayerToken.PLAYER1;
 		scoreUtil = new ScoreUtil();
 		playerTokenRepository = new PlayerTokenRepository();
 		scoreUtil.playerTokenRepository = playerTokenRepository;

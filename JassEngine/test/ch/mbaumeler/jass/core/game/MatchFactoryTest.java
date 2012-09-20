@@ -10,7 +10,7 @@ import ch.mbaumeler.jass.core.game.impl.CardFactoryImpl;
 public class MatchFactoryTest {
 
 	private MatchFactory matchFactory;
-	private PlayerToken startingPlayer = new PlayerToken("mab");
+	private PlayerToken startingPlayer = PlayerToken.PLAYER0;
 
 	@Before
 	public void setUp() throws Exception {

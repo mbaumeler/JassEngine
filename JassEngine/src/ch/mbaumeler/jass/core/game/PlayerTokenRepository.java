@@ -1,5 +1,10 @@
 package ch.mbaumeler.jass.core.game;
 
+import static ch.mbaumeler.jass.core.game.PlayerToken.PLAYER0;
+import static ch.mbaumeler.jass.core.game.PlayerToken.PLAYER1;
+import static ch.mbaumeler.jass.core.game.PlayerToken.PLAYER2;
+import static ch.mbaumeler.jass.core.game.PlayerToken.PLAYER3;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -11,14 +16,9 @@ public class PlayerTokenRepository {
 	private List<PlayerToken> all;
 
 	public PlayerTokenRepository() {
-		PlayerToken player1 = new PlayerToken("Team1 - Player1");
-		PlayerToken player2 = new PlayerToken("Team2 - Player1");
-		PlayerToken player3 = new PlayerToken("Team1 - Player2");
-		PlayerToken player4 = new PlayerToken("Team2 - Player2");
-
-		team1 = createPlayerList(player1, player3);
-		team2 = createPlayerList(player2, player4);
-		all = createPlayerList(player1, player2, player3, player4);
+		team1 = createPlayerList(PLAYER0, PLAYER2);
+		team2 = createPlayerList(PLAYER1, PLAYER3);
+		all = createPlayerList(PlayerToken.values());
 	}
 
 	public List<PlayerToken> getAll() {

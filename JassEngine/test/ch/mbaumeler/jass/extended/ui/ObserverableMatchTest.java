@@ -58,7 +58,7 @@ public class ObserverableMatchTest {
 	@Test
 	public void testSetTrumpf() {
 		Ansage ansage = new Ansage(CLUBS);
-		PlayerToken playerToken = new PlayerToken("mab");
+		PlayerToken playerToken = PlayerToken.PLAYER0;
 		when(delegateMock.getActivePlayer()).thenReturn(playerToken);
 		observerableMatch.setAnsage(ansage);
 		verify(delegateMock).setAnsage(ansage);
@@ -88,7 +88,7 @@ public class ObserverableMatchTest {
 
 	@Test
 	public void testGetPlayCard() {
-		PlayerToken playerToken = new PlayerToken("mab");
+		PlayerToken playerToken = PlayerToken.PLAYER0;
 		when(delegateMock.getActivePlayer()).thenReturn(playerToken);
 		observerableMatch.playCard(HEARTS_ACE);
 		verify(delegateMock).playCard(HEARTS_ACE);
@@ -119,7 +119,7 @@ public class ObserverableMatchTest {
 	@Test
 	public void testWys() {
 
-		PlayerToken playerToken = new PlayerToken("mab");
+		PlayerToken playerToken = PlayerToken.PLAYER0;
 		when(delegateMock.getActivePlayer()).thenReturn(playerToken);
 		Set<Wys> wysSet = new HashSet<Wys>();
 		wysSet.add(new Wys(Arrays.asList(CLUBS_KING, CLUBS_QUEEN, CLUBS_JACK), BLATT));

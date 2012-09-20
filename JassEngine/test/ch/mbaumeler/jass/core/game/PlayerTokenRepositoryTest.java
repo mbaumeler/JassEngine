@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.List;
 
@@ -76,7 +77,8 @@ public class PlayerTokenRepositoryTest {
 	@Test
 	public void testUnmodifiableAll() {
 		try {
-			playerTokenRepository.getAll().set(0, new PlayerToken("abc"));
+			playerTokenRepository.getAll().set(0, PlayerToken.PLAYER0);
+			fail();
 		} catch (UnsupportedOperationException e) {
 			// exptected
 		}
@@ -85,7 +87,8 @@ public class PlayerTokenRepositoryTest {
 	@Test
 	public void testUnmodifiableTeam1() {
 		try {
-			playerTokenRepository.getTeam1().set(0, new PlayerToken("abc"));
+			playerTokenRepository.getTeam1().set(0, PlayerToken.PLAYER0);
+			fail();
 		} catch (UnsupportedOperationException e) {
 			// exptected
 		}
@@ -94,7 +97,8 @@ public class PlayerTokenRepositoryTest {
 	@Test
 	public void testUnmodifiableTeam2() {
 		try {
-			playerTokenRepository.getTeam2().set(0, new PlayerToken("abc"));
+			playerTokenRepository.getTeam2().set(0, PlayerToken.PLAYER0);
+			fail();
 		} catch (UnsupportedOperationException e) {
 			// exptected
 		}
