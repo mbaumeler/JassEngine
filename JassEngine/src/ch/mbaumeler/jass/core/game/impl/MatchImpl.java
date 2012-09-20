@@ -97,10 +97,6 @@ public class MatchImpl implements Match {
 	@Override
 	public List<PlayedCard> getCardsOnTable() {
 
-		if (isNewRoundStarted() && getRoundsCompleted() > 0) {
-			int fromIndex = (getRoundsCompleted() - 1) * PLAYERS;
-			return playedCards.subList(fromIndex, fromIndex + PLAYERS);
-		}
 		return playedCards.subList(getRoundsCompleted() * PLAYERS,
 				playedCards.size());
 	}
