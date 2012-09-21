@@ -80,6 +80,16 @@ public interface Match {
 	void playCard(Card card);
 
 	/**
+	 * Schiebt die Ansage.
+	 */
+	void schiebe();
+
+	/**
+	 * True, if the ansage was geschoben.
+	 */
+	boolean isGeschoben();
+
+	/**
 	 * Wys.
 	 * 
 	 * @param wysSet

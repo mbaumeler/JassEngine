@@ -52,7 +52,7 @@ public class MatchImpl implements Match {
 	/**
 	 * The players of the match.
 	 */
-	private final List<PlayerToken> players;
+	private final PlayerTokenRepository playerTokenRepository;
 
 	/**
 	 * Stack of cards which where played.
@@ -73,19 +73,20 @@ public class MatchImpl implements Match {
 
 	private WysStore wysStore;
 
-	public MatchImpl(PlayerTokenRepository playerRepository,
-			PlayerToken startingPlayer, ScoreUtil scoreUtil,
-			JassRules jassRules, List<Card> shuffledDeck,
-			ScoreRules scoreRules, WysRules wysRule, WysScoreRule wysScoreRule) {
-		this.players = playerRepository.getAll();
-		this.startingPlayerOffset = players.indexOf(startingPlayer);
+	private boolean geschoben;
+
+	public MatchImpl(PlayerTokenRepository playerRepository, PlayerToken startingPlayer, ScoreUtil scoreUtil,
+			JassRules jassRules, List<Card> shuffledDeck, ScoreRules scoreRules, WysRules wysRule,
+			WysScoreRule wysScoreRule) {
+		this.playerTokenRepository = playerRepository;
+		List<PlayerToken> allPlayers = playerTokenRepository.getAll();
+		this.startingPlayerOffset = allPlayers.indexOf(startingPlayer);
 		this.scoreUtil = scoreUtil;
 		this.jassRules = jassRules;
 		this.wysStore = new WysStore(wysRule, wysScoreRule, this);
 		for (int i = 0; i < PLAYERS; i++) {
-			List<Card> subList = shuffledDeck.subList(i * CARDS_PER_PLAYER, i
-					* CARDS_PER_PLAYER + CARDS_PER_PLAYER);
-			cardsMap.put(players.get(i), new ArrayList<Card>(subList));
+			List<Card> subList = shuffledDeck.subList(i * CARDS_PER_PLAYER, i * CARDS_PER_PLAYER + CARDS_PER_PLAYER);
+			cardsMap.put(allPlayers.get(i), new ArrayList<Card>(subList));
 		}
 	}
 
@@ -97,8 +98,7 @@ public class MatchImpl implements Match {
 	@Override
 	public List<PlayedCard> getCardsOnTable() {
 
-		return playedCards.subList(getRoundsCompleted() * PLAYERS,
-				playedCards.size());
+		return playedCards.subList(getRoundsCompleted() * PLAYERS, playedCards.size());
 	}
 
 	private boolean isNewRoundStarted() {
@@ -113,8 +113,7 @@ public class MatchImpl implements Match {
 	@Override
 	public void setAnsage(Ansage ansage) {
 		if (this.ansage != null) {
-			throw new IllegalArgumentException("Ansage already set to "
-					+ this.ansage);
+			throw new IllegalArgumentException("Ansage already set to " + this.ansage);
 		}
 		this.ansage = ansage;
 	}
@@ -124,9 +123,13 @@ public class MatchImpl implements Match {
 
 		int index = playedCards.size();
 		boolean firstRound = getRoundsCompleted() == 0;
-		index += (firstRound) ? startingPlayerOffset : players
-				.indexOf(getWinnerlastRound());
-		return players.get(index % 4);
+		List<PlayerToken> allPlayers = playerTokenRepository.getAll();
+		index += (firstRound) ? startingPlayerOffset : allPlayers.indexOf(getWinnerlastRound());
+		PlayerToken activePlayer = allPlayers.get(index % 4);
+		if (ansage == null && isGeschoben()) {
+			return playerTokenRepository.getTeamPlayer(activePlayer);
+		}
+		return activePlayer;
 	}
 
 	private PlayerToken getWinnerlastRound() {
@@ -136,8 +139,8 @@ public class MatchImpl implements Match {
 
 	@Override
 	public boolean isCardPlayable(Card card) {
-		return jassRules.isCardPlayable(card, getCards(getActivePlayer()),
-				getCardsOnTable(), ansage, isNewRoundStarted());
+		return jassRules.isCardPlayable(card, getCards(getActivePlayer()), getCardsOnTable(), ansage,
+				isNewRoundStarted());
 	}
 
 	@Override
@@ -173,5 +176,20 @@ public class MatchImpl implements Match {
 	@Override
 	public void wys(Set<Wys> wysSet) {
 		wysStore.addWys(wysSet);
+	}
+
+	@Override
+	public void schiebe() {
+		if (ansage != null) {
+			throw new IllegalStateException("Ansage already set");
+		}
+
+		geschoben = true;
+
+	}
+
+	@Override
+	public boolean isGeschoben() {
+		return geschoben;
 	}
 }

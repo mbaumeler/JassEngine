@@ -88,4 +88,15 @@ public class ObserverableMatch implements Match {
 		observerRepository.notifyObservers();
 	}
 
+	@Override
+	public void schiebe() {
+		delegate.schiebe();
+		observerRepository.notifyObservers();
+	}
+
+	@Override
+	public boolean isGeschoben() {
+		return delegate.isGeschoben();
+	}
+
 }

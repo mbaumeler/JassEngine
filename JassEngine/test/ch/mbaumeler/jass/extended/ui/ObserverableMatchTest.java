@@ -110,6 +110,20 @@ public class ObserverableMatchTest {
 	}
 
 	@Test
+	public void testSchiebe() {
+		observerableMatch.schiebe();
+		verify(delegateMock).schiebe();
+		verify(observerRepository).notifyObservers();
+	}
+
+	@Test
+	public void testIsGeschoben() {
+		observerableMatch.isGeschoben();
+		verify(delegateMock).isGeschoben();
+		verify(observerRepository, times(0)).notifyObservers();
+	}
+
+	@Test
 	public void testGetRoundsCompleted() {
 		observerableMatch.getRoundsCompleted();
 		verify(delegateMock).getRoundsCompleted();
