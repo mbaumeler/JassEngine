@@ -13,7 +13,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import ch.mbaumeler.jass.core.Match;
-import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayedCard;
 import ch.mbaumeler.jass.core.game.PlayerToken;
@@ -39,7 +38,7 @@ public class WysStore {
 	public void addWys(Set<Wys> wysSet) {
 
 		PlayerToken activePlayer = match.getActivePlayer();
-		List<Card> cardsInHand = match.getCards(activePlayer);
+		List<PlayedCard> cardsInHand = match.getCards(activePlayer);
 		Set<Wys> allWysFromActivePlayer = wysRule.findWyss(cardsInHand, match.getAnsage());
 
 		for (Wys wys : wysSet) {
@@ -102,9 +101,9 @@ public class WysStore {
 		return wys.getTyp() == BLATT;
 	}
 
-	private int getHighestValue(Set<Card> cards) {
+	private int getHighestValue(Set<PlayedCard> cards) {
 		int maxValue = 0;
-		for (Card card : cards) {
+		for (PlayedCard card : cards) {
 			int currentValue = card.getValue().ordinal();
 			maxValue = currentValue > maxValue ? currentValue : maxValue;
 		}
@@ -115,11 +114,11 @@ public class WysStore {
 		return wysMap.get(playerToken);
 	}
 
-	private void wysStoeck(PlayerToken activePlayer, List<Card> cardsInHand, Wys wys) {
-		Iterator<Card> iterator = wys.getCards().iterator();
-		Card card1 = iterator.next();
-		Card card2 = iterator.next();
-		Set<Card> playedCardsFromPlayer = getPlayedCardsFromPlayer(activePlayer);
+	private void wysStoeck(PlayerToken activePlayer, List<PlayedCard> cardsInHand, Wys wys) {
+		Iterator<PlayedCard> iterator = wys.getCards().iterator();
+		PlayedCard card1 = iterator.next();
+		PlayedCard card2 = iterator.next();
+		Set<PlayedCard> playedCardsFromPlayer = getPlayedCardsFromPlayer(activePlayer);
 		if (inHandAndInHandOrAlreadyPlayed(cardsInHand, playedCardsFromPlayer, card1, card2)
 				|| inHandAndInHandOrAlreadyPlayed(cardsInHand, playedCardsFromPlayer, card2, card1)) {
 			stoeckPlayer = activePlayer;
@@ -135,18 +134,18 @@ public class WysStore {
 		wysMap.get(activePlayer).add(wys);
 	}
 
-	private boolean inHandAndInHandOrAlreadyPlayed(List<Card> cardsInHand, Set<Card> playedCardsFromPlayer, Card card1,
-			Card card2) {
+	private boolean inHandAndInHandOrAlreadyPlayed(List<PlayedCard> cardsInHand, Set<PlayedCard> playedCardsFromPlayer,
+			PlayedCard card1, PlayedCard card2) {
 		return cardsInHand.contains(card1) && (cardsInHand.contains(card2) || playedCardsFromPlayer.contains(card2));
 	}
 
-	private Set<Card> getPlayedCardsFromPlayer(PlayerToken player) {
-		Set<Card> playedCards = new HashSet<Card>();
+	private Set<PlayedCard> getPlayedCardsFromPlayer(PlayerToken player) {
+		Set<PlayedCard> playedCards = new HashSet<PlayedCard>();
 		for (int i = 0; i < match.getRoundsCompleted(); i++) {
 			List<PlayedCard> cardsFromRound = match.getCardsFromRound(i);
 			for (PlayedCard playedCard : cardsFromRound) {
 				if (playedCard.getPlayer() == player) {
-					playedCards.add(playedCard.getCard());
+					playedCards.add(playedCard);
 				}
 			}
 		}

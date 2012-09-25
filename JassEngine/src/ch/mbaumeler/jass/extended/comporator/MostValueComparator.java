@@ -2,11 +2,11 @@ package ch.mbaumeler.jass.extended.comporator;
 
 import java.util.Comparator;
 
-import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.Ansage;
+import ch.mbaumeler.jass.core.game.PlayedCard;
 import ch.mbaumeler.jass.core.game.ScoreRules;
 
-public class MostValueComparator implements Comparator<Card> {
+public class MostValueComparator implements Comparator<PlayedCard> {
 
 	private final Ansage ansage;
 
@@ -17,7 +17,7 @@ public class MostValueComparator implements Comparator<Card> {
 	}
 
 	@Override
-	public int compare(Card card, Card card2) {
+	public int compare(PlayedCard card, PlayedCard card2) {
 		return scoreUtil.getScore(card2, ansage) - scoreUtil.getScore(card, ansage);
 	}
 }

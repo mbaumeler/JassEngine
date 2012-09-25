@@ -2,11 +2,10 @@ package ch.mbaumeler.jass.core.game;
 
 import static ch.mbaumeler.jass.core.game.Ansage.SpielModi.OBENABE;
 import static ch.mbaumeler.jass.core.game.Ansage.SpielModi.UNDEUFE;
-import ch.mbaumeler.jass.core.card.Card;
 
 public class ScoreRules {
 
-	public int getScore(Card card, Ansage ansage) {
+	public int getScore(PlayedCard card, Ansage ansage) {
 
 		boolean isTrumpf = isTrumpf(card, ansage);
 		boolean isUndeUfe = ansage.getSpielModi() == UNDEUFE;
@@ -34,7 +33,7 @@ public class ScoreRules {
 		}
 	}
 
-	private boolean isTrumpf(Card card, Ansage ansage) {
+	private boolean isTrumpf(PlayedCard card, Ansage ansage) {
 		return ansage.is(card.getSuit());
 	}
 

@@ -38,7 +38,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ch.mbaumeler.jass.core.Match;
-import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayedCard;
 import ch.mbaumeler.jass.core.game.PlayerToken;
@@ -63,9 +62,9 @@ public class WysStoreTest {
 		Wys wys = new Wys(Arrays.asList(CLUBS_QUEEN, CLUBS_KING, CLUBS_JACK), BLATT);
 		Set<Wys> wysSet = new HashSet<Wys>();
 		wysSet.add(wys);
-		when(wysRuleMock.findWyss(anyListOf(Card.class), any(Ansage.class))).thenReturn(wysSet);
+		when(wysRuleMock.findWyss(anyListOf(PlayedCard.class), any(Ansage.class))).thenReturn(wysSet);
 		wysStore.addWys(wysSet);
-		verify(wysRuleMock).findWyss(anyListOf(Card.class), any(Ansage.class));
+		verify(wysRuleMock).findWyss(anyListOf(PlayedCard.class), any(Ansage.class));
 		assertEquals(wysSet, wysStore.getWys(playerTokenMock));
 	}
 
@@ -73,7 +72,7 @@ public class WysStoreTest {
 	public void testWysWherePlayerDoesNotHaveWys() {
 		Set<Wys> setToWys = new HashSet<Wys>();
 		setToWys.add(new Wys(Arrays.asList(CLUBS_QUEEN, CLUBS_KING, CLUBS_JACK), BLATT));
-		when(wysRuleMock.findWyss(anyListOf(Card.class), any(Ansage.class))).thenReturn(new HashSet<Wys>());
+		when(wysRuleMock.findWyss(anyListOf(PlayedCard.class), any(Ansage.class))).thenReturn(new HashSet<Wys>());
 
 		try {
 			wysStore.addWys(setToWys);
@@ -88,7 +87,7 @@ public class WysStoreTest {
 		Wys wys = new Wys(Arrays.asList(CLUBS_QUEEN, CLUBS_KING, CLUBS_JACK), BLATT);
 		Set<Wys> wysSet = new HashSet<Wys>();
 		wysSet.add(wys);
-		when(wysRuleMock.findWyss(anyListOf(Card.class), any(Ansage.class))).thenReturn(wysSet);
+		when(wysRuleMock.findWyss(anyListOf(PlayedCard.class), any(Ansage.class))).thenReturn(wysSet);
 		when(matchMock.getRoundsCompleted()).thenReturn(1);
 		try {
 			wysStore.addWys(wysSet);
@@ -100,14 +99,14 @@ public class WysStoreTest {
 
 	@Test
 	public void testStoeckWysAfterFirstRound() {
-		List<Card> cards = Arrays.asList(CLUBS_QUEEN, CLUBS_KING);
+		List<PlayedCard> cards = Arrays.asList(CLUBS_QUEEN, CLUBS_KING);
 		Wys wys = new Wys(cards, STOECK);
 		Set<Wys> wysSet = new HashSet<Wys>();
 		wysSet.add(wys);
 
-		when(matchMock.getCards(playerTokenMock)).thenReturn(new ArrayList<Card>(cards));
+		when(matchMock.getCards(playerTokenMock)).thenReturn(new ArrayList<PlayedCard>(cards));
 		when(matchMock.getRoundsCompleted()).thenReturn(0);
-		when(wysRuleMock.findWyss(anyListOf(Card.class), any(Ansage.class))).thenReturn(wysSet);
+		when(wysRuleMock.findWyss(anyListOf(PlayedCard.class), any(Ansage.class))).thenReturn(wysSet);
 		when(matchMock.getRoundsCompleted()).thenReturn(1);
 
 		wysStore.addWys(wysSet);
@@ -119,12 +118,12 @@ public class WysStoreTest {
 		Set<Wys> wysSet = new HashSet<Wys>();
 		wysSet.add(createWys(STOECK, CLUBS_QUEEN, CLUBS_KING));
 
-		List<PlayedCard> playedCards = Arrays.asList(new PlayedCard(CLUBS_QUEEN, playerTokenMock));
+		List<PlayedCard> playedCards = Arrays.asList(CLUBS_QUEEN);
 
 		when(matchMock.getCards(playerTokenMock)).thenReturn(Arrays.asList(CLUBS_KING));
 		when(matchMock.getRoundsCompleted()).thenReturn(1);
 		when(matchMock.getCardsFromRound(0)).thenReturn(playedCards);
-		when(wysRuleMock.findWyss(anyListOf(Card.class), any(Ansage.class))).thenReturn(wysSet);
+		when(wysRuleMock.findWyss(anyListOf(PlayedCard.class), any(Ansage.class))).thenReturn(wysSet);
 		when(matchMock.getRoundsCompleted()).thenReturn(1);
 
 		wysStore.addWys(wysSet);
@@ -136,12 +135,12 @@ public class WysStoreTest {
 		Set<Wys> wysSet = new HashSet<Wys>();
 		wysSet.add(createWys(STOECK, CLUBS_QUEEN, CLUBS_KING));
 
-		List<PlayedCard> playedCards = Arrays.asList(new PlayedCard(CLUBS_KING, playerTokenMock));
+		List<PlayedCard> playedCards = Arrays.asList(CLUBS_KING);
 
 		when(matchMock.getCards(playerTokenMock)).thenReturn(Arrays.asList(CLUBS_QUEEN));
 		when(matchMock.getRoundsCompleted()).thenReturn(1);
 		when(matchMock.getCardsFromRound(0)).thenReturn(playedCards);
-		when(wysRuleMock.findWyss(anyListOf(Card.class), any(Ansage.class))).thenReturn(wysSet);
+		when(wysRuleMock.findWyss(anyListOf(PlayedCard.class), any(Ansage.class))).thenReturn(wysSet);
 		when(matchMock.getRoundsCompleted()).thenReturn(1);
 
 		wysStore.addWys(wysSet);
@@ -159,7 +158,7 @@ public class WysStoreTest {
 		Wys wys = createWys(BLATT, CLUBS_QUEEN, CLUBS_KING, CLUBS_JACK);
 		wysSet.add(wys);
 
-		when(wysRuleMock.findWyss(anyListOf(Card.class), any(Ansage.class))).thenReturn(wysSet);
+		when(wysRuleMock.findWyss(anyListOf(PlayedCard.class), any(Ansage.class))).thenReturn(wysSet);
 		when(wysScoreRuleMock.getScoreFore(wys)).thenReturn(123);
 		wysStore.addWys(wysSet);
 
@@ -173,7 +172,7 @@ public class WysStoreTest {
 		Wys wys = createWys(BLATT, CLUBS_QUEEN, CLUBS_KING, CLUBS_JACK);
 		wysSet.add(wys);
 
-		when(wysRuleMock.findWyss(anyListOf(Card.class), any(Ansage.class))).thenReturn(wysSet);
+		when(wysRuleMock.findWyss(anyListOf(PlayedCard.class), any(Ansage.class))).thenReturn(wysSet);
 		when(wysScoreRuleMock.getScoreFore(wys)).thenReturn(123);
 		wysStore.addWys(wysSet);
 
@@ -183,7 +182,7 @@ public class WysStoreTest {
 
 		PlayerToken playerToken = PlayerToken.PLAYER0;
 		when(matchMock.getActivePlayer()).thenReturn(playerToken);
-		when(wysRuleMock.findWyss(anyListOf(Card.class), any(Ansage.class))).thenReturn(wysSet);
+		when(wysRuleMock.findWyss(anyListOf(PlayedCard.class), any(Ansage.class))).thenReturn(wysSet);
 		when(wysScoreRuleMock.getScoreFore(wys)).thenReturn(456);
 		wysStore.addWys(wysSet);
 
@@ -197,7 +196,7 @@ public class WysStoreTest {
 		Wys wys = createWys(WysTyp.VIER_GLEICHE, CLUBS_ACE, HEARTS_ACE, DIAMONDS_ACE, SPADES_ACE);
 		wysSet.add(wys);
 
-		when(wysRuleMock.findWyss(anyListOf(Card.class), any(Ansage.class))).thenReturn(wysSet);
+		when(wysRuleMock.findWyss(anyListOf(PlayedCard.class), any(Ansage.class))).thenReturn(wysSet);
 		when(wysScoreRuleMock.getScoreFore(wys)).thenReturn(100);
 		wysStore.addWys(wysSet);
 
@@ -207,7 +206,7 @@ public class WysStoreTest {
 
 		PlayerToken playerToken = PlayerToken.PLAYER0;
 		when(matchMock.getActivePlayer()).thenReturn(playerToken);
-		when(wysRuleMock.findWyss(anyListOf(Card.class), any(Ansage.class))).thenReturn(wysSet);
+		when(wysRuleMock.findWyss(anyListOf(PlayedCard.class), any(Ansage.class))).thenReturn(wysSet);
 		when(wysScoreRuleMock.getScoreFore(wys)).thenReturn(100);
 		wysStore.addWys(wysSet);
 
@@ -221,7 +220,7 @@ public class WysStoreTest {
 		Wys wys = createWys(BLATT, CLUBS_QUEEN, CLUBS_KING, CLUBS_JACK, CLUBS_TEN, CLUBS_NINE);
 		wysSet.add(wys);
 
-		when(wysRuleMock.findWyss(anyListOf(Card.class), any(Ansage.class))).thenReturn(wysSet);
+		when(wysRuleMock.findWyss(anyListOf(PlayedCard.class), any(Ansage.class))).thenReturn(wysSet);
 		when(wysScoreRuleMock.getScoreFore(wys)).thenReturn(100);
 		wysStore.addWys(wysSet);
 
@@ -231,7 +230,7 @@ public class WysStoreTest {
 
 		PlayerToken playerToken = PlayerToken.PLAYER0;
 		when(matchMock.getActivePlayer()).thenReturn(playerToken);
-		when(wysRuleMock.findWyss(anyListOf(Card.class), any(Ansage.class))).thenReturn(wysSet);
+		when(wysRuleMock.findWyss(anyListOf(PlayedCard.class), any(Ansage.class))).thenReturn(wysSet);
 		when(wysScoreRuleMock.getScoreFore(wys)).thenReturn(100);
 		wysStore.addWys(wysSet);
 
@@ -245,7 +244,7 @@ public class WysStoreTest {
 		Wys wys = createWys(BLATT, CLUBS_QUEEN, CLUBS_KING, CLUBS_JACK, CLUBS_TEN, CLUBS_NINE);
 		wysSet.add(wys);
 
-		when(wysRuleMock.findWyss(anyListOf(Card.class), any(Ansage.class))).thenReturn(wysSet);
+		when(wysRuleMock.findWyss(anyListOf(PlayedCard.class), any(Ansage.class))).thenReturn(wysSet);
 		when(wysScoreRuleMock.getScoreFore(wys)).thenReturn(100);
 		wysStore.addWys(wysSet);
 
@@ -255,7 +254,7 @@ public class WysStoreTest {
 
 		PlayerToken playerToken = PlayerToken.PLAYER0;
 		when(matchMock.getActivePlayer()).thenReturn(playerToken);
-		when(wysRuleMock.findWyss(anyListOf(Card.class), any(Ansage.class))).thenReturn(wysSet);
+		when(wysRuleMock.findWyss(anyListOf(PlayedCard.class), any(Ansage.class))).thenReturn(wysSet);
 		when(wysScoreRuleMock.getScoreFore(wys)).thenReturn(100);
 		wysStore.addWys(wysSet);
 
@@ -269,7 +268,7 @@ public class WysStoreTest {
 		Wys wys = createWys(BLATT, CLUBS_QUEEN, CLUBS_KING, CLUBS_JACK, CLUBS_TEN, CLUBS_NINE);
 		wysSet.add(wys);
 
-		when(wysRuleMock.findWyss(anyListOf(Card.class), any(Ansage.class))).thenReturn(wysSet);
+		when(wysRuleMock.findWyss(anyListOf(PlayedCard.class), any(Ansage.class))).thenReturn(wysSet);
 		when(wysScoreRuleMock.getScoreFore(wys)).thenReturn(100);
 		wysStore.addWys(wysSet);
 
@@ -279,7 +278,7 @@ public class WysStoreTest {
 
 		PlayerToken playerToken = PlayerToken.PLAYER0;
 		when(matchMock.getActivePlayer()).thenReturn(playerToken);
-		when(wysRuleMock.findWyss(anyListOf(Card.class), any(Ansage.class))).thenReturn(wysSet);
+		when(wysRuleMock.findWyss(anyListOf(PlayedCard.class), any(Ansage.class))).thenReturn(wysSet);
 		when(wysScoreRuleMock.getScoreFore(wys)).thenReturn(100);
 		wysStore.addWys(wysSet);
 
@@ -287,7 +286,7 @@ public class WysStoreTest {
 
 	}
 
-	private Wys createWys(WysTyp wysTyp, Card... cards) {
+	private Wys createWys(WysTyp wysTyp, PlayedCard... cards) {
 		return new Wys(Arrays.asList(cards), wysTyp);
 	}
 }

@@ -12,9 +12,9 @@ import ch.mbaumeler.jass.core.CardFactory;
 import ch.mbaumeler.jass.core.Game;
 import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.bootstrap.JassModule;
-import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.game.Ansage;
+import ch.mbaumeler.jass.core.game.PlayedCard;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.core.game.Score;
 import ch.mbaumeler.jass.core.game.impl.GameImpl;
@@ -32,8 +32,8 @@ public class AITests {
 
 	private SimpleStrategy simpleStrategy;
 
-	private final int currentTeam1Score = 203321;
-	private final int currentTeam2Score = 122179;
+	private final int currentTeam1Score = 207284;
+	private final int currentTeam2Score = 120116;
 
 	@Before
 	public void setup() {
@@ -61,18 +61,13 @@ public class AITests {
 
 		int scoreTeam1 = score.getPlayerScore(firstPlayer);
 		int scoreTeam2 = score.getOppositeScore(firstPlayer);
-		assertTrue(
-				"The strategy got worse!",
-				(scoreTeam1 - scoreTeam2 >= (currentTeam1Score - currentTeam2Score)));
+		assertTrue("The strategy got worse!", (scoreTeam1 - scoreTeam2 >= (currentTeam1Score - currentTeam2Score)));
 
 		boolean changed = currentTeam1Score != scoreTeam1;
 		if (changed) {
-			System.out
-					.println("***************************************************************");
-			System.out.println("* Adjust " + scoreTeam1
-					+ " as new scoreValue and " + scoreTeam2 + " *");
-			System.out
-					.println("***************************************************************");
+			System.out.println("***************************************************************");
+			System.out.println("* Adjust " + scoreTeam1 + " as new scoreValue and " + scoreTeam2 + " *");
+			System.out.println("***************************************************************");
 		}
 		assertFalse(changed);
 	}
@@ -103,17 +98,16 @@ public class AITests {
 		}
 	}
 
-	private Card getFirstPlayableCard(Match match) {
+	private PlayedCard getFirstPlayableCard(Match match) {
 		PlayerToken activePlayer = match.getActivePlayer();
-		List<Card> cards = match.getCards(activePlayer);
+		List<PlayedCard> cards = match.getCards(activePlayer);
 
-		for (Card card : cards) {
+		for (PlayedCard card : cards) {
 			if (match.isCardPlayable(card)) {
 				return card;
 			}
 		}
-		throw new IllegalStateException(
-				"Player does not have a playable card: " + cards);
+		throw new IllegalStateException("Player does not have a playable card: " + cards);
 	}
 
 }

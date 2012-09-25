@@ -7,8 +7,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import ch.mbaumeler.jass.core.Match;
-import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.Ansage;
+import ch.mbaumeler.jass.core.game.PlayedCard;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.extended.ai.JassStrategy;
 
@@ -22,14 +22,13 @@ public class SimpleStrategy implements JassStrategy {
 	private List<SimpleCardStrategy> strategies;
 
 	@Override
-	public Card getCardToPlay(Match match) {
+	public PlayedCard getCardToPlay(Match match) {
 		PlayerToken activePlayer = match.getActivePlayer();
-		List<Card> cardsInHand = match.getCards(activePlayer);
+		List<PlayedCard> cardsInHand = match.getCards(activePlayer);
 
 		for (SimpleCardStrategy strategy : strategies) {
 			if (strategy.isResponsible(match.getCardsOnTable())) {
-				return strategy.getPlayableCard(
-						new ArrayList<Card>(cardsInHand), match);
+				return strategy.getPlayableCard(new ArrayList<PlayedCard>(cardsInHand), match);
 			}
 		}
 		throw new IllegalStateException("No strategy to play");

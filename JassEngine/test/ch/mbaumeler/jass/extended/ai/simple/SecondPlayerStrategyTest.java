@@ -17,29 +17,27 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ch.mbaumeler.jass.core.Match;
-import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayedCard;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.core.game.impl.MatchImpl;
-import ch.mbaumeler.jass.extended.ai.simple.SecondPlayerStrategy;
 
 public class SecondPlayerStrategyTest {
 
 	private SecondPlayerStrategy secondPlayerStrategy;
 
 	private Match match;
-	private List<Card> cardsInHand;
+	private List<PlayedCard> cardsInHand;
 	private List<PlayedCard> cardsOnTable;
 
 	@Before
 	public void setup() {
 		secondPlayerStrategy = new SecondPlayerStrategy();
-		cardsInHand = new ArrayList<Card>();
+		cardsInHand = new ArrayList<PlayedCard>();
 		cardsOnTable = new ArrayList<PlayedCard>();
 		match = mock(MatchImpl.class);
-		when(match.isCardPlayable(any(Card.class))).thenReturn(true);
+		when(match.isCardPlayable(any(PlayedCard.class))).thenReturn(true);
 		when(match.getCardsOnTable()).thenReturn(cardsOnTable);
 		when(match.getCards(any(PlayerToken.class))).thenReturn(cardsInHand);
 		when(match.getAnsage()).thenReturn(new Ansage(CardSuit.HEARTS));
@@ -48,11 +46,11 @@ public class SecondPlayerStrategyTest {
 	@Test
 	public void testHaveSecondPlayerHigherCardThenFirstPlayer() {
 		match.setAnsage(new Ansage(CardSuit.HEARTS));
-		cardsOnTable.add(new PlayedCard(DIAMONDS_JACK, null));
+		cardsOnTable.add(DIAMONDS_JACK);
 		cardsInHand.add(DIAMONDS_EIGHT);
 		cardsInHand.add(DIAMONDS_QUEEN);
 
-		Card card = secondPlayerStrategy.getPlayableCard(cardsInHand, match);
+		PlayedCard card = secondPlayerStrategy.getPlayableCard(cardsInHand, match);
 
 		assertEquals(DIAMONDS_QUEEN, card);
 	}

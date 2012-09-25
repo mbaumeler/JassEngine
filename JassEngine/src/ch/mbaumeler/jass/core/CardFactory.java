@@ -2,7 +2,7 @@ package ch.mbaumeler.jass.core;
 
 import java.util.List;
 
-import ch.mbaumeler.jass.core.card.Card;
+import ch.mbaumeler.jass.core.game.PlayedCard;
 
 /**
  * Factory to create a list of cards.
@@ -16,5 +16,5 @@ public interface CardFactory {
 	 * 
 	 * @return new list of shuffled cards.
 	 */
-	List<Card> createShuffledCards();
+	List<PlayedCard> createShuffledCards();
 }

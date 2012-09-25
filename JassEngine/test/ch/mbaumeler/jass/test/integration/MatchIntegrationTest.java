@@ -14,7 +14,6 @@ import ch.mbaumeler.jass.core.CardFactory;
 import ch.mbaumeler.jass.core.Game;
 import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.bootstrap.JassModule;
-import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayedCard;
@@ -53,8 +52,8 @@ public class MatchIntegrationTest {
 		assertEquals(9, match.getCards(playerList.get(0)).size());
 		assertEquals(9, match.getCards(playerList.get(0)).size());
 
-		Card firstP1 = match.getCards(playerList.get(0)).get(0);
-		Card firstP2 = match.getCards(playerList.get(1)).get(0);
+		PlayedCard firstP1 = match.getCards(playerList.get(0)).get(0);
+		PlayedCard firstP2 = match.getCards(playerList.get(1)).get(0);
 		assertFalse(firstP1.equals(firstP2));
 	}
 
@@ -66,11 +65,11 @@ public class MatchIntegrationTest {
 	@Test
 	public void testPlayFirstCard() {
 		assertEquals(0, match.getCardsOnTable().size());
-		Card cardToPlay = match.getCards(playerList.get(0)).get(0);
+		PlayedCard cardToPlay = match.getCards(playerList.get(0)).get(0);
 		match.setAnsage(DEFAULT_ANSAGE);
 		match.playCard(cardToPlay);
 		assertEquals(8, match.getCards(playerList.get(0)).size());
-		assertEquals(cardToPlay, match.getCardsOnTable().get(0).getCard());
+		assertEquals(cardToPlay, match.getCardsOnTable().get(0));
 		assertEquals(playerList.get(1), match.getActivePlayer());
 	}
 
@@ -90,7 +89,7 @@ public class MatchIntegrationTest {
 
 	@Test
 	public void testPlayCardFromOtherPlayer() {
-		Card cardFromPlayer2 = match.getCards(playerList.get(2)).get(0);
+		PlayedCard cardFromPlayer2 = match.getCards(playerList.get(2)).get(0);
 		match.setAnsage(new Ansage(CardSuit.HEARTS));
 
 		try {
@@ -108,8 +107,8 @@ public class MatchIntegrationTest {
 		assertTrue(match.isComplete());
 	}
 
-	private Card getFirstPlayableCard(List<Card> cards) {
-		for (Card card : cards) {
+	private PlayedCard getFirstPlayableCard(List<PlayedCard> cards) {
+		for (PlayedCard card : cards) {
 			if (match.isCardPlayable(card)) {
 				return card;
 			}
@@ -126,7 +125,7 @@ public class MatchIntegrationTest {
 				assertEquals(player, scoreUtil.getWinnerCard(match.getCardsFromRound((i - 1) / 4), match.getAnsage())
 						.getPlayer());
 			}
-			Card card = getFirstPlayableCard(match.getCards(player));
+			PlayedCard card = getFirstPlayableCard(match.getCards(player));
 			match.playCard(card);
 		}
 	}

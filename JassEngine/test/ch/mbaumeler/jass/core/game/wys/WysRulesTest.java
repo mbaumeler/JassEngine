@@ -31,9 +31,9 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.game.Ansage;
+import ch.mbaumeler.jass.core.game.PlayedCard;
 import ch.mbaumeler.jass.core.game.wys.Wys.WysTyp;
 
 public class WysRulesTest {
@@ -49,14 +49,14 @@ public class WysRulesTest {
 
 	@Test
 	public void testGetWyssForEmptyList() {
-		List<Card> cards = new ArrayList<Card>();
+		List<PlayedCard> cards = new ArrayList<PlayedCard>();
 		Set<Wys> wyss = wysRule.findWyss(cards, trumpf);
 		assertNotNull(wyss);
 	}
 
 	@Test
 	public void testFindNoWyss() {
-		List<Card> cards = Arrays.asList(CLUBS_JACK, CLUBS_SIX, DIAMONDS_ACE);
+		List<PlayedCard> cards = Arrays.asList(CLUBS_JACK, CLUBS_SIX, DIAMONDS_ACE);
 		Set<Wys> wyss = wysRule.findWyss(cards, trumpf);
 		assertNotNull(wyss);
 		assertEquals(0, wyss.size());
@@ -64,7 +64,7 @@ public class WysRulesTest {
 
 	@Test
 	public void testDreiblatt() {
-		List<Card> cards = Arrays.asList(CLUBS_EIGHT, HEARTS_KING, CLUBS_SIX, CLUBS_SEVEN, DIAMONDS_NINE);
+		List<PlayedCard> cards = Arrays.asList(CLUBS_EIGHT, HEARTS_KING, CLUBS_SIX, CLUBS_SEVEN, DIAMONDS_NINE);
 		Set<Wys> expected = new HashSet<Wys>();
 		expected.add(new Wys(Arrays.asList(CLUBS_SIX, CLUBS_SEVEN, CLUBS_EIGHT), BLATT));
 
@@ -76,8 +76,8 @@ public class WysRulesTest {
 
 	@Test
 	public void testDreiblattUndVierBlatt() {
-		List<Card> cards = Arrays.asList(CLUBS_EIGHT, HEARTS_KING, CLUBS_SIX, CLUBS_SEVEN, DIAMONDS_NINE, HEARTS_SEVEN,
-				HEARTS_EIGHT, DIAMONDS_JACK, HEARTS_NINE, HEARTS_TEN);
+		List<PlayedCard> cards = Arrays.asList(CLUBS_EIGHT, HEARTS_KING, CLUBS_SIX, CLUBS_SEVEN, DIAMONDS_NINE,
+				HEARTS_SEVEN, HEARTS_EIGHT, DIAMONDS_JACK, HEARTS_NINE, HEARTS_TEN);
 		Set<Wys> expected = new HashSet<Wys>();
 		expected.add(new Wys(Arrays.asList(CLUBS_SIX, CLUBS_SEVEN, CLUBS_EIGHT), BLATT));
 		expected.add(new Wys(Arrays.asList(HEARTS_SEVEN, HEARTS_EIGHT, HEARTS_NINE, HEARTS_TEN), BLATT));
@@ -90,7 +90,7 @@ public class WysRulesTest {
 
 	@Test
 	public void testFindNothing() {
-		List<Card> cards = Arrays.asList(SPADES_QUEEN, HEARTS_KING, CLUBS_SIX, DIAMONDS_NINE, HEARTS_EIGHT,
+		List<PlayedCard> cards = Arrays.asList(SPADES_QUEEN, HEARTS_KING, CLUBS_SIX, DIAMONDS_NINE, HEARTS_EIGHT,
 				DIAMONDS_QUEEN, HEARTS_NINE, HEARTS_QUEEN);
 
 		Set<Wys> actual = wysRule.findWyss(cards, trumpf);
@@ -100,7 +100,7 @@ public class WysRulesTest {
 
 	@Test
 	public void testFourQueens() {
-		List<Card> cards = Arrays.asList(SPADES_QUEEN, HEARTS_KING, CLUBS_SIX, CLUBS_QUEEN, DIAMONDS_NINE,
+		List<PlayedCard> cards = Arrays.asList(SPADES_QUEEN, HEARTS_KING, CLUBS_SIX, CLUBS_QUEEN, DIAMONDS_NINE,
 				HEARTS_EIGHT, DIAMONDS_QUEEN, HEARTS_NINE, HEARTS_QUEEN);
 		Set<Wys> expected = new HashSet<Wys>();
 		expected.add(new Wys(Arrays.asList(HEARTS_QUEEN, DIAMONDS_QUEEN, SPADES_QUEEN, CLUBS_QUEEN),
@@ -114,7 +114,7 @@ public class WysRulesTest {
 
 	@Test
 	public void testFindStoeck() {
-		List<Card> cards = Arrays.asList(SPADES_QUEEN, HEARTS_KING, HEARTS_QUEEN, DIAMONDS_ACE);
+		List<PlayedCard> cards = Arrays.asList(SPADES_QUEEN, HEARTS_KING, HEARTS_QUEEN, DIAMONDS_ACE);
 		Set<Wys> expected = new HashSet<Wys>();
 		expected.add(new Wys(Arrays.asList(HEARTS_QUEEN, HEARTS_KING), STOECK));
 

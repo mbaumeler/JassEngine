@@ -3,7 +3,6 @@ package ch.mbaumeler.jass.extended.ai.simple;
 import java.util.List;
 
 import ch.mbaumeler.jass.core.Match;
-import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.PlayedCard;
 
 public class FirstPlayerStrategy implements SimpleCardStrategy {
@@ -11,7 +10,7 @@ public class FirstPlayerStrategy implements SimpleCardStrategy {
 	private StrategyUtil strategyUtil = new StrategyUtil();
 
 	@Override
-	public Card getPlayableCard(List<Card> cardsInHand, Match match) {
+	public PlayedCard getPlayableCard(List<PlayedCard> cardsInHand, Match match) {
 		return strategyUtil.firstPlayableWinnercardOfAnySuit(cardsInHand, match);
 	}
 

@@ -12,8 +12,8 @@ import org.junit.Test;
 import ch.mbaumeler.jass.core.Game;
 import ch.mbaumeler.jass.core.JassEngine;
 import ch.mbaumeler.jass.core.Match;
-import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.Ansage;
+import ch.mbaumeler.jass.core.game.PlayedCard;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.core.game.Score;
 
@@ -80,9 +80,9 @@ public class GameImplTest {
 		}
 	}
 
-	private Card getFirstPlayableCard(Match match, List<Card> cards) {
+	private PlayedCard getFirstPlayableCard(Match match, List<PlayedCard> cards) {
 
-		for (Card card : cards) {
+		for (PlayedCard card : cards) {
 			if (match.isCardPlayable(card)) {
 				return card;
 			}

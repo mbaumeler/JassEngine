@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 
 import ch.mbaumeler.jass.core.Match;
-import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayedCard;
@@ -17,21 +16,17 @@ import ch.mbaumeler.jass.extended.comporator.MostValueComparator;
 
 public class StrategyUtil {
 
-	public Card getHighestCardOfSameColor(Card firstPlayedCard, Ansage trumpf,
-			List<Card> cardsInHand) {
+	public PlayedCard getHighestCardOfSameColor(PlayedCard firstPlayedCard, Ansage trumpf, List<PlayedCard> cardsInHand) {
 		CardSuit suit = firstPlayedCard.getSuit();
-		List<Card> sameColor = new CardUtil().createCardMap(cardsInHand).get(
-				suit);
+		List<PlayedCard> sameColor = new CardUtil().createCardMap(cardsInHand).get(suit);
 		if (sameColor.isEmpty()) {
 			return null;
 		}
-		BestCardComparator bestCardComparator = new BestCardComparator(trumpf,
-				suit);
+		BestCardComparator bestCardComparator = new BestCardComparator(trumpf, suit);
 		Collections.sort(sameColor, bestCardComparator);
-		Card bestPlayerCard = sameColor.get(0);
+		PlayedCard bestPlayerCard = sameColor.get(0);
 
-		return bestCardComparator.compare(bestPlayerCard, firstPlayedCard) < 0 ? bestPlayerCard
-				: null;
+		return bestCardComparator.compare(bestPlayerCard, firstPlayedCard) < 0 ? bestPlayerCard : null;
 	}
 
 	public boolean alreadyWinning(List<PlayedCard> cardsOnTable, Ansage trumpf) {
@@ -40,40 +35,32 @@ public class StrategyUtil {
 		return cardsOnTable.indexOf(winnerCard) == 1;
 	}
 
-	public Card leastPlayableWinnerCard(List<Card> cardsInHand, Match match) {
-		BestCardComparator bestCardComporator = new BestCardComparator(
-				match.getAnsage(), getCurrentSuit(match));
+	public PlayedCard leastPlayableWinnerCard(List<PlayedCard> cardsInHand, Match match) {
+		BestCardComparator bestCardComporator = new BestCardComparator(match.getAnsage(), getCurrentSuit(match));
 		Collections.sort(cardsInHand, bestCardComporator);
 
-		PlayedCard currentWinnerCard = new ScoreUtil().getWinnerCard(
-				match.getCardsOnTable(), match.getAnsage());
+		PlayedCard currentWinnerCard = new ScoreUtil().getWinnerCard(match.getCardsOnTable(), match.getAnsage());
 
-		return getLastPlayableWinnerCard(cardsInHand, match, currentWinnerCard,
-				bestCardComporator);
+		return getLastPlayableWinnerCard(cardsInHand, match, currentWinnerCard, bestCardComporator);
 	}
 
 	public CardSuit getCurrentSuit(Match match) {
 		List<PlayedCard> cardsOnTable = match.getCardsOnTable();
-		return cardsOnTable.isEmpty() ? null : cardsOnTable.get(0).getCard()
-				.getSuit();
+		return cardsOnTable.isEmpty() ? null : cardsOnTable.get(0).getSuit();
 	}
 
-	public Card firstPlayableWinnercardOfAnySuit(List<Card> cardsInHand,
-			Match match) {
-		Collections.sort(cardsInHand, new BestCardComparator(match.getAnsage(),
-				null));
+	public PlayedCard firstPlayableWinnercardOfAnySuit(List<PlayedCard> cardsInHand, Match match) {
+		Collections.sort(cardsInHand, new BestCardComparator(match.getAnsage(), null));
 		return getFirstPlayableCard(cardsInHand, match);
 	}
 
-	public Card getCardWithMostScoreWhichIsPlayable(List<Card> cardsInHand,
-			Ansage trumpf, Match match) {
+	public PlayedCard getCardWithMostScoreWhichIsPlayable(List<PlayedCard> cardsInHand, Ansage trumpf, Match match) {
 		Collections.sort(cardsInHand, new MostValueComparator(trumpf));
 
-		Card cardToReturn = null;
-		for (Card card : cardsInHand) {
+		PlayedCard cardToReturn = null;
+		for (PlayedCard card : cardsInHand) {
 			if (match.isCardPlayable(card)
-					&& (cardToReturn == null || (cardToReturn.getValue() == ACE && card
-							.getValue() == TEN))) {
+					&& (cardToReturn == null || (cardToReturn.getValue() == ACE && card.getValue() == TEN))) {
 				cardToReturn = card;
 			}
 		}
@@ -81,33 +68,29 @@ public class StrategyUtil {
 		return cardToReturn;
 	}
 
-	private Card getLastPlayableWinnerCard(List<Card> cards, Match match,
-			PlayedCard currentWinnerCard, BestCardComparator bestCardComporator) {
+	private PlayedCard getLastPlayableWinnerCard(List<PlayedCard> cards, Match match, PlayedCard currentWinnerCard,
+			BestCardComparator bestCardComporator) {
 
-		Card cardToPlay = null;
-		for (Card card : cards) {
-			if (match.isCardPlayable(card)
-					&& bestCardComporator.compare(currentWinnerCard.getCard(),
-							card) > 0) {
+		PlayedCard cardToPlay = null;
+		for (PlayedCard card : cards) {
+			if (match.isCardPlayable(card) && bestCardComporator.compare(currentWinnerCard, card) > 0) {
 				cardToPlay = card;
 			}
 		}
 		return cardToPlay;
 	}
 
-	public Card getFirstPlayableCard(List<Card> cards, Match match) {
-		for (Card card : cards) {
+	public PlayedCard getFirstPlayableCard(List<PlayedCard> cards, Match match) {
+		for (PlayedCard card : cards) {
 			if (match.isCardPlayable(card)) {
 				return card;
 			}
 		}
-		throw new IllegalStateException(
-				"Player does not have a playable card: " + cards);
+		throw new IllegalStateException("Player does not have a playable card: " + cards);
 	}
 
-	public Card getLeastPlayableCard(List<Card> cardsInHand, Match match) {
-		BestCardComparator bestCardComporator = new BestCardComparator(
-				match.getAnsage(), null);
+	public PlayedCard getLeastPlayableCard(List<PlayedCard> cardsInHand, Match match) {
+		BestCardComparator bestCardComporator = new BestCardComparator(match.getAnsage(), null);
 		Collections.sort(cardsInHand, bestCardComporator);
 		Collections.reverse(cardsInHand);
 		return getFirstPlayableCard(cardsInHand, match);

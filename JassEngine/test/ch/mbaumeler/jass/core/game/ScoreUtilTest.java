@@ -38,9 +38,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ch.mbaumeler.jass.core.Match;
-import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
-import ch.mbaumeler.jass.core.card.Deck;
+import ch.mbaumeler.jass.core.card.CardValue;
 import ch.mbaumeler.jass.core.game.wys.Wys;
 import ch.mbaumeler.jass.core.game.wys.WysRules;
 import ch.mbaumeler.jass.core.game.wys.WysScoreRule;
@@ -53,14 +52,12 @@ public class ScoreUtilTest {
 	private Ansage ansage;
 	private Match matchMock;
 	private WysStore wysStoreMock;
-	private PlayerToken playerMock;
 	private PlayerTokenRepository playerTokenRepository;
 
 	@Before
 	public void setUp() throws Exception {
 		matchMock = mock(Match.class);
 		wysStoreMock = mock(WysStore.class);
-		playerMock = PlayerToken.PLAYER1;
 		scoreUtil = new ScoreUtil();
 		playerTokenRepository = new PlayerTokenRepository();
 		scoreUtil.playerTokenRepository = playerTokenRepository;
@@ -141,13 +138,13 @@ public class ScoreUtilTest {
 		Ansage ansage = new Ansage(HEARTS);
 		PlayerToken player = playerTokenRepository.getTeam1().get(0);
 		List<PlayedCard> cardsFromRound = new ArrayList<PlayedCard>();
-		PlayedCard winnerCard = new PlayedCard(CLUBS_JACK, player);
+		PlayedCard winnerCard = CLUBS_JACK;
 		cardsFromRound.add(winnerCard);
 
 		when(matchMock.getRoundsCompleted()).thenReturn(1);
 		when(matchMock.getCardsFromRound(0)).thenReturn(cardsFromRound);
 		when(matchMock.getAnsage()).thenReturn(ansage);
-		when(scoreUtil.scoreRules.getScore(winnerCard.getCard(), ansage)).thenReturn(70);
+		when(scoreUtil.scoreRules.getScore(winnerCard, ansage)).thenReturn(70);
 
 		Score score = scoreUtil.calculateScore(matchMock, wysStoreMock);
 
@@ -161,13 +158,13 @@ public class ScoreUtilTest {
 		Ansage ansage = new Ansage(HEARTS);
 		PlayerToken player = playerTokenRepository.getTeam1().get(0);
 		List<PlayedCard> cardsFromRound = new ArrayList<PlayedCard>();
-		PlayedCard winnerCard = new PlayedCard(CLUBS_JACK, player);
+		PlayedCard winnerCard = CLUBS_JACK;
 		cardsFromRound.add(winnerCard);
 
 		when(matchMock.getRoundsCompleted()).thenReturn(1);
 		when(matchMock.getCardsFromRound(0)).thenReturn(cardsFromRound);
 		when(matchMock.getAnsage()).thenReturn(ansage);
-		when(scoreUtil.scoreRules.getScore(winnerCard.getCard(), ansage)).thenReturn(70);
+		when(scoreUtil.scoreRules.getScore(winnerCard, ansage)).thenReturn(70);
 		when(matchMock.isComplete()).thenReturn(true);
 
 		Score score = scoreUtil.calculateScore(matchMock, wysStoreMock);
@@ -182,16 +179,14 @@ public class ScoreUtilTest {
 		Ansage ansage = new Ansage(DIAMONDS);
 
 		when(matchMock.getRoundsCompleted()).thenReturn(9);
-		Deck deck = new Deck();
-		List<Card> cards = deck.getCards();
+		List<PlayedCard> cards = createSortedDeck();
 
 		for (int i = 0; i < 9; i++) {
 			List<PlayedCard> cardsFromRound = new ArrayList<PlayedCard>();
-			List<PlayerToken> players = playerTokenRepository.getAll();
-			cardsFromRound.add(new PlayedCard(cards.get(0 + i), players.get(0)));
-			cardsFromRound.add(new PlayedCard(cards.get(9 + i), players.get(1)));
-			cardsFromRound.add(new PlayedCard(cards.get(18 + i), players.get(2)));
-			cardsFromRound.add(new PlayedCard(cards.get(27 + i), players.get(3)));
+			cardsFromRound.add(cards.get(0 + i));
+			cardsFromRound.add(cards.get(9 + i));
+			cardsFromRound.add(cards.get(18 + i));
+			cardsFromRound.add(cards.get(27 + i));
 			when(matchMock.getCardsFromRound(i)).thenReturn(cardsFromRound);
 		}
 
@@ -211,16 +206,14 @@ public class ScoreUtilTest {
 		Ansage ansage = new Ansage(SPADES);
 
 		when(matchMock.getRoundsCompleted()).thenReturn(9);
-		Deck deck = new Deck();
-		List<Card> cards = deck.getCards();
+		List<PlayedCard> cards = createSortedDeck();
 
 		for (int i = 0; i < 9; i++) {
 			List<PlayedCard> cardsFromRound = new ArrayList<PlayedCard>();
-			List<PlayerToken> players = playerTokenRepository.getAll();
-			cardsFromRound.add(new PlayedCard(cards.get(0 + i), players.get(0)));
-			cardsFromRound.add(new PlayedCard(cards.get(9 + i), players.get(1)));
-			cardsFromRound.add(new PlayedCard(cards.get(18 + i), players.get(2)));
-			cardsFromRound.add(new PlayedCard(cards.get(27 + i), players.get(3)));
+			cardsFromRound.add(cards.get(0 + i));
+			cardsFromRound.add(cards.get(9 + i));
+			cardsFromRound.add(cards.get(18 + i));
+			cardsFromRound.add(cards.get(27 + i));
 			when(matchMock.getCardsFromRound(i)).thenReturn(cardsFromRound);
 		}
 
@@ -235,102 +228,120 @@ public class ScoreUtilTest {
 
 	}
 
+	private List<PlayedCard> createSortedDeck() {
+		List<PlayedCard> result = new ArrayList<PlayedCard>(36);
+		result.addAll(sortedDeck(DIAMONDS, PlayerToken.PLAYER0));
+		result.addAll(sortedDeck(SPADES, PlayerToken.PLAYER1));
+		result.addAll(sortedDeck(HEARTS, PlayerToken.PLAYER2));
+		result.addAll(sortedDeck(CLUBS, PlayerToken.PLAYER3));
+		return result;
+	}
+
+	private List<PlayedCard> sortedDeck(CardSuit cardSuit, PlayerToken playerToken) {
+		List<PlayedCard> result = new ArrayList<PlayedCard>();
+
+		for (CardValue value : CardValue.values()) {
+			result.add(new PlayedCard(cardSuit, value, playerToken));
+		}
+		return result;
+	}
+
 	@Test
 	public void testGetWinnerCardTrumpf() {
-		PlayedCard card0 = new PlayedCard(CLUBS_KING, playerMock);
-		PlayedCard card1 = new PlayedCard(HEARTS_ACE, playerMock);
-		PlayedCard card2 = new PlayedCard(CLUBS_NINE, playerMock);
-		PlayedCard card3 = new PlayedCard(DIAMONDS_SIX, playerMock);
+		PlayedCard card0 = CLUBS_KING;
+		PlayedCard card1 = HEARTS_ACE;
+		PlayedCard card2 = CLUBS_NINE;
+		PlayedCard card3 = DIAMONDS_SIX;
 		List<PlayedCard> cards = Arrays.asList(card0, card1, card2, card3);
 		assertEquals(card3, scoreUtil.getWinnerCard(cards, new Ansage(CardSuit.DIAMONDS)));
 	}
 
 	@Test
 	public void testGetWinnerCardNotTrumpf() {
-		PlayedCard card0 = new PlayedCard(CLUBS_KING, playerMock);
-		PlayedCard card1 = new PlayedCard(CLUBS_ACE, playerMock);
-		PlayedCard card2 = new PlayedCard(CLUBS_NINE, playerMock);
-		PlayedCard card3 = new PlayedCard(CLUBS_SIX, playerMock);
+		PlayedCard card0 = CLUBS_KING;
+		PlayedCard card1 = CLUBS_ACE;
+		PlayedCard card2 = CLUBS_NINE;
+		PlayedCard card3 = CLUBS_SIX;
 		List<PlayedCard> cards = Arrays.asList(card0, card1, card2, card3);
 		assertEquals(card1, scoreUtil.getWinnerCard(cards, new Ansage(CardSuit.SPADES)));
 	}
 
 	@Test
 	public void testGetWinnerOvertrumpfed() {
-		PlayedCard card0 = new PlayedCard(DIAMONDS_SEVEN, playerMock);
-		PlayedCard card1 = new PlayedCard(CLUBS_ACE, playerMock);
-		PlayedCard card2 = new PlayedCard(CLUBS_NINE, playerMock);
-		PlayedCard card3 = new PlayedCard(DIAMONDS_EIGHT, playerMock);
+		PlayedCard card0 = DIAMONDS_SEVEN;
+		PlayedCard card1 = CLUBS_ACE;
+		PlayedCard card2 = CLUBS_NINE;
+		PlayedCard card3 = DIAMONDS_EIGHT;
 		List<PlayedCard> cards = Arrays.asList(card0, card1, card2, card3);
 		assertEquals(card2, scoreUtil.getWinnerCard(cards, ansage));
 	}
 
 	@Test
 	public void testGetWinnerWithTrumpf() {
-		PlayedCard card0 = new PlayedCard(DIAMONDS_SEVEN, playerMock);
-		PlayedCard card1 = new PlayedCard(CLUBS_ACE, playerMock);
-		PlayedCard card2 = new PlayedCard(CLUBS_NINE, playerMock);
-		PlayedCard card3 = new PlayedCard(DIAMONDS_EIGHT, playerMock);
+		PlayedCard card0 = DIAMONDS_SEVEN;
+		PlayedCard card1 = CLUBS_ACE;
+		PlayedCard card2 = CLUBS_NINE;
+		PlayedCard card3 = DIAMONDS_EIGHT;
 		List<PlayedCard> cards = Arrays.asList(card0, card1, card2, card3);
 		assertEquals(card3, scoreUtil.getWinnerCard(cards, new Ansage(HEARTS)));
 	}
 
 	@Test
 	public void testGetWinnerWithTrumpf2() {
-		PlayedCard card0 = new PlayedCard(SPADES_JACK, playerMock);
-		PlayedCard card1 = new PlayedCard(SPADES_EIGHT, playerMock);
-		PlayedCard card2 = new PlayedCard(SPADES_SIX, playerMock);
-		PlayedCard card3 = new PlayedCard(CLUBS_SIX, playerMock);
+		PlayedCard card0 = SPADES_JACK;
+		PlayedCard card1 = SPADES_EIGHT;
+		PlayedCard card2 = SPADES_SIX;
+		PlayedCard card3 = CLUBS_SIX;
 		List<PlayedCard> cards = Arrays.asList(card0, card1, card2, card3);
 		assertEquals(card3, scoreUtil.getWinnerCard(cards, ansage));
 	}
 
 	@Test
 	public void testGetWinnerWithTrumpfAtSecondPosition() {
-		PlayedCard card0 = new PlayedCard(SPADES_EIGHT, playerMock);
-		PlayedCard card1 = new PlayedCard(HEARTS_QUEEN, playerMock);
-		PlayedCard card2 = new PlayedCard(SPADES_SIX, playerMock);
-		PlayedCard card3 = new PlayedCard(CLUBS_JACK, playerMock);
+		PlayedCard card0 = SPADES_EIGHT;
+		PlayedCard card1 = HEARTS_QUEEN;
+		PlayedCard card2 = SPADES_SIX;
+		PlayedCard card3 = CLUBS_JACK;
 		List<PlayedCard> cards = Arrays.asList(card0, card1, card2, card3);
 		assertEquals(card1, scoreUtil.getWinnerCard(cards, new Ansage(HEARTS)));
 	}
 
 	@Test
 	public void testGetWinnerWithTrumpfJack() {
-		PlayedCard card0 = new PlayedCard(HEARTS_NINE, playerMock);
-		PlayedCard card1 = new PlayedCard(HEARTS_JACK, playerMock);
-		PlayedCard card2 = new PlayedCard(SPADES_SIX, playerMock);
-		PlayedCard card3 = new PlayedCard(HEARTS_ACE, playerMock);
+		PlayedCard card0 = HEARTS_NINE;
+		PlayedCard card1 = HEARTS_JACK;
+		PlayedCard card2 = SPADES_SIX;
+		PlayedCard card3 = HEARTS_ACE;
 		List<PlayedCard> cards = Arrays.asList(card0, card1, card2, card3);
 		assertEquals(card1, scoreUtil.getWinnerCard(cards, new Ansage(HEARTS)));
 	}
 
 	@Test
 	public void testGetWinnerHeartsButNotTrumpf() {
-		PlayedCard card0 = new PlayedCard(HEARTS_QUEEN, playerMock);
-		PlayedCard card1 = new PlayedCard(CLUBS_EIGHT, playerMock);
-		PlayedCard card2 = new PlayedCard(HEARTS_ACE, playerMock);
-		PlayedCard card3 = new PlayedCard(HEARTS_TEN, playerMock);
+		PlayedCard card0 = HEARTS_QUEEN;
+		PlayedCard card1 = CLUBS_EIGHT;
+		PlayedCard card2 = HEARTS_ACE;
+		PlayedCard card3 = HEARTS_TEN;
 		List<PlayedCard> cards = Arrays.asList(card0, card1, card2, card3);
 		assertEquals(card1, scoreUtil.getWinnerCard(cards, ansage));
 	}
 
 	@Test
 	public void testGetWinnerUndeUfe() {
-		PlayedCard card0 = new PlayedCard(HEARTS_QUEEN, playerMock);
-		PlayedCard card1 = new PlayedCard(CLUBS_EIGHT, playerMock);
-		PlayedCard card2 = new PlayedCard(HEARTS_ACE, playerMock);
-		PlayedCard card3 = new PlayedCard(HEARTS_TEN, playerMock);
+		PlayedCard card0 = HEARTS_QUEEN;
+		PlayedCard card1 = CLUBS_EIGHT;
+		PlayedCard card2 = HEARTS_ACE;
+		PlayedCard card3 = HEARTS_TEN;
 		List<PlayedCard> cards = Arrays.asList(card0, card1, card2, card3);
 		assertEquals(card3, scoreUtil.getWinnerCard(cards, new Ansage(UNDEUFE)));
 	}
 
 	@Test
 	public void testGetObenAbeUndeUfe() {
-		PlayedCard card0 = new PlayedCard(HEARTS_QUEEN, playerMock);
-		PlayedCard card1 = new PlayedCard(CLUBS_EIGHT, playerMock);
-		PlayedCard card2 = new PlayedCard(HEARTS_ACE, playerMock);
-		PlayedCard card3 = new PlayedCard(HEARTS_TEN, playerMock);
+		PlayedCard card0 = HEARTS_QUEEN;
+		PlayedCard card1 = CLUBS_EIGHT;
+		PlayedCard card2 = HEARTS_ACE;
+		PlayedCard card3 = HEARTS_TEN;
 		List<PlayedCard> cards = Arrays.asList(card0, card1, card2, card3);
 		assertEquals(card2, scoreUtil.getWinnerCard(cards, new Ansage(OBENABE)));
 	}

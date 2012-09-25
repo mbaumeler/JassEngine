@@ -3,7 +3,6 @@ package ch.mbaumeler.jass.core;
 import java.util.List;
 import java.util.Set;
 
-import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayedCard;
 import ch.mbaumeler.jass.core.game.PlayerToken;
@@ -19,7 +18,7 @@ public interface Match {
 	 *            The player.
 	 * @return The cards in hand of the given player.
 	 */
-	List<Card> getCards(PlayerToken player);
+	List<PlayedCard> getCards(PlayerToken player);
 
 	/**
 	 * Returns a list of cards on the table. A list of cards between 0 and 4
@@ -60,7 +59,7 @@ public interface Match {
 	 *            Card to check.
 	 * @return true, if the card is playable by the active player.
 	 */
-	boolean isCardPlayable(Card card);
+	boolean isCardPlayable(PlayedCard card);
 
 	/**
 	 * Returns the card from round i.
@@ -77,7 +76,7 @@ public interface Match {
 	 * @param card
 	 *            Card to play.
 	 */
-	void playCard(Card card);
+	void playCard(PlayedCard card);
 
 	/**
 	 * Schiebt die Ansage.

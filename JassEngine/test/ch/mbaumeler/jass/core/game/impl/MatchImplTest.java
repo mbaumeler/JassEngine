@@ -1,5 +1,9 @@
 package ch.mbaumeler.jass.core.game.impl;
 
+import static ch.mbaumeler.jass.core.card.CardSuit.CLUBS;
+import static ch.mbaumeler.jass.core.card.CardSuit.DIAMONDS;
+import static ch.mbaumeler.jass.core.card.CardSuit.HEARTS;
+import static ch.mbaumeler.jass.core.card.CardSuit.SPADES;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
@@ -20,9 +24,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ch.mbaumeler.jass.core.Match;
-import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
-import ch.mbaumeler.jass.core.card.Deck;
+import ch.mbaumeler.jass.core.card.CardValue;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.Ansage.SpielModi;
 import ch.mbaumeler.jass.core.game.JassRules;
@@ -43,7 +46,7 @@ public class MatchImplTest {
 	private WysScoreRule wysScoreRuleMock;
 	private JassRules jassRulesMock;
 	private WysRules wysRuleMock;
-	private List<Card> cards;
+	private List<PlayedCard> cards;
 
 	@Before
 	public void setup() {
@@ -52,22 +55,40 @@ public class MatchImplTest {
 		scoreUtilMock = mock(ScoreUtil.class);
 		wysRuleMock = mock(WysRules.class);
 		wysScoreRuleMock = mock(WysScoreRule.class);
-		cards = new Deck().getCards();
+		cards = createSortedDeck();
 		jassRulesMock = mock(JassRules.class);
 		match = new MatchImpl(playerRepository, playerList.get(0), scoreUtilMock, jassRulesMock, cards,
 				new ScoreRules(), wysRuleMock, wysScoreRuleMock);
 	}
 
+	private List<PlayedCard> createSortedDeck() {
+		List<PlayedCard> result = new ArrayList<PlayedCard>(36);
+		result.addAll(sortedDeck(DIAMONDS, PlayerToken.PLAYER0));
+		result.addAll(sortedDeck(SPADES, PlayerToken.PLAYER1));
+		result.addAll(sortedDeck(HEARTS, PlayerToken.PLAYER2));
+		result.addAll(sortedDeck(CLUBS, PlayerToken.PLAYER3));
+		return result;
+	}
+
+	private List<PlayedCard> sortedDeck(CardSuit cardSuit, PlayerToken playerToken) {
+		List<PlayedCard> result = new ArrayList<PlayedCard>();
+
+		for (CardValue value : CardValue.values()) {
+			result.add(new PlayedCard(cardSuit, value, playerToken));
+		}
+		return result;
+	}
+
 	@Test
 	public void testGetCardsFromPlayer0() {
-		List<Card> cardsPlayer0 = match.getCards(playerList.get(0));
+		List<PlayedCard> cardsPlayer0 = match.getCards(playerList.get(0));
 		assertEquals(9, cardsPlayer0.size());
 		assertEquals(cards.subList(0, 9), cardsPlayer0);
 	}
 
 	@Test
 	public void testGetCardsFromPlayer1() {
-		List<Card> cardsPlayer0 = match.getCards(playerList.get(1));
+		List<PlayedCard> cardsPlayer0 = match.getCards(playerList.get(1));
 		assertEquals(9, cardsPlayer0.size());
 		assertEquals(cards.subList(9, 18), cardsPlayer0);
 	}
@@ -94,7 +115,7 @@ public class MatchImplTest {
 
 	@Test
 	public void testIsCardPlayable() {
-		Card card = cards.get(0);
+		PlayedCard card = cards.get(0);
 		Ansage ansage = new Ansage(SpielModi.OBENABE);
 		match.setAnsage(ansage);
 		match.isCardPlayable(card);
@@ -103,7 +124,7 @@ public class MatchImplTest {
 
 	@Test
 	public void testPlayCard() {
-		Card card = cards.get(0);
+		PlayedCard card = cards.get(0);
 		Ansage ansage = new Ansage(SpielModi.OBENABE);
 		match.setAnsage(ansage);
 		when(jassRulesMock.isCardPlayable(card, cards.subList(0, 9), new ArrayList<PlayedCard>(), ansage, true))
@@ -119,14 +140,14 @@ public class MatchImplTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testPlayCardNotPlayable() {
 		when(
-				jassRulesMock.isCardPlayable(any(Card.class), anyListOf(Card.class), anyListOf(PlayedCard.class),
-						any(Ansage.class), anyBoolean())).thenReturn(false);
+				jassRulesMock.isCardPlayable(any(PlayedCard.class), anyListOf(PlayedCard.class),
+						anyListOf(PlayedCard.class), any(Ansage.class), anyBoolean())).thenReturn(false);
 		match.playCard(cards.get(0));
 	}
 
 	@Test
 	public void testGetCardsOnTable() {
-		Card card = cards.get(0);
+		PlayedCard card = cards.get(0);
 		Ansage ansage = new Ansage(SpielModi.OBENABE);
 		match.setAnsage(ansage);
 		when(jassRulesMock.isCardPlayable(card, cards.subList(0, 9), new ArrayList<PlayedCard>(), ansage, true))
@@ -136,18 +157,18 @@ public class MatchImplTest {
 		List<PlayedCard> cardsOnTable = match.getCardsOnTable();
 		assertEquals(1, cardsOnTable.size());
 		PlayedCard playedCard = cardsOnTable.get(0);
-		assertEquals(card, playedCard.getCard());
+		assertEquals(card, playedCard);
 		assertEquals(playerList.get(0), playedCard.getPlayer());
 	}
 
 	@Test
 	public void testGetActivePlayer() {
-		Card card = cards.get(0);
+		PlayedCard card = cards.get(0);
 		Ansage ansage = new Ansage(SpielModi.OBENABE);
 		match.setAnsage(ansage);
 		when(
-				jassRulesMock.isCardPlayable(any(Card.class), anyListOf(Card.class), anyListOf(PlayedCard.class),
-						eq(ansage), anyBoolean())).thenReturn(true);
+				jassRulesMock.isCardPlayable(any(PlayedCard.class), anyListOf(PlayedCard.class),
+						anyListOf(PlayedCard.class), eq(ansage), anyBoolean())).thenReturn(true);
 
 		assertEquals(playerList.get(0), match.getActivePlayer());
 		match.playCard(card);
@@ -157,12 +178,12 @@ public class MatchImplTest {
 	@Test
 	public void testIsComplete() {
 		Ansage ansage = new Ansage(SpielModi.OBENABE);
+		PlayedCard winnerCard = mock(PlayedCard.class);
 		match.setAnsage(ansage);
 		when(
-				jassRulesMock.isCardPlayable(any(Card.class), anyListOf(Card.class), anyListOf(PlayedCard.class),
-						eq(new Ansage(SpielModi.OBENABE)), anyBoolean())).thenReturn(true);
-		when(scoreUtilMock.getWinnerCard(anyListOf(PlayedCard.class), eq(ansage))).thenReturn(
-				new PlayedCard(null, playerList.get(0)));
+				jassRulesMock.isCardPlayable(any(PlayedCard.class), anyListOf(PlayedCard.class),
+						anyListOf(PlayedCard.class), eq(new Ansage(SpielModi.OBENABE)), anyBoolean())).thenReturn(true);
+		when(scoreUtilMock.getWinnerCard(anyListOf(PlayedCard.class), eq(ansage))).thenReturn(winnerCard);
 
 		assertFalse(match.isComplete());
 

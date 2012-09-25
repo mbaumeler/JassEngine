@@ -1,14 +1,10 @@
 package ch.mbaumeler.jass.core.game.impl;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import ch.mbaumeler.jass.core.Match;
-import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.JassRules;
 import ch.mbaumeler.jass.core.game.PlayedCard;
@@ -35,11 +31,6 @@ public class MatchImpl implements Match {
 	private static final int PLAYERS = 4;
 
 	/**
-	 * Number of cards a player holds in his hands.
-	 */
-	private static final int CARDS_PER_PLAYER = CARDS / PLAYERS;
-
-	/**
 	 * Current choosen trumpf.
 	 */
 	private Ansage ansage;
@@ -47,7 +38,7 @@ public class MatchImpl implements Match {
 	/**
 	 * Map between players and the cards in their hands.
 	 */
-	private final Map<PlayerToken, List<Card>> cardsMap = new HashMap<PlayerToken, List<Card>>();
+	private final List<PlayedCard> cards;
 
 	/**
 	 * The players of the match.
@@ -76,7 +67,7 @@ public class MatchImpl implements Match {
 	private boolean geschoben;
 
 	public MatchImpl(PlayerTokenRepository playerRepository, PlayerToken startingPlayer, ScoreUtil scoreUtil,
-			JassRules jassRules, List<Card> shuffledDeck, ScoreRules scoreRules, WysRules wysRule,
+			JassRules jassRules, List<PlayedCard> shuffledDeck, ScoreRules scoreRules, WysRules wysRule,
 			WysScoreRule wysScoreRule) {
 		this.playerTokenRepository = playerRepository;
 		List<PlayerToken> allPlayers = playerTokenRepository.getAll();
@@ -84,15 +75,19 @@ public class MatchImpl implements Match {
 		this.scoreUtil = scoreUtil;
 		this.jassRules = jassRules;
 		this.wysStore = new WysStore(wysRule, wysScoreRule, this);
-		for (int i = 0; i < PLAYERS; i++) {
-			List<Card> subList = shuffledDeck.subList(i * CARDS_PER_PLAYER, i * CARDS_PER_PLAYER + CARDS_PER_PLAYER);
-			cardsMap.put(allPlayers.get(i), new ArrayList<Card>(subList));
-		}
+		this.cards = shuffledDeck;
 	}
 
 	@Override
-	public List<Card> getCards(PlayerToken player) {
-		return Collections.unmodifiableList(cardsMap.get(player));
+	public List<PlayedCard> getCards(PlayerToken player) {
+
+		ArrayList<PlayedCard> cardsFromPlayer = new ArrayList<PlayedCard>();
+		for (PlayedCard playedCard : cards) {
+			if (playedCard.getPlayer() == player) {
+				cardsFromPlayer.add(playedCard);
+			}
+		}
+		return cardsFromPlayer;
 	}
 
 	@Override
@@ -138,7 +133,7 @@ public class MatchImpl implements Match {
 	}
 
 	@Override
-	public boolean isCardPlayable(Card card) {
+	public boolean isCardPlayable(PlayedCard card) {
 		return jassRules.isCardPlayable(card, getCards(getActivePlayer()), getCardsOnTable(), ansage,
 				isNewRoundStarted());
 	}
@@ -149,13 +144,12 @@ public class MatchImpl implements Match {
 	}
 
 	@Override
-	public void playCard(Card card) {
+	public void playCard(PlayedCard card) {
 		if (card == null || !isCardPlayable(card)) {
 			throw new IllegalArgumentException("Card is not playable: " + card);
 		}
-		PlayerToken activePlayer = getActivePlayer();
-		cardsMap.get(activePlayer).remove(card);
-		playedCards.add(new PlayedCard(card, activePlayer));
+		cards.remove(card);
+		playedCards.add(card);
 	}
 
 	@Override
@@ -183,9 +177,7 @@ public class MatchImpl implements Match {
 		if (ansage != null) {
 			throw new IllegalStateException("Ansage already set");
 		}
-
 		geschoben = true;
-
 	}
 
 	@Override

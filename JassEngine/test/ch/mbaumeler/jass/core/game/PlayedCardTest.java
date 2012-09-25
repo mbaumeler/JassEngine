@@ -1,8 +1,6 @@
 package ch.mbaumeler.jass.core.game;
 
 import static ch.mbaumeler.jass.test.util.CardDomain.CLUBS_SEVEN;
-import static ch.mbaumeler.jass.test.util.CardDomain.CLUBS_SIX;
-import static ch.mbaumeler.jass.test.util.CardDomain.SPADES_SIX;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
@@ -11,7 +9,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import ch.mbaumeler.jass.core.card.Card;
+import ch.mbaumeler.jass.core.card.CardSuit;
+import ch.mbaumeler.jass.core.card.CardValue;
 
 public class PlayedCardTest {
 
@@ -24,114 +23,85 @@ public class PlayedCardTest {
 
 	@Test
 	public void testEquals() {
-		PlayedCard playedCard = new PlayedCard(SPADES_SIX, playerToken);
-		PlayedCard playedCard2 = new PlayedCard(SPADES_SIX, playerToken);
+		PlayedCard playedCard = new PlayedCard(CardSuit.SPADES, CardValue.SIX, playerToken);
+		PlayedCard playedCard2 = new PlayedCard(CardSuit.SPADES, CardValue.SIX, playerToken);
 		assertEquals(playedCard, playedCard2);
 	}
 
 	@Test
 	public void testNotEquals() {
-		PlayedCard playedCard = new PlayedCard(SPADES_SIX, PlayerToken.PLAYER0);
-		PlayedCard playedCard2 = new PlayedCard(SPADES_SIX, PlayerToken.PLAYER1);
+		PlayedCard playedCard = new PlayedCard(CardSuit.SPADES, CardValue.SIX, PlayerToken.PLAYER0);
+		PlayedCard playedCard2 = new PlayedCard(CardSuit.SPADES, CardValue.SIX, PlayerToken.PLAYER1);
 		assertFalse(playedCard.equals(playedCard2));
 	}
 
 	@Test
-	public void testGetCard() {
-		Card card = CLUBS_SEVEN;
-		PlayerToken player = PlayerToken.PLAYER0;
-		PlayedCard playedCard = new PlayedCard(card, player);
-		assertSame(card, playedCard.getCard());
+	public void testGetCardSuit() {
+		PlayedCard playedCard = new PlayedCard(CardSuit.CLUBS, CardValue.SEVEN, PlayerToken.PLAYER0);
+		assertSame(CardSuit.CLUBS, playedCard.getSuit());
+	}
+
+	@Test
+	public void testGetValue() {
+		PlayedCard playedCard = new PlayedCard(CardSuit.CLUBS, CardValue.SEVEN, PlayerToken.PLAYER0);
+		assertSame(CardValue.SEVEN, playedCard.getValue());
 	}
 
 	@Test
 	public void testToString() {
-		Card card = CLUBS_SEVEN;
-		PlayerToken player = PlayerToken.PLAYER0;
-		PlayedCard playedCard = new PlayedCard(card, player);
-		assertEquals(player + " played " + card, playedCard.toString());
+		PlayedCard card = CLUBS_SEVEN;
+		assertEquals("CardSuit: " + card.getSuit() + ", CardValue: " + card.getValue() + ", PlayerToken: "
+				+ PlayerToken.PLAYER0, card.toString());
 	}
 
 	@Test
 	public void testGetPlayer() {
-		PlayerToken player = PlayerToken.PLAYER0;
-		PlayedCard playedCard = new PlayedCard(CLUBS_SEVEN, player);
-		assertSame(player, playedCard.getPlayer());
+		assertSame(PlayerToken.PLAYER0, CLUBS_SEVEN.getPlayer());
 	}
 
 	@Test
 	public void testHashcode() {
-		Card card = CLUBS_SEVEN;
-		PlayerToken player = PlayerToken.PLAYER0;
-		PlayedCard playedCard = new PlayedCard(card, player);
-		PlayedCard playedCard2 = new PlayedCard(card, player);
+		PlayedCard playedCard = new PlayedCard(CardSuit.CLUBS, CardValue.SEVEN, PlayerToken.PLAYER0);
+		PlayedCard playedCard2 = new PlayedCard(CardSuit.CLUBS, CardValue.SEVEN, PlayerToken.PLAYER0);
 		assertEquals(playedCard.hashCode(), playedCard2.hashCode());
 	}
 
 	@Test
 	public void testNotEqualsWithNull() {
-		PlayerToken player = PlayerToken.PLAYER0;
-		PlayedCard playedCard = new PlayedCard(CLUBS_SEVEN, player);
+		PlayedCard playedCard = new PlayedCard(CardSuit.CLUBS, CardValue.SEVEN, PlayerToken.PLAYER0);
 		assertFalse(playedCard.equals(null));
 	}
 
 	@Test
 	public void testNotEqualsWithObject() {
-		PlayerToken player = PlayerToken.PLAYER0;
-		PlayedCard playedCard = new PlayedCard(CLUBS_SEVEN, player);
+		PlayedCard playedCard = new PlayedCard(CardSuit.CLUBS, CardValue.SEVEN, PlayerToken.PLAYER0);
 		assertFalse(playedCard.equals(new Object()));
 	}
 
 	@Test
 	public void testEqualsWithSame() {
-		PlayerToken player = PlayerToken.PLAYER0;
-		PlayedCard playedCard = new PlayedCard(CLUBS_SEVEN, player);
+		PlayedCard playedCard = new PlayedCard(CardSuit.CLUBS, CardValue.SEVEN, PlayerToken.PLAYER0);
 		assertTrue(playedCard.equals(playedCard));
 	}
 
 	@Test
 	public void testNotEqualsWithNotSamePlayer() {
-		Card card = CLUBS_SEVEN;
-		PlayedCard playedCard = new PlayedCard(card, PlayerToken.PLAYER0);
-		PlayedCard playedCard2 = new PlayedCard(card, PlayerToken.PLAYER1);
+		PlayedCard playedCard = new PlayedCard(CardSuit.CLUBS, CardValue.SEVEN, PlayerToken.PLAYER0);
+		PlayedCard playedCard2 = new PlayedCard(CardSuit.CLUBS, CardValue.SEVEN, PlayerToken.PLAYER1);
 		assertFalse(playedCard.equals(playedCard2));
 	}
 
 	@Test
-	public void testNotEqualsWithNotSameCard() {
-		PlayedCard playedCard = new PlayedCard(CLUBS_SEVEN, playerToken);
-		PlayedCard playedCard2 = new PlayedCard(CLUBS_SIX, playerToken);
+	public void testNotEqualsWithNotSameCardValue() {
+		PlayedCard playedCard = new PlayedCard(CardSuit.CLUBS, CardValue.SEVEN, PlayerToken.PLAYER0);
+		PlayedCard playedCard2 = new PlayedCard(CardSuit.CLUBS, CardValue.SIX, PlayerToken.PLAYER0);
 		assertFalse(playedCard.equals(playedCard2));
 	}
 
 	@Test
-	public void testNotEqualsWithNotNullCard() {
-		PlayedCard playedCard = new PlayedCard(null, playerToken);
-		PlayedCard playedCard2 = new PlayedCard(CLUBS_SIX, playerToken);
-		assertFalse(playedCard.equals(playedCard2));
-	}
-
-	@Test
-	public void testNotEqualsWithNotNullCardNullOtherPlayer() {
-		PlayerToken player = PlayerToken.PLAYER0;
-		PlayedCard playedCard = new PlayedCard(CLUBS_SIX, player);
-		PlayedCard playedCard2 = new PlayedCard(null, player);
-		assertFalse(playedCard.equals(playedCard2));
-	}
-
-	@Test
-	public void testNotEqualsNullPlayer() {
-		Card card = CLUBS_SEVEN;
-		PlayedCard playedCard = new PlayedCard(card, null);
-		PlayedCard playedCard2 = new PlayedCard(card, PlayerToken.PLAYER0);
-		assertFalse(playedCard.equals(playedCard2));
-	}
-
-	@Test
-	public void testNotEqualsNullPlayerOther() {
-		Card card = CLUBS_SEVEN;
-		PlayedCard playedCard = new PlayedCard(card, PlayerToken.PLAYER0);
-		PlayedCard playedCard2 = new PlayedCard(card, null);
+	public void testNotEqualsWithNotSameCardSuit() {
+		PlayedCard playedCard = new PlayedCard(CardSuit.HEARTS, CardValue.SEVEN, PlayerToken.PLAYER0);
+		PlayedCard playedCard2 = new PlayedCard(CardSuit.CLUBS, CardValue.SEVEN, PlayerToken.PLAYER0);
 		assertFalse(playedCard.equals(playedCard2));
 	}
 

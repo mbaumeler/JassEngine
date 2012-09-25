@@ -10,20 +10,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
+import ch.mbaumeler.jass.core.game.PlayedCard;
 
 public class CardUtil {
 
-	public Map<CardSuit, List<Card>> createCardMap(List<Card> cards) {
+	public Map<CardSuit, List<PlayedCard>> createCardMap(List<PlayedCard> cards) {
 
-		Map<CardSuit, List<Card>> map = new HashMap<CardSuit, List<Card>>();
-		map.put(CLUBS, new ArrayList<Card>());
-		map.put(HEARTS, new ArrayList<Card>());
-		map.put(SPADES, new ArrayList<Card>());
-		map.put(DIAMONDS, new ArrayList<Card>());
+		Map<CardSuit, List<PlayedCard>> map = new HashMap<CardSuit, List<PlayedCard>>();
+		map.put(CLUBS, new ArrayList<PlayedCard>());
+		map.put(HEARTS, new ArrayList<PlayedCard>());
+		map.put(SPADES, new ArrayList<PlayedCard>());
+		map.put(DIAMONDS, new ArrayList<PlayedCard>());
 
-		for (Card card : cards) {
+		for (PlayedCard card : cards) {
 			switch (card.getSuit()) {
 			case CLUBS:
 				map.get(CLUBS).add(card);

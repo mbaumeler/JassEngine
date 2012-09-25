@@ -15,14 +15,14 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import ch.mbaumeler.jass.core.card.Card;
+import ch.mbaumeler.jass.core.game.PlayedCard;
 import ch.mbaumeler.jass.core.game.wys.Wys.WysTyp;
 
 public class WysTest {
 
 	@Test
 	public void testGetCards() {
-		Set<Card> set = new HashSet<Card>();
+		Set<PlayedCard> set = new HashSet<PlayedCard>();
 		Wys wys = new Wys(set, BLATT);
 		assertEquals(set, wys.getCards());
 	}
@@ -76,8 +76,8 @@ public class WysTest {
 		assertFalse(wys.equals(new Object()));
 	}
 
-	private Wys createWys(WysTyp typ, Card... cards) {
-		Set<Card> set = new HashSet<Card>(Arrays.asList(cards));
+	private Wys createWys(WysTyp typ, PlayedCard... cards) {
+		Set<PlayedCard> set = new HashSet<PlayedCard>(Arrays.asList(cards));
 		return new Wys(set, typ);
 	}
 

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 
 import ch.mbaumeler.jass.core.Match;
-import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayedCard;
 import ch.mbaumeler.jass.core.game.PlayerToken;
@@ -26,7 +25,7 @@ public class ObserverableMatch implements Match {
 	}
 
 	@Override
-	public List<Card> getCards(PlayerToken player) {
+	public List<PlayedCard> getCards(PlayerToken player) {
 		return delegate.getCards(player);
 	}
 
@@ -52,7 +51,7 @@ public class ObserverableMatch implements Match {
 	}
 
 	@Override
-	public boolean isCardPlayable(Card card) {
+	public boolean isCardPlayable(PlayedCard card) {
 		return delegate.isCardPlayable(card);
 	}
 
@@ -62,7 +61,7 @@ public class ObserverableMatch implements Match {
 	}
 
 	@Override
-	public void playCard(Card card) {
+	public void playCard(PlayedCard card) {
 		delegate.playCard(card);
 		observerRepository.notifyObservers();
 	}

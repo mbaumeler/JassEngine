@@ -16,25 +16,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.card.CardValue;
 import ch.mbaumeler.jass.core.game.Ansage;
+import ch.mbaumeler.jass.core.game.PlayedCard;
 
 public class WysRules {
 
-	public Set<Wys> findWyss(List<Card> cards, Ansage trumpf) {
+	public Set<Wys> findWyss(List<PlayedCard> cards, Ansage trumpf) {
 
 		Set<Wys> foundWyss = new HashSet<Wys>();
-		List<Card> sorted = sortBySuitAndValue(cards);
+		List<PlayedCard> sorted = sortBySuitAndValue(cards);
 
-		Map<CardValue, Set<Card>> cardsWithSameValueMap = new HashMap<CardValue, Set<Card>>();
+		Map<CardValue, Set<PlayedCard>> cardsWithSameValueMap = new HashMap<CardValue, Set<PlayedCard>>();
 
-		Set<Card> stoeck = new HashSet<Card>();
+		Set<PlayedCard> stoeck = new HashSet<PlayedCard>();
 
-		List<Card> analyzeBlattStack = new ArrayList<Card>();
+		List<PlayedCard> analyzeBlattStack = new ArrayList<PlayedCard>();
 
-		for (Card card : sorted) {
+		for (PlayedCard card : sorted) {
 			analyseForFourCardsWithSameValue(foundWyss, cardsWithSameValueMap, card);
 			analyseForStoeck(foundWyss, card, trumpf, stoeck);
 			analyseForBlatt(foundWyss, analyzeBlattStack, card);
@@ -46,7 +46,7 @@ public class WysRules {
 		return foundWyss;
 	}
 
-	private void analyseForBlatt(Set<Wys> foundWyss, List<Card> analyzeBlattStack, Card card) {
+	private void analyseForBlatt(Set<Wys> foundWyss, List<PlayedCard> analyzeBlattStack, PlayedCard card) {
 		if (isSameSuitAndFollowingPrevious(lastCardFromStack(analyzeBlattStack), card)) {
 			analyzeBlattStack.add(card);
 		} else {
@@ -58,7 +58,7 @@ public class WysRules {
 		}
 	}
 
-	private void analyseForStoeck(Set<Wys> foundWyss, Card card, Ansage trumpf, Set<Card> stoeck) {
+	private void analyseForStoeck(Set<Wys> foundWyss, PlayedCard card, Ansage trumpf, Set<PlayedCard> stoeck) {
 		CardSuit suit = card.getSuit();
 		CardValue value = card.getValue();
 		if (trumpf.is(suit) && (value == KING || value == QUEEN)) {
@@ -69,22 +69,23 @@ public class WysRules {
 		}
 	}
 
-	private void analyseForFourCardsWithSameValue(Set<Wys> foundWyss, Map<CardValue, Set<Card>> valueMap, Card card) {
+	private void analyseForFourCardsWithSameValue(Set<Wys> foundWyss, Map<CardValue, Set<PlayedCard>> valueMap,
+			PlayedCard card) {
 		CardValue value = card.getValue();
 		if (valueMap.get(value) == null) {
-			valueMap.put(value, new HashSet<Card>());
+			valueMap.put(value, new HashSet<PlayedCard>());
 		}
-		Set<Card> set = valueMap.get(value);
+		Set<PlayedCard> set = valueMap.get(value);
 		set.add(card);
 		if (set.size() == 4) {
 			foundWyss.add(new Wys(set, VIER_GLEICHE));
 		}
 	}
 
-	private List<Card> sortBySuitAndValue(Collection<Card> cards) {
-		List<Card> sorted = new ArrayList<Card>(cards);
-		Collections.sort(sorted, new Comparator<Card>() {
-			public int compare(Card card1, Card card2) {
+	private List<PlayedCard> sortBySuitAndValue(Collection<PlayedCard> cards) {
+		List<PlayedCard> sorted = new ArrayList<PlayedCard>(cards);
+		Collections.sort(sorted, new Comparator<PlayedCard>() {
+			public int compare(PlayedCard card1, PlayedCard card2) {
 				int suit = card1.getSuit().compareTo(card2.getSuit());
 				return (suit != 0) ? suit : card1.getValue().compareTo(card2.getValue());
 			}
@@ -92,11 +93,11 @@ public class WysRules {
 		return sorted;
 	}
 
-	private Card lastCardFromStack(List<Card> blattStack) {
+	private PlayedCard lastCardFromStack(List<PlayedCard> blattStack) {
 		return blattStack.isEmpty() ? null : blattStack.get(blattStack.size() - 1);
 	}
 
-	private boolean isSameSuitAndFollowingPrevious(Card card, Card card2) {
+	private boolean isSameSuitAndFollowingPrevious(PlayedCard card, PlayedCard card2) {
 
 		return card != null && card2 != null && card.getSuit() == card2.getSuit()
 				&& card.getValue().ordinal() == card2.getValue().ordinal() - 1;
