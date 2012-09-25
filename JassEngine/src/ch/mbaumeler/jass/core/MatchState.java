@@ -1,10 +1,13 @@
 package ch.mbaumeler.jass.core;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.Card;
-import ch.mbaumeler.jass.core.game.wys.WysStore;
+import ch.mbaumeler.jass.core.game.PlayerToken;
+import ch.mbaumeler.jass.core.game.wys.Wys;
 
 public class MatchState {
 
@@ -13,16 +16,18 @@ public class MatchState {
 	private final List<Card> playedCards;
 	private final int startingPlayerOffset;
 	private final boolean geschoben;
-	private final WysStore wysStore;
+	private final Map<PlayerToken, Set<Wys>> wysMap;
+	private final PlayerToken stoeckPlayer;
 
 	public MatchState(Ansage ansage, List<Card> cards, List<Card> playedCards, int startingPlayerOffset,
-			boolean geschoben, WysStore wysStore) {
+			boolean geschoben, Map<PlayerToken, Set<Wys>> wysMap, PlayerToken stoeckPlayer) {
 		this.ansage = ansage;
 		this.cards = cards;
 		this.playedCards = playedCards;
 		this.startingPlayerOffset = startingPlayerOffset;
 		this.geschoben = geschoben;
-		this.wysStore = wysStore;
+		this.wysMap = wysMap;
+		this.stoeckPlayer = stoeckPlayer;
 	}
 
 	public Ansage getAnsage() {
@@ -45,7 +50,12 @@ public class MatchState {
 		return geschoben;
 	}
 
-	public WysStore getWysStore() {
-		return wysStore;
+	public Map<PlayerToken, Set<Wys>> getWysMap() {
+		return wysMap;
 	}
+
+	public PlayerToken getStoeckPlayer() {
+		return stoeckPlayer;
+	}
+
 }

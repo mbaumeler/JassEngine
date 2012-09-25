@@ -19,20 +19,25 @@ import ch.mbaumeler.jass.core.game.PlayerToken;
 
 public class WysStore {
 
-	private Map<PlayerToken, Set<Wys>> wysMap = new LinkedHashMap<PlayerToken, Set<Wys>>();
-
+	private final Map<PlayerToken, Set<Wys>> wysMap;
 	private PlayerToken stoeckPlayer;
-
-	private WysRules wysRule;
-
-	private WysScoreRule wysScoreRule;
-
-	private Match match;
+	private final WysRules wysRule;
+	private final WysScoreRule wysScoreRule;
+	private final Match match;
 
 	public WysStore(WysRules wysRule, WysScoreRule wysScoreRule, Match match) {
 		this.wysScoreRule = wysScoreRule;
 		this.wysRule = wysRule;
 		this.match = match;
+		this.wysMap = new LinkedHashMap<PlayerToken, Set<Wys>>();
+	}
+
+	public WysStore(WysRules wysRule, WysScoreRule wysScoreRule, Match match, Map<PlayerToken, Set<Wys>> wysMap,
+			PlayerToken stoeckPlayer) {
+		this.wysScoreRule = wysScoreRule;
+		this.wysRule = wysRule;
+		this.match = match;
+		this.wysMap = wysMap;
 	}
 
 	public void addWys(Set<Wys> wysSet) {
@@ -60,6 +65,10 @@ public class WysStore {
 
 	public PlayerToken getStoeckFromPlayer() {
 		return stoeckPlayer;
+	}
+
+	public Map<PlayerToken, Set<Wys>> getWysMap() {
+		return wysMap;
 	}
 
 	public PlayerToken getBestWys(Ansage ansage) {
@@ -134,8 +143,8 @@ public class WysStore {
 		wysMap.get(activePlayer).add(wys);
 	}
 
-	private boolean inHandAndInHandOrAlreadyPlayed(List<Card> cardsInHand, Set<Card> playedCardsFromPlayer,
-			Card card1, Card card2) {
+	private boolean inHandAndInHandOrAlreadyPlayed(List<Card> cardsInHand, Set<Card> playedCardsFromPlayer, Card card1,
+			Card card2) {
 		return cardsInHand.contains(card1) && (cardsInHand.contains(card2) || playedCardsFromPlayer.contains(card2));
 	}
 

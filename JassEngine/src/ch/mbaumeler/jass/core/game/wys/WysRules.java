@@ -23,7 +23,7 @@ import ch.mbaumeler.jass.core.game.Card;
 
 public class WysRules {
 
-	public Set<Wys> findWyss(List<Card> cards, Ansage trumpf) {
+	public Set<Wys> findWyss(List<Card> cards, Ansage ansage) {
 
 		Set<Wys> foundWyss = new HashSet<Wys>();
 		List<Card> sorted = sortBySuitAndValue(cards);
@@ -36,7 +36,7 @@ public class WysRules {
 
 		for (Card card : sorted) {
 			analyseForFourCardsWithSameValue(foundWyss, cardsWithSameValueMap, card);
-			analyseForStoeck(foundWyss, card, trumpf, stoeck);
+			analyseForStoeck(foundWyss, card, ansage, stoeck);
 			analyseForBlatt(foundWyss, analyzeBlattStack, card);
 		}
 

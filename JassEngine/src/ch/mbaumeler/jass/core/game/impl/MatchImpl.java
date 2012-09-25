@@ -7,8 +7,8 @@ import java.util.Set;
 import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.MatchState;
 import ch.mbaumeler.jass.core.game.Ansage;
-import ch.mbaumeler.jass.core.game.JassRules;
 import ch.mbaumeler.jass.core.game.Card;
+import ch.mbaumeler.jass.core.game.JassRules;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.core.game.PlayerTokenRepository;
 import ch.mbaumeler.jass.core.game.Score;
@@ -89,7 +89,7 @@ public class MatchImpl implements Match {
 		this.cards = matchState.getCards();
 		this.geschoben = matchState.isGeschoben();
 		this.playedCards = matchState.getPlayedCards();
-		this.wysStore = matchState.getWysStore();
+		this.wysStore = new WysStore(wysRule, wysScoreRule, this, matchState.getWysMap(), matchState.getStoeckPlayer());
 		this.ansage = matchState.getAnsage();
 	}
 
@@ -202,6 +202,7 @@ public class MatchImpl implements Match {
 
 	@Override
 	public MatchState createMatchState() {
-		return new MatchState(ansage, cards, playedCards, startingPlayerOffset, geschoben, wysStore);
+		return new MatchState(ansage, cards, playedCards, startingPlayerOffset, geschoben, wysStore.getWysMap(),
+				wysStore.getStoeckFromPlayer());
 	}
 }
