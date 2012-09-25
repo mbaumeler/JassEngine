@@ -15,8 +15,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.Ansage;
-import ch.mbaumeler.jass.core.game.Card;
 
 public class MostValueComporatorTest {
 

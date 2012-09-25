@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 import ch.mbaumeler.jass.core.Match;
+import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.game.Ansage;
-import ch.mbaumeler.jass.core.game.Card;
 import ch.mbaumeler.jass.core.game.ScoreRules;
 
 public class SelectTrumpfStrategy {

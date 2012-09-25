@@ -2,7 +2,7 @@ package ch.mbaumeler.jass.core;
 
 import java.util.List;
 
-import ch.mbaumeler.jass.core.game.Card;
+import ch.mbaumeler.jass.core.card.Card;
 
 /**
  * Factory to create a list of cards.

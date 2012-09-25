@@ -2,6 +2,7 @@ package ch.mbaumeler.jass.core.game;
 
 import static ch.mbaumeler.jass.core.game.Ansage.SpielModi.OBENABE;
 import static ch.mbaumeler.jass.core.game.Ansage.SpielModi.UNDEUFE;
+import ch.mbaumeler.jass.core.card.Card;
 
 public class ScoreRules {
 

@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ch.mbaumeler.jass.core.CardFactory;
-import ch.mbaumeler.jass.core.game.Card;
+import ch.mbaumeler.jass.core.card.Card;
 
 public class CardFactoryImplTest {
 

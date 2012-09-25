@@ -6,9 +6,9 @@ import java.util.Collections;
 import java.util.List;
 
 import ch.mbaumeler.jass.core.CardFactory;
+import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.card.CardValue;
-import ch.mbaumeler.jass.core.game.Card;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 
 public class CardFactoryImpl implements CardFactory {

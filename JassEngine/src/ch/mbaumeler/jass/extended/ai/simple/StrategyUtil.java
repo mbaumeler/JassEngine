@@ -7,9 +7,9 @@ import java.util.Collections;
 import java.util.List;
 
 import ch.mbaumeler.jass.core.Match;
+import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.game.Ansage;
-import ch.mbaumeler.jass.core.game.Card;
 import ch.mbaumeler.jass.core.game.ScoreUtil;
 import ch.mbaumeler.jass.extended.comporator.BestCardComparator;
 import ch.mbaumeler.jass.extended.comporator.MostValueComparator;

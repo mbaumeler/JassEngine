@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import ch.mbaumeler.jass.core.game.Card;
+import ch.mbaumeler.jass.core.card.Card;
 
 public class Wys {
 

@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
 
 public class JassRules {

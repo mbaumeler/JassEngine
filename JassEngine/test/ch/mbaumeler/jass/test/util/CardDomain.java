@@ -13,7 +13,7 @@ import static ch.mbaumeler.jass.core.card.CardValue.QUEEN;
 import static ch.mbaumeler.jass.core.card.CardValue.SEVEN;
 import static ch.mbaumeler.jass.core.card.CardValue.SIX;
 import static ch.mbaumeler.jass.core.card.CardValue.TEN;
-import ch.mbaumeler.jass.core.game.Card;
+import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 
 public class CardDomain {

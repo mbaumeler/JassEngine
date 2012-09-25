@@ -20,6 +20,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import ch.mbaumeler.jass.core.card.Card;
+
 public class JassRulesTest {
 
 	private JassRules jassRules;

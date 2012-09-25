@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.mbaumeler.jass.core.Match;
+import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.Ansage;
-import ch.mbaumeler.jass.core.game.Card;
 
 public class SecondPlayerStrategy implements SimpleCardStrategy {
 

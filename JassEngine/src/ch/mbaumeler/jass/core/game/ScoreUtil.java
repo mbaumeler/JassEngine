@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import ch.mbaumeler.jass.core.Match;
+import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.wys.Wys;
 import ch.mbaumeler.jass.core.game.wys.WysRules;
 import ch.mbaumeler.jass.core.game.wys.WysScoreRule;

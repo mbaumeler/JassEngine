@@ -2,8 +2,8 @@ package ch.mbaumeler.jass.extended.comporator;
 
 import java.util.Comparator;
 
+import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.Ansage;
-import ch.mbaumeler.jass.core.game.Card;
 import ch.mbaumeler.jass.core.game.ScoreRules;
 
 public class MostValueComparator implements Comparator<Card> {

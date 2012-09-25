@@ -18,8 +18,8 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
+import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
-import ch.mbaumeler.jass.core.game.Card;
 
 public class CardUtilTest {
 

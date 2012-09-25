@@ -3,8 +3,8 @@ package ch.mbaumeler.jass.core;
 import java.util.List;
 import java.util.Set;
 
+import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.Ansage;
-import ch.mbaumeler.jass.core.game.Card;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.core.game.Score;
 import ch.mbaumeler.jass.core.game.wys.Wys;
