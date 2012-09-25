@@ -9,14 +9,19 @@ import com.google.inject.Injector;
 
 public class JassEngine {
 
-	private Injector injector = Guice.createInjector(new JassModule());
+	private Injector injector;
+	private MatchFactory matchFactory;
+
+	public JassEngine() {
+		injector = Guice.createInjector(new JassModule());
+		matchFactory = injector.getInstance(MatchFactory.class);
+	}
 
 	public Game createJassGame() {
 		return injector.getInstance(GameImpl.class);
 	}
 
 	public Match createMatchFromMatchState(MatchState matchState) {
-		MatchFactory matchFactory = injector.getInstance(MatchFactory.class);
 		return matchFactory.createMatch(matchState);
 	}
 }
