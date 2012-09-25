@@ -12,17 +12,17 @@ import java.util.Map;
 import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.game.Ansage;
-import ch.mbaumeler.jass.core.game.PlayedCard;
+import ch.mbaumeler.jass.core.game.Card;
 import ch.mbaumeler.jass.core.game.ScoreRules;
 
 public class SelectTrumpfStrategy {
 
 	private ScoreRules scoreUtil = new ScoreRules();
 
-	private Map<CardSuit, List<PlayedCard>> map;
+	private Map<CardSuit, List<Card>> map;
 
 	public Ansage getAnsage(Match match) {
-		List<PlayedCard> cards = new ArrayList<PlayedCard>(match.getCards(match.getActivePlayer()));
+		List<Card> cards = new ArrayList<Card>(match.getCards(match.getActivePlayer()));
 		map = new CardUtil().createCardMap(cards);
 
 		int scoreClubs = getScore(CLUBS);
@@ -55,9 +55,9 @@ public class SelectTrumpfStrategy {
 
 	private int getScore(CardSuit suit) {
 		Ansage ansage = new Ansage(suit);
-		List<PlayedCard> cards = map.get(suit);
+		List<Card> cards = map.get(suit);
 		int scores = 0;
-		for (PlayedCard card : cards) {
+		for (Card card : cards) {
 			scores += scoreUtil.getScore(card, ansage);
 		}
 		return scores;

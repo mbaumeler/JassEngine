@@ -14,7 +14,7 @@ import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.bootstrap.JassModule;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.game.Ansage;
-import ch.mbaumeler.jass.core.game.PlayedCard;
+import ch.mbaumeler.jass.core.game.Card;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.core.game.Score;
 import ch.mbaumeler.jass.core.game.impl.GameImpl;
@@ -98,11 +98,11 @@ public class AITests {
 		}
 	}
 
-	private PlayedCard getFirstPlayableCard(Match match) {
+	private Card getFirstPlayableCard(Match match) {
 		PlayerToken activePlayer = match.getActivePlayer();
-		List<PlayedCard> cards = match.getCards(activePlayer);
+		List<Card> cards = match.getCards(activePlayer);
 
-		for (PlayedCard card : cards) {
+		for (Card card : cards) {
 			if (match.isCardPlayable(card)) {
 				return card;
 			}

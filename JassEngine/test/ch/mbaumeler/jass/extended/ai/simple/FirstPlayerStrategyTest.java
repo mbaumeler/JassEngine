@@ -22,7 +22,7 @@ import org.junit.Test;
 import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.game.Ansage;
-import ch.mbaumeler.jass.core.game.PlayedCard;
+import ch.mbaumeler.jass.core.game.Card;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 
 public class FirstPlayerStrategyTest {
@@ -30,16 +30,16 @@ public class FirstPlayerStrategyTest {
 	private FirstPlayerStrategy firstPlayerStrategy;
 
 	private Match match;
-	private List<PlayedCard> cardsInHand;
-	private List<PlayedCard> cardsOnTable;
+	private List<Card> cardsInHand;
+	private List<Card> cardsOnTable;
 
 	@Before
 	public void setup() {
 		firstPlayerStrategy = new FirstPlayerStrategy();
-		cardsInHand = new ArrayList<PlayedCard>();
-		cardsOnTable = new ArrayList<PlayedCard>();
+		cardsInHand = new ArrayList<Card>();
+		cardsOnTable = new ArrayList<Card>();
 		match = mock(Match.class);
-		when(match.isCardPlayable(any(PlayedCard.class))).thenReturn(true);
+		when(match.isCardPlayable(any(Card.class))).thenReturn(true);
 		when(match.getCardsOnTable()).thenReturn(cardsOnTable);
 		when(match.getCards(any(PlayerToken.class))).thenReturn(cardsInHand);
 		when(match.getAnsage()).thenReturn(new Ansage(CardSuit.HEARTS));
@@ -50,7 +50,7 @@ public class FirstPlayerStrategyTest {
 		cardsInHand.add(DIAMONDS_EIGHT);
 		cardsInHand.add(DIAMONDS_JACK);
 
-		PlayedCard card = firstPlayerStrategy.getPlayableCard(cardsInHand, match);
+		Card card = firstPlayerStrategy.getPlayableCard(cardsInHand, match);
 		assertEquals(DIAMONDS_JACK, card);
 	}
 
@@ -60,7 +60,7 @@ public class FirstPlayerStrategyTest {
 		cardsInHand.add(HEARTS_JACK);
 		cardsInHand.add(DIAMONDS_QUEEN);
 
-		PlayedCard card = firstPlayerStrategy.getPlayableCard(cardsInHand, match);
+		Card card = firstPlayerStrategy.getPlayableCard(cardsInHand, match);
 
 		assertEquals(HEARTS_JACK, card);
 	}
@@ -70,7 +70,7 @@ public class FirstPlayerStrategyTest {
 		cardsInHand.add(DIAMONDS_ACE);
 		cardsInHand.add(DIAMONDS_QUEEN);
 
-		PlayedCard card = firstPlayerStrategy.getPlayableCard(cardsInHand, match);
+		Card card = firstPlayerStrategy.getPlayableCard(cardsInHand, match);
 
 		assertEquals(DIAMONDS_ACE, card);
 	}
@@ -80,7 +80,7 @@ public class FirstPlayerStrategyTest {
 		cardsInHand.add(DIAMONDS_ACE);
 		cardsInHand.add(DIAMONDS_QUEEN);
 		cardsInHand.add(HEARTS_SIX);
-		PlayedCard card = firstPlayerStrategy.getPlayableCard(cardsInHand, match);
+		Card card = firstPlayerStrategy.getPlayableCard(cardsInHand, match);
 
 		assertEquals(HEARTS_SIX, card);
 	}
@@ -88,7 +88,7 @@ public class FirstPlayerStrategyTest {
 	@Test
 	public void testIsResponsibleFor() {
 		@SuppressWarnings("unchecked")
-		List<PlayedCard> cardsOnTableMock = mock(List.class);
+		List<Card> cardsOnTableMock = mock(List.class);
 
 		when(cardsOnTableMock.size()).thenReturn(0);
 		assertTrue(firstPlayerStrategy.isResponsible(cardsOnTableMock));

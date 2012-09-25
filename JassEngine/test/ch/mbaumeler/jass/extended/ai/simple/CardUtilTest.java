@@ -19,7 +19,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ch.mbaumeler.jass.core.card.CardSuit;
-import ch.mbaumeler.jass.core.game.PlayedCard;
+import ch.mbaumeler.jass.core.game.Card;
 
 public class CardUtilTest {
 
@@ -32,8 +32,8 @@ public class CardUtilTest {
 
 	@Test
 	public void testCreateCardMap() {
-		List<PlayedCard> cards = Arrays.asList(DIAMONDS_ACE, DIAMONDS_KING, HEARTS_JACK, CLUBS_EIGHT, SPADES_SIX);
-		Map<CardSuit, List<PlayedCard>> map = cardUtil.createCardMap(cards);
+		List<Card> cards = Arrays.asList(DIAMONDS_ACE, DIAMONDS_KING, HEARTS_JACK, CLUBS_EIGHT, SPADES_SIX);
+		Map<CardSuit, List<Card>> map = cardUtil.createCardMap(cards);
 		assertEquals(4, map.size());
 		assertEquals(2, map.get(DIAMONDS).size());
 		assertEquals(1, map.get(HEARTS).size());
@@ -43,8 +43,8 @@ public class CardUtilTest {
 
 	@Test
 	public void testCreateCardMapWithEmptySuites() {
-		List<PlayedCard> cards = Arrays.asList(DIAMONDS_ACE, DIAMONDS_KING);
-		Map<CardSuit, List<PlayedCard>> map = cardUtil.createCardMap(cards);
+		List<Card> cards = Arrays.asList(DIAMONDS_ACE, DIAMONDS_KING);
+		Map<CardSuit, List<Card>> map = cardUtil.createCardMap(cards);
 		assertEquals(4, map.size());
 		assertEquals(2, map.get(DIAMONDS).size());
 		assertEquals(0, map.get(HEARTS).size());

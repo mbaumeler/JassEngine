@@ -23,18 +23,18 @@ import org.junit.Test;
 public class JassRulesTest {
 
 	private JassRules jassRules;
-	private List<PlayedCard> cardsOnTable;
+	private List<Card> cardsOnTable;
 
 	@Before
 	public void setUp() throws Exception {
 		jassRules = new JassRules();
-		cardsOnTable = new ArrayList<PlayedCard>();
+		cardsOnTable = new ArrayList<Card>();
 		jassRules.scoreUtil = new ScoreUtil();
 	}
 
 	@Test
 	public void testNoTrumpfIsChoosen() {
-		List<PlayedCard> cardsInHand = Arrays.asList(SPADES_SIX, HEARTS_KING);
+		List<Card> cardsInHand = Arrays.asList(SPADES_SIX, HEARTS_KING);
 		assertFalse(jassRules.isCardPlayable(HEARTS_KING, cardsInHand, cardsOnTable, null, false));
 	}
 
@@ -43,7 +43,7 @@ public class JassRulesTest {
 
 		cardsOnTable.add(DIAMONDS_SIX);
 
-		List<PlayedCard> cardsInHand = Arrays.asList(SPADES_SIX, HEARTS_KING);
+		List<Card> cardsInHand = Arrays.asList(SPADES_SIX, HEARTS_KING);
 		assertFalse(jassRules.isCardPlayable(DIAMONDS_NINE, cardsInHand, cardsOnTable, new Ansage(DIAMONDS), false));
 	}
 
@@ -52,13 +52,13 @@ public class JassRulesTest {
 
 		cardsOnTable.add(DIAMONDS_SIX);
 
-		List<PlayedCard> cardsInHand = Arrays.asList(SPADES_SIX, HEARTS_KING);
+		List<Card> cardsInHand = Arrays.asList(SPADES_SIX, HEARTS_KING);
 		assertTrue(jassRules.isCardPlayable(HEARTS_KING, cardsInHand, cardsOnTable, new Ansage(HEARTS), false));
 	}
 
 	@Test
 	public void testIsNewRound() {
-		List<PlayedCard> cardsInHand = Arrays.asList(SPADES_SIX, HEARTS_KING);
+		List<Card> cardsInHand = Arrays.asList(SPADES_SIX, HEARTS_KING);
 		assertTrue(jassRules.isCardPlayable(HEARTS_KING, cardsInHand, cardsOnTable, new Ansage(DIAMONDS), true));
 	}
 
@@ -66,7 +66,7 @@ public class JassRulesTest {
 	public void testIsSameSuit() {
 
 		cardsOnTable.add(HEARTS_SIX);
-		List<PlayedCard> cardsInHand = Arrays.asList(SPADES_SIX, HEARTS_KING);
+		List<Card> cardsInHand = Arrays.asList(SPADES_SIX, HEARTS_KING);
 		assertTrue(jassRules.isCardPlayable(HEARTS_KING, cardsInHand, cardsOnTable, new Ansage(DIAMONDS), false));
 	}
 
@@ -74,7 +74,7 @@ public class JassRulesTest {
 	public void testDoesNotHaveSameColor() {
 
 		cardsOnTable.add(DIAMONDS_SIX);
-		List<PlayedCard> cardsInHand = Arrays.asList(SPADES_SIX, HEARTS_KING);
+		List<Card> cardsInHand = Arrays.asList(SPADES_SIX, HEARTS_KING);
 		assertTrue(jassRules.isCardPlayable(HEARTS_KING, cardsInHand, cardsOnTable, new Ansage(DIAMONDS), false));
 	}
 
@@ -82,14 +82,14 @@ public class JassRulesTest {
 	public void testWouldHaveSameColor() {
 
 		cardsOnTable.add(SPADES_SEVEN);
-		List<PlayedCard> cardsInHand = Arrays.asList(SPADES_SIX, HEARTS_KING);
+		List<Card> cardsInHand = Arrays.asList(SPADES_SIX, HEARTS_KING);
 		assertFalse(jassRules.isCardPlayable(HEARTS_KING, cardsInHand, cardsOnTable, new Ansage(DIAMONDS), false));
 	}
 
 	@Test
 	public void testUndeUfe() {
 		cardsOnTable.add(SPADES_SEVEN);
-		List<PlayedCard> cardsInHand = Arrays.asList(SPADES_SIX, HEARTS_KING);
+		List<Card> cardsInHand = Arrays.asList(SPADES_SIX, HEARTS_KING);
 		assertTrue(jassRules.isCardPlayable(SPADES_SIX, cardsInHand, cardsOnTable, new Ansage(UNDEUFE), false));
 	}
 
@@ -97,15 +97,15 @@ public class JassRulesTest {
 	public void testUndeUfe_notPlayable() {
 
 		cardsOnTable.add(SPADES_SEVEN);
-		List<PlayedCard> cardsInHand = Arrays.asList(SPADES_SIX, HEARTS_KING);
+		List<Card> cardsInHand = Arrays.asList(SPADES_SIX, HEARTS_KING);
 		assertFalse(jassRules.isCardPlayable(HEARTS_KING, cardsInHand, cardsOnTable, new Ansage(UNDEUFE), false));
 	}
 
 	@Test
 	public void testUnterTrumpfenNotAllowed() {
-		List<PlayedCard> cardsInHand = Arrays.asList(SPADES_SIX, HEARTS_KING);
+		List<Card> cardsInHand = Arrays.asList(SPADES_SIX, HEARTS_KING);
 		Ansage heartsAnsage = new Ansage(HEARTS);
-		cardsOnTable = new ArrayList<PlayedCard>();
+		cardsOnTable = new ArrayList<Card>();
 		cardsOnTable.add(SPADES_SEVEN);
 		cardsOnTable.add(HEARTS_ACE);
 
@@ -114,9 +114,9 @@ public class JassRulesTest {
 
 	@Test
 	public void testUeberTrumpfenAllowed() {
-		List<PlayedCard> cardsInHand = Arrays.asList(SPADES_SIX, HEARTS_ACE);
+		List<Card> cardsInHand = Arrays.asList(SPADES_SIX, HEARTS_ACE);
 		Ansage heartsAnsage = new Ansage(HEARTS);
-		cardsOnTable = new ArrayList<PlayedCard>();
+		cardsOnTable = new ArrayList<Card>();
 		cardsOnTable.add(SPADES_SEVEN);
 		cardsOnTable.add(HEARTS_KING);
 
@@ -125,9 +125,9 @@ public class JassRulesTest {
 
 	@Test
 	public void testUnterTrumpfenAllowed() {
-		List<PlayedCard> cardsInHand = Arrays.asList(HEARTS_KING);
+		List<Card> cardsInHand = Arrays.asList(HEARTS_KING);
 		Ansage heartsAnsage = new Ansage(HEARTS);
-		cardsOnTable = new ArrayList<PlayedCard>();
+		cardsOnTable = new ArrayList<Card>();
 		cardsOnTable.add(SPADES_SEVEN);
 		cardsOnTable.add(HEARTS_ACE);
 

@@ -12,11 +12,13 @@ import org.junit.Test;
 
 import ch.mbaumeler.jass.core.CardFactory;
 import ch.mbaumeler.jass.core.Game;
+import ch.mbaumeler.jass.core.JassEngine;
 import ch.mbaumeler.jass.core.Match;
+import ch.mbaumeler.jass.core.MatchState;
 import ch.mbaumeler.jass.core.bootstrap.JassModule;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.game.Ansage;
-import ch.mbaumeler.jass.core.game.PlayedCard;
+import ch.mbaumeler.jass.core.game.Card;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.core.game.ScoreUtil;
 import ch.mbaumeler.jass.core.game.impl.GameImpl;
@@ -52,8 +54,8 @@ public class MatchIntegrationTest {
 		assertEquals(9, match.getCards(playerList.get(0)).size());
 		assertEquals(9, match.getCards(playerList.get(0)).size());
 
-		PlayedCard firstP1 = match.getCards(playerList.get(0)).get(0);
-		PlayedCard firstP2 = match.getCards(playerList.get(1)).get(0);
+		Card firstP1 = match.getCards(playerList.get(0)).get(0);
+		Card firstP2 = match.getCards(playerList.get(1)).get(0);
 		assertFalse(firstP1.equals(firstP2));
 	}
 
@@ -65,7 +67,7 @@ public class MatchIntegrationTest {
 	@Test
 	public void testPlayFirstCard() {
 		assertEquals(0, match.getCardsOnTable().size());
-		PlayedCard cardToPlay = match.getCards(playerList.get(0)).get(0);
+		Card cardToPlay = match.getCards(playerList.get(0)).get(0);
 		match.setAnsage(DEFAULT_ANSAGE);
 		match.playCard(cardToPlay);
 		assertEquals(8, match.getCards(playerList.get(0)).size());
@@ -79,17 +81,17 @@ public class MatchIntegrationTest {
 		assertTrue(match.isComplete());
 		ScoreUtil scoreUtil = new ScoreUtil();
 		for (int i = 0; i < 8; i++) {
-			List<PlayedCard> cards = match.getCardsFromRound(i);
+			List<Card> cards = match.getCardsFromRound(i);
 
-			PlayedCard winnerCard = scoreUtil.getWinnerCard(cards, DEFAULT_ANSAGE);
-			PlayedCard firstPlayerNextRound = match.getCardsFromRound(i + 1).get(0);
+			Card winnerCard = scoreUtil.getWinnerCard(cards, DEFAULT_ANSAGE);
+			Card firstPlayerNextRound = match.getCardsFromRound(i + 1).get(0);
 			assertEquals(winnerCard.getPlayer(), firstPlayerNextRound.getPlayer());
 		}
 	}
 
 	@Test
 	public void testPlayCardFromOtherPlayer() {
-		PlayedCard cardFromPlayer2 = match.getCards(playerList.get(2)).get(0);
+		Card cardFromPlayer2 = match.getCards(playerList.get(2)).get(0);
 		match.setAnsage(new Ansage(CardSuit.HEARTS));
 
 		try {
@@ -101,14 +103,26 @@ public class MatchIntegrationTest {
 	}
 
 	@Test
+	public void testStoreMatchState() {
+		playAllCards();
+		MatchState matchState = match.createMatchState();
+		Match createdMatch = new JassEngine().createMatchFromMatchState(matchState);
+		assertEquals(match.isComplete(), createdMatch.isComplete());
+		assertEquals(match.getAnsage(), createdMatch.getAnsage());
+		for (int i = 0; i < match.getRoundsCompleted(); i++) {
+			assertEquals(match.getCardsFromRound(i), createdMatch.getCardsFromRound(i));
+		}
+	}
+
+	@Test
 	public void testPlayRound() {
 		assertFalse(match.isComplete());
 		playAllCards();
 		assertTrue(match.isComplete());
 	}
 
-	private PlayedCard getFirstPlayableCard(List<PlayedCard> cards) {
-		for (PlayedCard card : cards) {
+	private Card getFirstPlayableCard(List<Card> cards) {
+		for (Card card : cards) {
 			if (match.isCardPlayable(card)) {
 				return card;
 			}
@@ -125,7 +139,7 @@ public class MatchIntegrationTest {
 				assertEquals(player, scoreUtil.getWinnerCard(match.getCardsFromRound((i - 1) / 4), match.getAnsage())
 						.getPlayer());
 			}
-			PlayedCard card = getFirstPlayableCard(match.getCards(player));
+			Card card = getFirstPlayableCard(match.getCards(player));
 			match.playCard(card);
 		}
 	}

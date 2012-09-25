@@ -4,8 +4,9 @@ import java.util.List;
 import java.util.Set;
 
 import ch.mbaumeler.jass.core.Match;
+import ch.mbaumeler.jass.core.MatchState;
 import ch.mbaumeler.jass.core.game.Ansage;
-import ch.mbaumeler.jass.core.game.PlayedCard;
+import ch.mbaumeler.jass.core.game.Card;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.core.game.Score;
 import ch.mbaumeler.jass.core.game.wys.Wys;
@@ -25,12 +26,12 @@ public class ObserverableMatch implements Match {
 	}
 
 	@Override
-	public List<PlayedCard> getCards(PlayerToken player) {
+	public List<Card> getCards(PlayerToken player) {
 		return delegate.getCards(player);
 	}
 
 	@Override
-	public List<PlayedCard> getCardsOnTable() {
+	public List<Card> getCardsOnTable() {
 		return delegate.getCardsOnTable();
 	}
 
@@ -51,17 +52,17 @@ public class ObserverableMatch implements Match {
 	}
 
 	@Override
-	public boolean isCardPlayable(PlayedCard card) {
+	public boolean isCardPlayable(Card card) {
 		return delegate.isCardPlayable(card);
 	}
 
 	@Override
-	public List<PlayedCard> getCardsFromRound(int i) {
+	public List<Card> getCardsFromRound(int i) {
 		return delegate.getCardsFromRound(i);
 	}
 
 	@Override
-	public void playCard(PlayedCard card) {
+	public void playCard(Card card) {
 		delegate.playCard(card);
 		observerRepository.notifyObservers();
 	}
@@ -96,6 +97,11 @@ public class ObserverableMatch implements Match {
 	@Override
 	public boolean isGeschoben() {
 		return delegate.isGeschoben();
+	}
+
+	@Override
+	public MatchState createMatchState() {
+		return delegate.createMatchState();
 	}
 
 }

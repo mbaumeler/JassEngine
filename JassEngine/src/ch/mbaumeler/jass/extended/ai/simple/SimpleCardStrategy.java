@@ -3,11 +3,11 @@ package ch.mbaumeler.jass.extended.ai.simple;
 import java.util.List;
 
 import ch.mbaumeler.jass.core.Match;
-import ch.mbaumeler.jass.core.game.PlayedCard;
+import ch.mbaumeler.jass.core.game.Card;
 
 public interface SimpleCardStrategy {
 
-	PlayedCard getPlayableCard(List<PlayedCard> cardsInHand, Match match);
+	Card getPlayableCard(List<Card> cardsInHand, Match match);
 
-	boolean isResponsible(List<PlayedCard> cardsOnTable);
+	boolean isResponsible(List<Card> cardsOnTable);
 }

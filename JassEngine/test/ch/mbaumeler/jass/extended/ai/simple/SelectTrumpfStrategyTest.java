@@ -32,7 +32,7 @@ import org.junit.Test;
 
 import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.game.Ansage;
-import ch.mbaumeler.jass.core.game.PlayedCard;
+import ch.mbaumeler.jass.core.game.Card;
 
 public class SelectTrumpfStrategyTest {
 
@@ -47,7 +47,7 @@ public class SelectTrumpfStrategyTest {
 
 	@Test
 	public void testGetTrumpfOnlyOneHearts() {
-		List<PlayedCard> cards = Arrays.asList(HEARTS_ACE, HEARTS_KING, HEARTS_QUEEN, HEARTS_JACK, HEARTS_TEN,
+		List<Card> cards = Arrays.asList(HEARTS_ACE, HEARTS_KING, HEARTS_QUEEN, HEARTS_JACK, HEARTS_TEN,
 				HEARTS_NINE, HEARTS_EIGHT, HEARTS_SEVEN, HEARTS_SIX);
 
 		when(matchMock.getCards(null)).thenReturn(cards);
@@ -58,7 +58,7 @@ public class SelectTrumpfStrategyTest {
 	@Test
 	public void testGetTrumpfJackNineAce() {
 
-		List<PlayedCard> cards = Arrays.asList(HEARTS_ACE, SPADES_KING, SPADES_QUEEN, HEARTS_JACK, SPADES_TEN,
+		List<Card> cards = Arrays.asList(HEARTS_ACE, SPADES_KING, SPADES_QUEEN, HEARTS_JACK, SPADES_TEN,
 				HEARTS_NINE, SPADES_EIGHT, SPADES_SEVEN, SPADES_SIX);
 
 		when(matchMock.getCards(null)).thenReturn(cards);
@@ -69,7 +69,7 @@ public class SelectTrumpfStrategyTest {
 	@Test
 	public void testDifferentCards() {
 
-		List<PlayedCard> cards = Arrays.asList(DIAMONDS_JACK, DIAMONDS_NINE, CLUBS_TEN, HEARTS_TEN, HEARTS_QUEEN,
+		List<Card> cards = Arrays.asList(DIAMONDS_JACK, DIAMONDS_NINE, CLUBS_TEN, HEARTS_TEN, HEARTS_QUEEN,
 				SPADES_TEN, SPADES_QUEEN, SPADES_KING);
 
 		when(matchMock.getCards(null)).thenReturn(cards);

@@ -16,7 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ch.mbaumeler.jass.core.game.Ansage;
-import ch.mbaumeler.jass.core.game.PlayedCard;
+import ch.mbaumeler.jass.core.game.Card;
 
 public class MostValueComporatorTest {
 
@@ -29,8 +29,8 @@ public class MostValueComporatorTest {
 
 	@Test
 	public void test() {
-		List<PlayedCard> cardsInput = Arrays.asList(DIAMONDS_QUEEN, DIAMONDS_TEN, DIAMONDS_EIGHT, DIAMONDS_ACE);
-		List<PlayedCard> expected = Arrays.asList(DIAMONDS_ACE, DIAMONDS_TEN, DIAMONDS_QUEEN, DIAMONDS_EIGHT);
+		List<Card> cardsInput = Arrays.asList(DIAMONDS_QUEEN, DIAMONDS_TEN, DIAMONDS_EIGHT, DIAMONDS_ACE);
+		List<Card> expected = Arrays.asList(DIAMONDS_ACE, DIAMONDS_TEN, DIAMONDS_QUEEN, DIAMONDS_EIGHT);
 
 		assertFalse(cardsInput.equals(expected));
 		Collections.sort(cardsInput, mostValueComporator);

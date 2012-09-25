@@ -13,7 +13,7 @@ import ch.mbaumeler.jass.core.Game;
 import ch.mbaumeler.jass.core.JassEngine;
 import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.game.Ansage;
-import ch.mbaumeler.jass.core.game.PlayedCard;
+import ch.mbaumeler.jass.core.game.Card;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.core.game.Score;
 
@@ -80,9 +80,9 @@ public class GameImplTest {
 		}
 	}
 
-	private PlayedCard getFirstPlayableCard(Match match, List<PlayedCard> cards) {
+	private Card getFirstPlayableCard(Match match, List<Card> cards) {
 
-		for (PlayedCard card : cards) {
+		for (Card card : cards) {
 			if (match.isCardPlayable(card)) {
 				return card;
 			}

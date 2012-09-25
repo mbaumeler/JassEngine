@@ -137,8 +137,8 @@ public class ScoreUtilTest {
 	public void testScoreForAnsage() {
 		Ansage ansage = new Ansage(HEARTS);
 		PlayerToken player = playerTokenRepository.getTeam1().get(0);
-		List<PlayedCard> cardsFromRound = new ArrayList<PlayedCard>();
-		PlayedCard winnerCard = CLUBS_JACK;
+		List<Card> cardsFromRound = new ArrayList<Card>();
+		Card winnerCard = CLUBS_JACK;
 		cardsFromRound.add(winnerCard);
 
 		when(matchMock.getRoundsCompleted()).thenReturn(1);
@@ -157,8 +157,8 @@ public class ScoreUtilTest {
 	public void testScoreForLastRound() {
 		Ansage ansage = new Ansage(HEARTS);
 		PlayerToken player = playerTokenRepository.getTeam1().get(0);
-		List<PlayedCard> cardsFromRound = new ArrayList<PlayedCard>();
-		PlayedCard winnerCard = CLUBS_JACK;
+		List<Card> cardsFromRound = new ArrayList<Card>();
+		Card winnerCard = CLUBS_JACK;
 		cardsFromRound.add(winnerCard);
 
 		when(matchMock.getRoundsCompleted()).thenReturn(1);
@@ -179,10 +179,10 @@ public class ScoreUtilTest {
 		Ansage ansage = new Ansage(DIAMONDS);
 
 		when(matchMock.getRoundsCompleted()).thenReturn(9);
-		List<PlayedCard> cards = createSortedDeck();
+		List<Card> cards = createSortedDeck();
 
 		for (int i = 0; i < 9; i++) {
-			List<PlayedCard> cardsFromRound = new ArrayList<PlayedCard>();
+			List<Card> cardsFromRound = new ArrayList<Card>();
 			cardsFromRound.add(cards.get(0 + i));
 			cardsFromRound.add(cards.get(9 + i));
 			cardsFromRound.add(cards.get(18 + i));
@@ -206,10 +206,10 @@ public class ScoreUtilTest {
 		Ansage ansage = new Ansage(SPADES);
 
 		when(matchMock.getRoundsCompleted()).thenReturn(9);
-		List<PlayedCard> cards = createSortedDeck();
+		List<Card> cards = createSortedDeck();
 
 		for (int i = 0; i < 9; i++) {
-			List<PlayedCard> cardsFromRound = new ArrayList<PlayedCard>();
+			List<Card> cardsFromRound = new ArrayList<Card>();
 			cardsFromRound.add(cards.get(0 + i));
 			cardsFromRound.add(cards.get(9 + i));
 			cardsFromRound.add(cards.get(18 + i));
@@ -228,8 +228,8 @@ public class ScoreUtilTest {
 
 	}
 
-	private List<PlayedCard> createSortedDeck() {
-		List<PlayedCard> result = new ArrayList<PlayedCard>(36);
+	private List<Card> createSortedDeck() {
+		List<Card> result = new ArrayList<Card>(36);
 		result.addAll(sortedDeck(DIAMONDS, PlayerToken.PLAYER0));
 		result.addAll(sortedDeck(SPADES, PlayerToken.PLAYER1));
 		result.addAll(sortedDeck(HEARTS, PlayerToken.PLAYER2));
@@ -237,112 +237,112 @@ public class ScoreUtilTest {
 		return result;
 	}
 
-	private List<PlayedCard> sortedDeck(CardSuit cardSuit, PlayerToken playerToken) {
-		List<PlayedCard> result = new ArrayList<PlayedCard>();
+	private List<Card> sortedDeck(CardSuit cardSuit, PlayerToken playerToken) {
+		List<Card> result = new ArrayList<Card>();
 
 		for (CardValue value : CardValue.values()) {
-			result.add(new PlayedCard(cardSuit, value, playerToken));
+			result.add(new Card(cardSuit, value, playerToken));
 		}
 		return result;
 	}
 
 	@Test
 	public void testGetWinnerCardTrumpf() {
-		PlayedCard card0 = CLUBS_KING;
-		PlayedCard card1 = HEARTS_ACE;
-		PlayedCard card2 = CLUBS_NINE;
-		PlayedCard card3 = DIAMONDS_SIX;
-		List<PlayedCard> cards = Arrays.asList(card0, card1, card2, card3);
+		Card card0 = CLUBS_KING;
+		Card card1 = HEARTS_ACE;
+		Card card2 = CLUBS_NINE;
+		Card card3 = DIAMONDS_SIX;
+		List<Card> cards = Arrays.asList(card0, card1, card2, card3);
 		assertEquals(card3, scoreUtil.getWinnerCard(cards, new Ansage(CardSuit.DIAMONDS)));
 	}
 
 	@Test
 	public void testGetWinnerCardNotTrumpf() {
-		PlayedCard card0 = CLUBS_KING;
-		PlayedCard card1 = CLUBS_ACE;
-		PlayedCard card2 = CLUBS_NINE;
-		PlayedCard card3 = CLUBS_SIX;
-		List<PlayedCard> cards = Arrays.asList(card0, card1, card2, card3);
+		Card card0 = CLUBS_KING;
+		Card card1 = CLUBS_ACE;
+		Card card2 = CLUBS_NINE;
+		Card card3 = CLUBS_SIX;
+		List<Card> cards = Arrays.asList(card0, card1, card2, card3);
 		assertEquals(card1, scoreUtil.getWinnerCard(cards, new Ansage(CardSuit.SPADES)));
 	}
 
 	@Test
 	public void testGetWinnerOvertrumpfed() {
-		PlayedCard card0 = DIAMONDS_SEVEN;
-		PlayedCard card1 = CLUBS_ACE;
-		PlayedCard card2 = CLUBS_NINE;
-		PlayedCard card3 = DIAMONDS_EIGHT;
-		List<PlayedCard> cards = Arrays.asList(card0, card1, card2, card3);
+		Card card0 = DIAMONDS_SEVEN;
+		Card card1 = CLUBS_ACE;
+		Card card2 = CLUBS_NINE;
+		Card card3 = DIAMONDS_EIGHT;
+		List<Card> cards = Arrays.asList(card0, card1, card2, card3);
 		assertEquals(card2, scoreUtil.getWinnerCard(cards, ansage));
 	}
 
 	@Test
 	public void testGetWinnerWithTrumpf() {
-		PlayedCard card0 = DIAMONDS_SEVEN;
-		PlayedCard card1 = CLUBS_ACE;
-		PlayedCard card2 = CLUBS_NINE;
-		PlayedCard card3 = DIAMONDS_EIGHT;
-		List<PlayedCard> cards = Arrays.asList(card0, card1, card2, card3);
+		Card card0 = DIAMONDS_SEVEN;
+		Card card1 = CLUBS_ACE;
+		Card card2 = CLUBS_NINE;
+		Card card3 = DIAMONDS_EIGHT;
+		List<Card> cards = Arrays.asList(card0, card1, card2, card3);
 		assertEquals(card3, scoreUtil.getWinnerCard(cards, new Ansage(HEARTS)));
 	}
 
 	@Test
 	public void testGetWinnerWithTrumpf2() {
-		PlayedCard card0 = SPADES_JACK;
-		PlayedCard card1 = SPADES_EIGHT;
-		PlayedCard card2 = SPADES_SIX;
-		PlayedCard card3 = CLUBS_SIX;
-		List<PlayedCard> cards = Arrays.asList(card0, card1, card2, card3);
+		Card card0 = SPADES_JACK;
+		Card card1 = SPADES_EIGHT;
+		Card card2 = SPADES_SIX;
+		Card card3 = CLUBS_SIX;
+		List<Card> cards = Arrays.asList(card0, card1, card2, card3);
 		assertEquals(card3, scoreUtil.getWinnerCard(cards, ansage));
 	}
 
 	@Test
 	public void testGetWinnerWithTrumpfAtSecondPosition() {
-		PlayedCard card0 = SPADES_EIGHT;
-		PlayedCard card1 = HEARTS_QUEEN;
-		PlayedCard card2 = SPADES_SIX;
-		PlayedCard card3 = CLUBS_JACK;
-		List<PlayedCard> cards = Arrays.asList(card0, card1, card2, card3);
+		Card card0 = SPADES_EIGHT;
+		Card card1 = HEARTS_QUEEN;
+		Card card2 = SPADES_SIX;
+		Card card3 = CLUBS_JACK;
+		List<Card> cards = Arrays.asList(card0, card1, card2, card3);
 		assertEquals(card1, scoreUtil.getWinnerCard(cards, new Ansage(HEARTS)));
 	}
 
 	@Test
 	public void testGetWinnerWithTrumpfJack() {
-		PlayedCard card0 = HEARTS_NINE;
-		PlayedCard card1 = HEARTS_JACK;
-		PlayedCard card2 = SPADES_SIX;
-		PlayedCard card3 = HEARTS_ACE;
-		List<PlayedCard> cards = Arrays.asList(card0, card1, card2, card3);
+		Card card0 = HEARTS_NINE;
+		Card card1 = HEARTS_JACK;
+		Card card2 = SPADES_SIX;
+		Card card3 = HEARTS_ACE;
+		List<Card> cards = Arrays.asList(card0, card1, card2, card3);
 		assertEquals(card1, scoreUtil.getWinnerCard(cards, new Ansage(HEARTS)));
 	}
 
 	@Test
 	public void testGetWinnerHeartsButNotTrumpf() {
-		PlayedCard card0 = HEARTS_QUEEN;
-		PlayedCard card1 = CLUBS_EIGHT;
-		PlayedCard card2 = HEARTS_ACE;
-		PlayedCard card3 = HEARTS_TEN;
-		List<PlayedCard> cards = Arrays.asList(card0, card1, card2, card3);
+		Card card0 = HEARTS_QUEEN;
+		Card card1 = CLUBS_EIGHT;
+		Card card2 = HEARTS_ACE;
+		Card card3 = HEARTS_TEN;
+		List<Card> cards = Arrays.asList(card0, card1, card2, card3);
 		assertEquals(card1, scoreUtil.getWinnerCard(cards, ansage));
 	}
 
 	@Test
 	public void testGetWinnerUndeUfe() {
-		PlayedCard card0 = HEARTS_QUEEN;
-		PlayedCard card1 = CLUBS_EIGHT;
-		PlayedCard card2 = HEARTS_ACE;
-		PlayedCard card3 = HEARTS_TEN;
-		List<PlayedCard> cards = Arrays.asList(card0, card1, card2, card3);
+		Card card0 = HEARTS_QUEEN;
+		Card card1 = CLUBS_EIGHT;
+		Card card2 = HEARTS_ACE;
+		Card card3 = HEARTS_TEN;
+		List<Card> cards = Arrays.asList(card0, card1, card2, card3);
 		assertEquals(card3, scoreUtil.getWinnerCard(cards, new Ansage(UNDEUFE)));
 	}
 
 	@Test
 	public void testGetObenAbeUndeUfe() {
-		PlayedCard card0 = HEARTS_QUEEN;
-		PlayedCard card1 = CLUBS_EIGHT;
-		PlayedCard card2 = HEARTS_ACE;
-		PlayedCard card3 = HEARTS_TEN;
-		List<PlayedCard> cards = Arrays.asList(card0, card1, card2, card3);
+		Card card0 = HEARTS_QUEEN;
+		Card card1 = CLUBS_EIGHT;
+		Card card2 = HEARTS_ACE;
+		Card card3 = HEARTS_TEN;
+		List<Card> cards = Arrays.asList(card0, card1, card2, card3);
 		assertEquals(card2, scoreUtil.getWinnerCard(cards, new Ansage(OBENABE)));
 	}
 }

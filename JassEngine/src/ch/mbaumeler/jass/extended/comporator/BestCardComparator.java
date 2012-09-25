@@ -4,9 +4,9 @@ import java.util.Comparator;
 
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.game.Ansage;
-import ch.mbaumeler.jass.core.game.PlayedCard;
+import ch.mbaumeler.jass.core.game.Card;
 
-public class BestCardComparator implements Comparator<PlayedCard> {
+public class BestCardComparator implements Comparator<Card> {
 
 	private final Ansage ansage;
 	private final CardSuit suit;
@@ -17,11 +17,11 @@ public class BestCardComparator implements Comparator<PlayedCard> {
 	}
 
 	@Override
-	public int compare(PlayedCard card1, PlayedCard card2) {
+	public int compare(Card card1, Card card2) {
 		return suit != null ? compareSuitSensitiv(card1, card2) : compareSuitUnsensitiv(card1, card2);
 	}
 
-	private int compareSuitSensitiv(PlayedCard card1, PlayedCard card2) {
+	private int compareSuitSensitiv(Card card1, Card card2) {
 		if (isTrumpf(card1) && !isTrumpf(card2)) {
 			return -1;
 		} else if (!isTrumpf(card1) && isTrumpf(card2)) {
@@ -37,7 +37,7 @@ public class BestCardComparator implements Comparator<PlayedCard> {
 		}
 	}
 
-	private int compareSuitUnsensitiv(PlayedCard card1, PlayedCard card2) {
+	private int compareSuitUnsensitiv(Card card1, Card card2) {
 		if (isTrumpf(card1) && !isTrumpf(card2)) {
 			return -1;
 		} else if (!isTrumpf(card1) && isTrumpf(card2)) {
@@ -49,15 +49,15 @@ public class BestCardComparator implements Comparator<PlayedCard> {
 		}
 	}
 
-	private boolean isTrumpf(PlayedCard card) {
+	private boolean isTrumpf(Card card) {
 		return ansage.is(card.getSuit());
 	}
 
-	private boolean isSuit(PlayedCard card) {
+	private boolean isSuit(Card card) {
 		return card.getSuit().equals(suit);
 	}
 
-	private int getTrumpfValue(PlayedCard card) {
+	private int getTrumpfValue(Card card) {
 
 		switch (card.getValue()) {
 		case JACK:

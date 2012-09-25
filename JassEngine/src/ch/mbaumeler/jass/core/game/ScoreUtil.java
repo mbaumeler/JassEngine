@@ -64,11 +64,11 @@ public class ScoreUtil {
 		addScore(teamPlayer, wysStore, score);
 	}
 
-	public PlayedCard getWinnerCard(List<PlayedCard> cardsOnTable, Ansage ansage) {
+	public Card getWinnerCard(List<Card> cardsOnTable, Ansage ansage) {
 
-		PlayedCard currentWinner = cardsOnTable.get(0);
+		Card currentWinner = cardsOnTable.get(0);
 
-		for (PlayedCard playedCard : cardsOnTable) {
+		for (Card playedCard : cardsOnTable) {
 
 			switch (ansage.getSpielModi()) {
 			case TRUMPF:
@@ -94,14 +94,14 @@ public class ScoreUtil {
 		return currentWinner;
 	}
 
-	private boolean isHigher(Ansage ansage, PlayedCard playedCard, PlayedCard currentWinner) {
+	private boolean isHigher(Ansage ansage, Card playedCard, Card currentWinner) {
 		if (isTrumpf(ansage, playedCard) && !isTrumpf(ansage, currentWinner)) {
 			return true;
 		}
 		return getValue(ansage, playedCard) > getValue(ansage, currentWinner);
 	}
 
-	private int getValue(Ansage ansage, PlayedCard card) {
+	private int getValue(Ansage ansage, Card card) {
 		if (ansage.is(card.getSuit()) && card.getValue() == JACK) {
 			return 20;
 		}
@@ -112,11 +112,11 @@ public class ScoreUtil {
 		return card.getValue().ordinal();
 	}
 
-	private boolean isTrumpf(Ansage ansage, PlayedCard playedCard) {
+	private boolean isTrumpf(Ansage ansage, Card playedCard) {
 		return ansage.is(playedCard.getSuit());
 	}
 
-	private boolean isSameSuit(PlayedCard playedCard, PlayedCard playedCard2) {
+	private boolean isSameSuit(Card playedCard, Card playedCard2) {
 		return playedCard.getSuit().equals(playedCard2.getSuit());
 	}
 
@@ -138,7 +138,7 @@ public class ScoreUtil {
 	private void addScoreForAnsage(Match match, Score score) {
 		Ansage ansage = match.getAnsage();
 		for (int i = 0; i < match.getRoundsCompleted(); i++) {
-			List<PlayedCard> cardsFromRound = match.getCardsFromRound(i);
+			List<Card> cardsFromRound = match.getCardsFromRound(i);
 			PlayerToken winner = getWinnerCard(cardsFromRound, ansage).getPlayer();
 			int winnerScore = getScore(cardsFromRound, ansage);
 			score.addScore(winner, winnerScore);
@@ -151,16 +151,16 @@ public class ScoreUtil {
 		}
 	}
 
-	private int getScore(List<PlayedCard> cardsFromRound, Ansage trumpf) {
+	private int getScore(List<Card> cardsFromRound, Ansage trumpf) {
 		int totalScore = 0;
-		for (PlayedCard playedCard : cardsFromRound) {
+		for (Card playedCard : cardsFromRound) {
 			totalScore += scoreRules.getScore(playedCard, trumpf);
 		}
 		return totalScore;
 	}
 
 	private PlayerToken getWinnerlastRound(Match match) {
-		List<PlayedCard> cardsFromRound = match.getCardsFromRound(match.getRoundsCompleted() - 1);
+		List<Card> cardsFromRound = match.getCardsFromRound(match.getRoundsCompleted() - 1);
 		return getWinnerCard(cardsFromRound, match.getAnsage()).getPlayer();
 	}
 }

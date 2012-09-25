@@ -3,13 +3,13 @@ package ch.mbaumeler.jass.core.game;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.card.CardValue;
 
-public class PlayedCard {
+public class Card {
 
 	private final CardSuit cardSuit;
 	private final CardValue cardValue;
 	private final PlayerToken player;
 
-	public PlayedCard(CardSuit cardSuit, CardValue cardValue, PlayerToken player) {
+	public Card(CardSuit cardSuit, CardValue cardValue, PlayerToken player) {
 		this.cardSuit = cardSuit;
 		this.cardValue = cardValue;
 		this.player = player;
@@ -45,7 +45,7 @@ public class PlayedCard {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PlayedCard other = (PlayedCard) obj;
+		Card other = (Card) obj;
 		if (cardSuit != other.cardSuit)
 			return false;
 		if (cardValue != other.cardValue)

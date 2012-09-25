@@ -5,7 +5,7 @@ import static ch.mbaumeler.jass.core.game.Ansage.SpielModi.UNDEUFE;
 
 public class ScoreRules {
 
-	public int getScore(PlayedCard card, Ansage ansage) {
+	public int getScore(Card card, Ansage ansage) {
 
 		boolean isTrumpf = isTrumpf(card, ansage);
 		boolean isUndeUfe = ansage.getSpielModi() == UNDEUFE;
@@ -33,7 +33,7 @@ public class ScoreRules {
 		}
 	}
 
-	private boolean isTrumpf(PlayedCard card, Ansage ansage) {
+	private boolean isTrumpf(Card card, Ansage ansage) {
 		return ansage.is(card.getSuit());
 	}
 

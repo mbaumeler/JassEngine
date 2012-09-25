@@ -4,11 +4,11 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import ch.mbaumeler.jass.core.game.PlayedCard;
+import ch.mbaumeler.jass.core.game.Card;
 
 public class Wys {
 
-	private final Set<PlayedCard> cards;
+	private final Set<Card> cards;
 
 	private final WysTyp typ;
 
@@ -16,16 +16,16 @@ public class Wys {
 		STOECK, BLATT, VIER_GLEICHE
 	};
 
-	public Wys(Collection<PlayedCard> cards, WysTyp wysTyp) {
+	public Wys(Collection<Card> cards, WysTyp wysTyp) {
 		this.typ = wysTyp;
-		this.cards = new HashSet<PlayedCard>(cards);
+		this.cards = new HashSet<Card>(cards);
 	}
 
 	public WysTyp getTyp() {
 		return this.typ;
 	}
 
-	public Set<PlayedCard> getCards() {
+	public Set<Card> getCards() {
 		return cards;
 	}
 

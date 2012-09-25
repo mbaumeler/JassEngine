@@ -5,9 +5,10 @@ import java.util.List;
 import java.util.Set;
 
 import ch.mbaumeler.jass.core.Match;
+import ch.mbaumeler.jass.core.MatchState;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.JassRules;
-import ch.mbaumeler.jass.core.game.PlayedCard;
+import ch.mbaumeler.jass.core.game.Card;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.core.game.PlayerTokenRepository;
 import ch.mbaumeler.jass.core.game.Score;
@@ -38,7 +39,7 @@ public class MatchImpl implements Match {
 	/**
 	 * Map between players and the cards in their hands.
 	 */
-	private final List<PlayedCard> cards;
+	private final List<Card> cards;
 
 	/**
 	 * The players of the match.
@@ -48,7 +49,7 @@ public class MatchImpl implements Match {
 	/**
 	 * Stack of cards which where played.
 	 */
-	private final List<PlayedCard> playedCards = new ArrayList<PlayedCard>();
+	private final List<Card> playedCards;
 
 	/**
 	 * Util to get the score.
@@ -62,12 +63,12 @@ public class MatchImpl implements Match {
 	 */
 	private final int startingPlayerOffset;
 
-	private WysStore wysStore;
+	private final WysStore wysStore;
 
 	private boolean geschoben;
 
 	public MatchImpl(PlayerTokenRepository playerRepository, PlayerToken startingPlayer, ScoreUtil scoreUtil,
-			JassRules jassRules, List<PlayedCard> shuffledDeck, ScoreRules scoreRules, WysRules wysRule,
+			JassRules jassRules, List<Card> shuffledDeck, ScoreRules scoreRules, WysRules wysRule,
 			WysScoreRule wysScoreRule) {
 		this.playerTokenRepository = playerRepository;
 		List<PlayerToken> allPlayers = playerTokenRepository.getAll();
@@ -76,13 +77,27 @@ public class MatchImpl implements Match {
 		this.jassRules = jassRules;
 		this.wysStore = new WysStore(wysRule, wysScoreRule, this);
 		this.cards = shuffledDeck;
+		this.playedCards = new ArrayList<Card>();
+	}
+
+	public MatchImpl(MatchState matchState, PlayerTokenRepository playerRepository, ScoreUtil scoreUtil,
+			JassRules jassRules, ScoreRules scoreRules, WysRules wysRule, WysScoreRule wysScoreRule) {
+		this.playerTokenRepository = playerRepository;
+		this.scoreUtil = scoreUtil;
+		this.jassRules = jassRules;
+		this.startingPlayerOffset = matchState.getStartingPlayerOffset();
+		this.cards = matchState.getCards();
+		this.geschoben = matchState.isGeschoben();
+		this.playedCards = matchState.getPlayedCards();
+		this.wysStore = matchState.getWysStore();
+		this.ansage = matchState.getAnsage();
 	}
 
 	@Override
-	public List<PlayedCard> getCards(PlayerToken player) {
+	public List<Card> getCards(PlayerToken player) {
 
-		ArrayList<PlayedCard> cardsFromPlayer = new ArrayList<PlayedCard>();
-		for (PlayedCard playedCard : cards) {
+		ArrayList<Card> cardsFromPlayer = new ArrayList<Card>();
+		for (Card playedCard : cards) {
 			if (playedCard.getPlayer() == player) {
 				cardsFromPlayer.add(playedCard);
 			}
@@ -91,7 +106,7 @@ public class MatchImpl implements Match {
 	}
 
 	@Override
-	public List<PlayedCard> getCardsOnTable() {
+	public List<Card> getCardsOnTable() {
 
 		return playedCards.subList(getRoundsCompleted() * PLAYERS, playedCards.size());
 	}
@@ -128,23 +143,23 @@ public class MatchImpl implements Match {
 	}
 
 	private PlayerToken getWinnerlastRound() {
-		List<PlayedCard> cardsFromRound = getCardsFromRound(getRoundsCompleted() - 1);
+		List<Card> cardsFromRound = getCardsFromRound(getRoundsCompleted() - 1);
 		return scoreUtil.getWinnerCard(cardsFromRound, ansage).getPlayer();
 	}
 
 	@Override
-	public boolean isCardPlayable(PlayedCard card) {
+	public boolean isCardPlayable(Card card) {
 		return jassRules.isCardPlayable(card, getCards(getActivePlayer()), getCardsOnTable(), ansage,
 				isNewRoundStarted());
 	}
 
 	@Override
-	public List<PlayedCard> getCardsFromRound(int i) {
+	public List<Card> getCardsFromRound(int i) {
 		return playedCards.subList(i * PLAYERS, i * PLAYERS + PLAYERS);
 	}
 
 	@Override
-	public void playCard(PlayedCard card) {
+	public void playCard(Card card) {
 		if (card == null || !isCardPlayable(card)) {
 			throw new IllegalArgumentException("Card is not playable: " + card);
 		}
@@ -183,5 +198,10 @@ public class MatchImpl implements Match {
 	@Override
 	public boolean isGeschoben() {
 		return geschoben;
+	}
+
+	@Override
+	public MatchState createMatchState() {
+		return new MatchState(ansage, cards, playedCards, startingPlayerOffset, geschoben, wysStore);
 	}
 }

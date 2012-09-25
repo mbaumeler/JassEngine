@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ch.mbaumeler.jass.core.CardFactory;
-import ch.mbaumeler.jass.core.game.PlayedCard;
+import ch.mbaumeler.jass.core.game.Card;
 
 public class CardFactoryImplTest {
 
@@ -22,8 +22,8 @@ public class CardFactoryImplTest {
 
 	@Test
 	public void testCreateShuffledCards() {
-		List<PlayedCard> first = cardFactory.createShuffledCards();
-		List<PlayedCard> second = cardFactory.createShuffledCards();
+		List<Card> first = cardFactory.createShuffledCards();
+		List<Card> second = cardFactory.createShuffledCards();
 
 		assertNotNull(first);
 		assertNotNull(second);

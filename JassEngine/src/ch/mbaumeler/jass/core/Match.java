@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import ch.mbaumeler.jass.core.game.Ansage;
-import ch.mbaumeler.jass.core.game.PlayedCard;
+import ch.mbaumeler.jass.core.game.Card;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.core.game.Score;
 import ch.mbaumeler.jass.core.game.wys.Wys;
@@ -18,7 +18,7 @@ public interface Match {
 	 *            The player.
 	 * @return The cards in hand of the given player.
 	 */
-	List<PlayedCard> getCards(PlayerToken player);
+	List<Card> getCards(PlayerToken player);
 
 	/**
 	 * Returns a list of cards on the table. A list of cards between 0 and 4
@@ -27,7 +27,7 @@ public interface Match {
 	 * 
 	 * @return cards on the table.
 	 */
-	List<PlayedCard> getCardsOnTable();
+	List<Card> getCardsOnTable();
 
 	/**
 	 * Returns the ansage of the match. Might by null if no ansage is set.
@@ -59,7 +59,7 @@ public interface Match {
 	 *            Card to check.
 	 * @return true, if the card is playable by the active player.
 	 */
-	boolean isCardPlayable(PlayedCard card);
+	boolean isCardPlayable(Card card);
 
 	/**
 	 * Returns the card from round i.
@@ -68,7 +68,7 @@ public interface Match {
 	 *            0... completed rounds -1
 	 * @return the played cards for the search round.
 	 */
-	List<PlayedCard> getCardsFromRound(int i);
+	List<Card> getCardsFromRound(int i);
 
 	/**
 	 * Plays the given card.
@@ -76,7 +76,7 @@ public interface Match {
 	 * @param card
 	 *            Card to play.
 	 */
-	void playCard(PlayedCard card);
+	void playCard(Card card);
 
 	/**
 	 * Schiebt die Ansage.
@@ -117,5 +117,13 @@ public interface Match {
 	 * @return number of completed rounds.
 	 */
 	int getRoundsCompleted();
+
+	/**
+	 * Creates a match state to store the current state of the match in an
+	 * object.
+	 * 
+	 * @return current state of the match.
+	 */
+	MatchState createMatchState();
 
 }

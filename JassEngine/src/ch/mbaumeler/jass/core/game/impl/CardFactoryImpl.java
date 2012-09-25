@@ -8,22 +8,22 @@ import java.util.List;
 import ch.mbaumeler.jass.core.CardFactory;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.card.CardValue;
-import ch.mbaumeler.jass.core.game.PlayedCard;
+import ch.mbaumeler.jass.core.game.Card;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 
 public class CardFactoryImpl implements CardFactory {
 
 	@Override
-	public List<PlayedCard> createShuffledCards() {
+	public List<Card> createShuffledCards() {
 
-		List<PlayedCard> playedCards = new ArrayList<PlayedCard>();
+		List<Card> playedCards = new ArrayList<Card>();
 
 		List<PlayerToken> playerToken = shuffeldPlayerList();
 
 		int playerTokenIndex = 0;
 		for (CardValue value : shuffeldValues()) {
 			for (CardSuit cardSuit : CardSuit.values()) {
-				playedCards.add(new PlayedCard(cardSuit, value, playerToken.get(playerTokenIndex++)));
+				playedCards.add(new Card(cardSuit, value, playerToken.get(playerTokenIndex++)));
 			}
 		}
 		return playedCards;

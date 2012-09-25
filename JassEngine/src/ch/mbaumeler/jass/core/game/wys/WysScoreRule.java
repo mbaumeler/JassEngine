@@ -10,7 +10,7 @@ import static ch.mbaumeler.jass.core.card.CardValue.SEVEN;
 import static ch.mbaumeler.jass.core.card.CardValue.SIX;
 import static ch.mbaumeler.jass.core.card.CardValue.TEN;
 import ch.mbaumeler.jass.core.card.CardValue;
-import ch.mbaumeler.jass.core.game.PlayedCard;
+import ch.mbaumeler.jass.core.game.Card;
 
 public class WysScoreRule {
 
@@ -55,7 +55,7 @@ public class WysScoreRule {
 	}
 
 	private int getScoreForVierGleiche(Wys wys) {
-		PlayedCard firstCard = wys.getCards().iterator().next();
+		Card firstCard = wys.getCards().iterator().next();
 		if (isValue(firstCard, ACE, KING, QUEEN, TEN, EIGHT, SEVEN, SIX)) {
 			return 100;
 		} else if (isValue(firstCard, JACK)) {
@@ -66,7 +66,7 @@ public class WysScoreRule {
 			throw new IllegalArgumentException("Could not find score for: " + wys.getCards());
 	}
 
-	private boolean isValue(PlayedCard card, CardValue... value) {
+	private boolean isValue(Card card, CardValue... value) {
 		for (CardValue cardValue : value) {
 			if (card.getValue() == cardValue) {
 				return true;

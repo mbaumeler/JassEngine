@@ -14,18 +14,18 @@ public class JassRules {
 	@Inject
 	ScoreUtil scoreUtil;
 
-	public boolean isCardPlayable(PlayedCard card, List<PlayedCard> cardsInHand, List<PlayedCard> cardsOnTable,
+	public boolean isCardPlayable(Card card, List<Card> cardsInHand, List<Card> cardsOnTable,
 			Ansage trumpf, boolean isNewRoundStarted) {
 
 		return ansageSet(trumpf) && hasCardInHand(card, cardsInHand)
 				&& isAllowedToPlay(card, cardsInHand, cardsOnTable, trumpf, isNewRoundStarted);
 	}
 
-	private CardSuit getCurrentSuit(List<PlayedCard> cardsOnTable) {
+	private CardSuit getCurrentSuit(List<Card> cardsOnTable) {
 		return cardsOnTable.isEmpty() ? null : cardsOnTable.get(0).getSuit();
 	}
 
-	private boolean isAllowedToPlay(PlayedCard cardToPlay, List<PlayedCard> cardsInHand, List<PlayedCard> cardsOnTable,
+	private boolean isAllowedToPlay(Card cardToPlay, List<Card> cardsInHand, List<Card> cardsOnTable,
 			Ansage ansage, boolean isNewRoundStarted) {
 
 		CardSuit currentSuit = getCurrentSuit(cardsOnTable);
@@ -38,12 +38,12 @@ public class JassRules {
 		return ansage != null;
 	}
 
-	private boolean hasCardInHand(PlayedCard card, List<PlayedCard> cardsInHand) {
+	private boolean hasCardInHand(Card card, List<Card> cardsInHand) {
 		return cardsInHand.contains(card);
 	}
 
-	private boolean hasNotSameSuit(CardSuit suit, List<PlayedCard> cardsInHand, Ansage trumpf) {
-		for (PlayedCard card : cardsInHand) {
+	private boolean hasNotSameSuit(CardSuit suit, List<Card> cardsInHand, Ansage trumpf) {
+		for (Card card : cardsInHand) {
 			if (card.getSuit().equals(suit) && isNotTrumpfJack(card, trumpf)) {
 				return false;
 			}
@@ -51,20 +51,20 @@ public class JassRules {
 		return true;
 	}
 
-	private boolean isNotTrumpfJack(PlayedCard cardToPlay, Ansage trumpf) {
+	private boolean isNotTrumpfJack(Card cardToPlay, Ansage trumpf) {
 		return !(isTrumpf(cardToPlay, trumpf) && cardToPlay.getValue().equals(JACK));
 	}
 
-	private boolean isTrumpf(PlayedCard cardToPlay, Ansage ansage) {
+	private boolean isTrumpf(Card cardToPlay, Ansage ansage) {
 		return ansage.is(cardToPlay.getSuit());
 	}
 
-	private boolean isSameSuit(PlayedCard cardToPlay, CardSuit currentSuit) {
+	private boolean isSameSuit(Card cardToPlay, CardSuit currentSuit) {
 		return cardToPlay.getSuit().equals(currentSuit);
 	}
 
-	private boolean isTrumpfAndNotUnderTrumpf(PlayedCard cardToPlay, List<PlayedCard> cardsInHand,
-			List<PlayedCard> cardsOnTable, Ansage ansage) {
+	private boolean isTrumpfAndNotUnderTrumpf(Card cardToPlay, List<Card> cardsInHand,
+			List<Card> cardsOnTable, Ansage ansage) {
 
 		CardSuit currentSuit = getCurrentSuit(cardsOnTable);
 		if (isTrumpf(cardToPlay, ansage)) {
@@ -79,15 +79,15 @@ public class JassRules {
 		return false;
 	}
 
-	private boolean isNotUnterTrumpf(PlayedCard cardToPlay, Ansage ansage, List<PlayedCard> cardsOnTable) {
+	private boolean isNotUnterTrumpf(Card cardToPlay, Ansage ansage, List<Card> cardsOnTable) {
 
-		PlayedCard currentWinner = scoreUtil.getWinnerCard(cardsOnTable, ansage);
+		Card currentWinner = scoreUtil.getWinnerCard(cardsOnTable, ansage);
 
 		if (!ansage.is(currentWinner.getSuit())) {
 			return true;
 		}
 
-		List<PlayedCard> list = new ArrayList<PlayedCard>();
+		List<Card> list = new ArrayList<Card>();
 		list.add(currentWinner);
 		list.add(cardToPlay);
 		return currentWinner != scoreUtil.getWinnerCard(list, ansage);

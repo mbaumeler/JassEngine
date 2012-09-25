@@ -26,7 +26,7 @@ import org.junit.Test;
 import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.game.Ansage;
-import ch.mbaumeler.jass.core.game.PlayedCard;
+import ch.mbaumeler.jass.core.game.Card;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.core.game.impl.MatchImpl;
 
@@ -35,16 +35,16 @@ public class FourthPlayerStrategyTest {
 	private FourthPlayerStrategy fourthPlayerStrategy;
 
 	private Match match;
-	private List<PlayedCard> cardsInHand;
-	private List<PlayedCard> cardsOnTable;
+	private List<Card> cardsInHand;
+	private List<Card> cardsOnTable;
 
 	@Before
 	public void setup() {
 		fourthPlayerStrategy = new FourthPlayerStrategy();
-		cardsInHand = new ArrayList<PlayedCard>();
-		cardsOnTable = new ArrayList<PlayedCard>();
+		cardsInHand = new ArrayList<Card>();
+		cardsOnTable = new ArrayList<Card>();
 		match = mock(MatchImpl.class);
-		when(match.isCardPlayable(any(PlayedCard.class))).thenReturn(true);
+		when(match.isCardPlayable(any(Card.class))).thenReturn(true);
 		when(match.getCardsOnTable()).thenReturn(cardsOnTable);
 		when(match.getCards(any(PlayerToken.class))).thenReturn(cardsInHand);
 		when(match.getAnsage()).thenReturn(new Ansage(CardSuit.HEARTS));
@@ -58,7 +58,7 @@ public class FourthPlayerStrategyTest {
 		cardsInHand.add(DIAMONDS_EIGHT);
 		cardsInHand.add(DIAMONDS_TEN);
 		cardsInHand.add(DIAMONDS_QUEEN);
-		PlayedCard card = fourthPlayerStrategy.getPlayableCard(cardsInHand, match);
+		Card card = fourthPlayerStrategy.getPlayableCard(cardsInHand, match);
 		assertEquals(DIAMONDS_TEN, card);
 	}
 
@@ -70,13 +70,13 @@ public class FourthPlayerStrategyTest {
 		cardsInHand.add(SPADES_KING);
 		cardsInHand.add(SPADES_TEN);
 		cardsInHand.add(SPADES_SIX);
-		PlayedCard card = fourthPlayerStrategy.getPlayableCard(cardsInHand, match);
+		Card card = fourthPlayerStrategy.getPlayableCard(cardsInHand, match);
 		assertEquals(SPADES_TEN, card);
 	}
 
 	@Test
 	public void testLastPlayerPlaysWinningCardIfPossibleByPlayingTrumpf() {
-		PlayedCard currentWinnerCard = DIAMONDS_QUEEN;
+		Card currentWinnerCard = DIAMONDS_QUEEN;
 		cardsOnTable.add(currentWinnerCard);
 		cardsOnTable.add(DIAMONDS_SIX);
 		cardsOnTable.add(DIAMONDS_SEVEN);
@@ -84,13 +84,13 @@ public class FourthPlayerStrategyTest {
 		cardsInHand.add(HEARTS_SIX);
 		cardsInHand.add(SPADES_SIX);
 
-		PlayedCard card = fourthPlayerStrategy.getPlayableCard(cardsInHand, match);
+		Card card = fourthPlayerStrategy.getPlayableCard(cardsInHand, match);
 		assertEquals(HEARTS_SIX, card);
 	}
 
 	@Test
 	public void testLastPlayerPlaysLeastPossibleWinningCard() {
-		PlayedCard currentWinnerCard = DIAMONDS_QUEEN;
+		Card currentWinnerCard = DIAMONDS_QUEEN;
 		cardsOnTable.add(currentWinnerCard);
 		cardsOnTable.add(DIAMONDS_SIX);
 		cardsOnTable.add(DIAMONDS_SEVEN);
@@ -98,14 +98,14 @@ public class FourthPlayerStrategyTest {
 		cardsInHand.add(HEARTS_JACK);
 		cardsInHand.add(HEARTS_SIX);
 
-		PlayedCard card = fourthPlayerStrategy.getPlayableCard(cardsInHand, match);
+		Card card = fourthPlayerStrategy.getPlayableCard(cardsInHand, match);
 		assertEquals(HEARTS_SIX, card);
 	}
 
 	@Test
 	public void testIsResponsibleFor() {
 		@SuppressWarnings("unchecked")
-		List<PlayedCard> cardsOnTableMock = mock(List.class);
+		List<Card> cardsOnTableMock = mock(List.class);
 		when(cardsOnTableMock.size()).thenReturn(3);
 		assertTrue(fourthPlayerStrategy.isResponsible(cardsOnTableMock));
 		when(cardsOnTableMock.size()).thenReturn(0);
