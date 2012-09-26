@@ -21,7 +21,7 @@ import org.junit.Test;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
 
-public class CardUtilTest {
+/* REVIEW NEEDED */ public class CardUtilTest {
 
 	private CardUtil cardUtil;
 

@@ -126,4 +126,8 @@ public interface Match {
 	 */
 	MatchState createMatchState();
 
+	/**
+	 * Collects the card from the table.
+	 */
+	void collectCards();
 }

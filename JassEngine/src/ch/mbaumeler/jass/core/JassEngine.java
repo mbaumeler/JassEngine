@@ -7,7 +7,7 @@ import ch.mbaumeler.jass.core.game.impl.GameImpl;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-public class JassEngine {
+/* REVIEW NEEDED */ public class JassEngine {
 
 	private Injector injector;
 	private MatchFactory matchFactory;

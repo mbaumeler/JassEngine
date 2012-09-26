@@ -3,7 +3,7 @@ package ch.mbaumeler.jass.extended.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ObserverRepository {
+/* REVIEW NEEDED */ public class ObserverRepository {
 
 	private List<JassModelObserver> observers = new ArrayList<JassModelObserver>();
 

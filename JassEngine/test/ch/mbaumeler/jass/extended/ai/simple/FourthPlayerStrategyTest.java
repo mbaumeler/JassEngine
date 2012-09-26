@@ -30,7 +30,7 @@ import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.core.game.impl.MatchImpl;
 
-public class FourthPlayerStrategyTest {
+/* REVIEW NEEDED */ public class FourthPlayerStrategyTest {
 
 	private FourthPlayerStrategy fourthPlayerStrategy;
 

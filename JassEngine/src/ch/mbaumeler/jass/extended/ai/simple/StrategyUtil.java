@@ -14,7 +14,7 @@ import ch.mbaumeler.jass.core.game.ScoreUtil;
 import ch.mbaumeler.jass.extended.comporator.BestCardComparator;
 import ch.mbaumeler.jass.extended.comporator.MostValueComparator;
 
-public class StrategyUtil {
+/* REVIEW NEEDED */ public class StrategyUtil {
 
 	public Card getHighestCardOfSameColor(Card firstPlayedCard, Ansage trumpf, List<Card> cardsInHand) {
 		CardSuit suit = firstPlayedCard.getSuit();

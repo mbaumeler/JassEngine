@@ -36,7 +36,7 @@ import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.wys.Wys.WysTyp;
 
-public class WysRulesTest {
+/* REVIEW NEEDED */ public class WysRulesTest {
 
 	private WysRules wysRule;
 	private Ansage trumpf;

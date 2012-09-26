@@ -18,7 +18,7 @@ import org.junit.Test;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.wys.Wys.WysTyp;
 
-public class WysTest {
+/* REVIEW NEEDED */ public class WysTest {
 
 	@Test
 	public void testGetCards() {

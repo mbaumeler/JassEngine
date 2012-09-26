@@ -34,7 +34,7 @@ import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.Ansage;
 
-public class SelectTrumpfStrategyTest {
+/* REVIEW NEEDED */ public class SelectTrumpfStrategyTest {
 
 	private SelectTrumpfStrategy selectTrumpfStrategy;
 	private Match matchMock;

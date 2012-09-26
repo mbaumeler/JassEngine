@@ -5,7 +5,7 @@ import java.util.List;
 import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.Card;
 
-public class FirstPlayerStrategy implements SimpleCardStrategy {
+/* REVIEW NEEDED */ public class FirstPlayerStrategy implements SimpleCardStrategy {
 
 	private StrategyUtil strategyUtil = new StrategyUtil();
 

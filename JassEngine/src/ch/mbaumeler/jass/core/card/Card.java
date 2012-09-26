@@ -2,7 +2,7 @@ package ch.mbaumeler.jass.core.card;
 
 import ch.mbaumeler.jass.core.game.PlayerToken;
 
-public class Card {
+/* REVIEW NEEDED */ public class Card {
 
 	private final CardSuit cardSuit;
 	private final CardValue cardValue;

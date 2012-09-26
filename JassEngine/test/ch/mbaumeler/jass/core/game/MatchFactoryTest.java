@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import ch.mbaumeler.jass.core.game.impl.CardFactoryImpl;
 
-public class MatchFactoryTest {
+/* REVIEW NEEDED */ public class MatchFactoryTest {
 
 	private MatchFactory matchFactory;
 	private PlayerToken startingPlayer = PlayerToken.PLAYER0;

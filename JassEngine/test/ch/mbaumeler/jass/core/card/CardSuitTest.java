@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-public class CardSuitTest {
+/* REVIEW NEEDED */ public class CardSuitTest {
 
 	@Test
 	public void testNumberOfSuites() {

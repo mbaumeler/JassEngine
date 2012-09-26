@@ -23,7 +23,7 @@ import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.core.game.impl.MatchImpl;
 
-public class SecondPlayerStrategyTest {
+/* REVIEW NEEDED */ public class SecondPlayerStrategyTest {
 
 	private SecondPlayerStrategy secondPlayerStrategy;
 

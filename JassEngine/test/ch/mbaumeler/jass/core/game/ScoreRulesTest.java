@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ScoreRulesTest {
+/* REVIEW NEEDED */ public class ScoreRulesTest {
 
 	private ScoreRules scoreRules;
 	private Ansage ansage;

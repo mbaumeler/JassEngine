@@ -7,7 +7,7 @@ import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.Ansage;
 
-public class SecondPlayerStrategy implements SimpleCardStrategy {
+/* REVIEW NEEDED */ public class SecondPlayerStrategy implements SimpleCardStrategy {
 
 	private StrategyUtil strategyUtil = new StrategyUtil();
 

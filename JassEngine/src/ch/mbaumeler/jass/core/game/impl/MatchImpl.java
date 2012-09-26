@@ -19,17 +19,7 @@ import ch.mbaumeler.jass.core.game.wys.WysRules;
 import ch.mbaumeler.jass.core.game.wys.WysScoreRule;
 import ch.mbaumeler.jass.core.game.wys.WysStore;
 
-public class MatchImpl implements Match {
-
-	/**
-	 * Number of Cards in a deck.
-	 */
-	private static final int CARDS = 36;
-
-	/**
-	 * Number of players in a jass game.
-	 */
-	private static final int PLAYERS = 4;
+/* REVIEW NEEDED */public class MatchImpl implements Match {
 
 	/**
 	 * Current choosen trumpf.
@@ -49,7 +39,7 @@ public class MatchImpl implements Match {
 	/**
 	 * Stack of cards which where played.
 	 */
-	private final List<Card> playedCards;
+	private final List<Round> rounds;
 
 	/**
 	 * Util to get the score.
@@ -77,7 +67,8 @@ public class MatchImpl implements Match {
 		this.jassRules = jassRules;
 		this.wysStore = new WysStore(wysRule, wysScoreRule, this);
 		this.cards = shuffledDeck;
-		this.playedCards = new ArrayList<Card>();
+		this.rounds = new ArrayList<Round>();
+		this.rounds.add(new Round());
 	}
 
 	public MatchImpl(MatchState matchState, PlayerTokenRepository playerRepository, ScoreUtil scoreUtil,
@@ -88,7 +79,7 @@ public class MatchImpl implements Match {
 		this.startingPlayerOffset = matchState.getStartingPlayerOffset();
 		this.cards = matchState.getCards();
 		this.geschoben = matchState.isGeschoben();
-		this.playedCards = matchState.getPlayedCards();
+		this.rounds = matchState.getPlayedCards();
 		this.wysStore = new WysStore(wysRule, wysScoreRule, this, matchState.getWysMap(), matchState.getStoeckPlayer());
 		this.ansage = matchState.getAnsage();
 	}
@@ -107,12 +98,19 @@ public class MatchImpl implements Match {
 
 	@Override
 	public List<Card> getCardsOnTable() {
+		return getCurrentRound().getCards();
+	}
 
-		return playedCards.subList(getRoundsCompleted() * PLAYERS, playedCards.size());
+	private Round getCurrentRound() {
+		return rounds.get(rounds.size() - 1);
+	}
+
+	private Round getLastRound() {
+		return rounds.get(rounds.size() - 2);
 	}
 
 	private boolean isNewRoundStarted() {
-		return playedCards.size() % PLAYERS == 0;
+		return getCurrentRound().getCards().isEmpty();
 	}
 
 	@Override
@@ -130,20 +128,30 @@ public class MatchImpl implements Match {
 
 	@Override
 	public PlayerToken getActivePlayer() {
-
-		int index = playedCards.size();
-		boolean firstRound = getRoundsCompleted() == 0;
 		List<PlayerToken> allPlayers = playerTokenRepository.getAll();
-		index += (firstRound) ? startingPlayerOffset : allPlayers.indexOf(getWinnerlastRound());
-		PlayerToken activePlayer = allPlayers.get(index % 4);
-		if (ansage == null && isGeschoben()) {
-			return playerTokenRepository.getTeamPlayer(activePlayer);
+
+		PlayerToken activePlayer;
+		if (getRoundsCompleted() == 0 && getCurrentRound().isEmpty()) {
+			activePlayer = allPlayers.get(startingPlayerOffset);
+			if (ansage == null && isGeschoben()) {
+				return playerTokenRepository.getTeamPlayer(activePlayer);
+			}
+			return activePlayer;
+		} else {
+			if (getCurrentRound().isEmpty()) {
+				// Winner last round
+				return getWinnerlastRound();
+			} else {
+				Round round = getCurrentRound();
+				PlayerToken player = round.getLastPlayedCard().getPlayer();
+				int indexOf = allPlayers.indexOf(player);
+				return allPlayers.get((indexOf + 1) % 4);
+			}
 		}
-		return activePlayer;
 	}
 
 	private PlayerToken getWinnerlastRound() {
-		List<Card> cardsFromRound = getCardsFromRound(getRoundsCompleted() - 1);
+		List<Card> cardsFromRound = getLastRound().getCards();
 		return scoreUtil.getWinnerCard(cardsFromRound, ansage).getPlayer();
 	}
 
@@ -155,7 +163,7 @@ public class MatchImpl implements Match {
 
 	@Override
 	public List<Card> getCardsFromRound(int i) {
-		return playedCards.subList(i * PLAYERS, i * PLAYERS + PLAYERS);
+		return rounds.get(i).getCards();
 	}
 
 	@Override
@@ -164,17 +172,17 @@ public class MatchImpl implements Match {
 			throw new IllegalArgumentException("Card is not playable: " + card);
 		}
 		cards.remove(card);
-		playedCards.add(card);
+		getCurrentRound().addCard(card);
 	}
 
 	@Override
 	public int getRoundsCompleted() {
-		return playedCards.size() / PLAYERS;
+		return getCurrentRound().isComplete() ? rounds.size() : rounds.size() - 1;
 	}
 
 	@Override
 	public boolean isComplete() {
-		return playedCards.size() == CARDS;
+		return rounds.size() == 9 && getCurrentRound().isComplete();
 	}
 
 	@Override
@@ -202,7 +210,19 @@ public class MatchImpl implements Match {
 
 	@Override
 	public MatchState createMatchState() {
-		return new MatchState(ansage, cards, playedCards, startingPlayerOffset, geschoben, wysStore.getWysMap(),
+		return new MatchState(ansage, cards, rounds, startingPlayerOffset, geschoben, wysStore.getWysMap(),
 				wysStore.getStoeckFromPlayer());
+	}
+
+	@Override
+	public void collectCards() {
+
+		if (!getCurrentRound().isComplete()) {
+			throw new IllegalArgumentException("Current round is not complete");
+		}
+
+		if (!isComplete()) {
+			rounds.add(new Round());
+		}
 	}
 }

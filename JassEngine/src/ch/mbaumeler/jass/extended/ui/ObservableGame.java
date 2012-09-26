@@ -5,7 +5,7 @@ import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.game.PlayerTokenRepository;
 import ch.mbaumeler.jass.core.game.Score;
 
-public class ObservableGame implements Game {
+/* REVIEW NEEDED */ public class ObservableGame implements Game {
 
 	private Game delegate;
 

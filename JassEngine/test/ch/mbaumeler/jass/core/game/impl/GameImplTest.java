@@ -3,6 +3,7 @@ package ch.mbaumeler.jass.core.game.impl;
 import static ch.mbaumeler.jass.core.card.CardSuit.CLUBS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.core.game.Score;
 
-public class GameImplTest {
+/* REVIEW NEEDED */ public class GameImplTest {
 
 	private Game game;
 
@@ -61,6 +62,8 @@ public class GameImplTest {
 	public void testGetTotalScoreOneRound() {
 		Match match = game.getCurrentMatch();
 		playMatch(match);
+		assertTrue(match.isComplete());
+		assertEquals(9, match.getRoundsCompleted());
 		Score score = game.getTotalScore();
 		PlayerToken firstPlayer = game.getPlayerRepository().getAll().get(0);
 		assertEquals(157, score.getPlayerScore(firstPlayer) + score.getOppositeScore(firstPlayer));
@@ -80,9 +83,12 @@ public class GameImplTest {
 
 	private void playMatch(Match match) {
 		match.setAnsage(new Ansage(CLUBS));
-		for (int i = 0; i < 36; i++) {
-			PlayerToken player = match.getActivePlayer();
-			match.playCard(getFirstPlayableCard(match, match.getCards(player)));
+		for (int i = 0; i < 9; i++) {
+			for (int m = 0; m < 4; m++) {
+				PlayerToken player = match.getActivePlayer();
+				match.playCard(getFirstPlayableCard(match, match.getCards(player)));
+			}
+			match.collectCards();
 		}
 	}
 

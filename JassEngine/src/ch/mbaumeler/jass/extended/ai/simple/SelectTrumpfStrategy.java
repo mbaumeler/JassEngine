@@ -15,7 +15,7 @@ import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.ScoreRules;
 
-public class SelectTrumpfStrategy {
+/* REVIEW NEEDED */ public class SelectTrumpfStrategy {
 
 	private ScoreRules scoreUtil = new ScoreRules();
 

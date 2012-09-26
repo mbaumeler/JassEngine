@@ -47,7 +47,7 @@ import org.junit.Test;
 
 import ch.mbaumeler.jass.core.game.wys.Wys.WysTyp;
 
-public class WysScoreRuleTest {
+/* REVIEW NEEDED */ public class WysScoreRuleTest {
 
 	private WysScoreRule wyssScoreRule;
 

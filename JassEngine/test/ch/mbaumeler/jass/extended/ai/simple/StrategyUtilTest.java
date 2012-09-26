@@ -25,7 +25,7 @@ import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.impl.MatchImpl;
 import ch.mbaumeler.jass.test.util.CardDomain;
 
-public class StrategyUtilTest {
+/* REVIEW NEEDED */ public class StrategyUtilTest {
 
 	private StrategyUtil strategyUtil;
 	private Match match;

@@ -3,7 +3,7 @@ package ch.mbaumeler.jass.core.game;
 import static ch.mbaumeler.jass.core.game.Ansage.SpielModi.TRUMPF;
 import ch.mbaumeler.jass.core.card.CardSuit;
 
-public class Ansage {
+/* REVIEW NEEDED */ public class Ansage {
 
 	public enum SpielModi {
 		OBENABE, UNDEUFE, TRUMPF

@@ -12,7 +12,7 @@ import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.core.game.PlayerTokenRepository;
 import ch.mbaumeler.jass.core.game.Score;
 
-public class GameImpl implements Game {
+/* REVIEW NEEDED */ public class GameImpl implements Game {
 
 	private final List<Match> matchs;
 

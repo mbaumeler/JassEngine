@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import ch.mbaumeler.jass.core.JassEngine;
 
-public class JassEngineTest {
+/* REVIEW NEEDED */ public class JassEngineTest {
 
 	private JassEngine jassEngine;
 

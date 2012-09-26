@@ -15,7 +15,7 @@ import ch.mbaumeler.jass.core.game.wys.WysRules;
 import ch.mbaumeler.jass.core.game.wys.WysScoreRule;
 import ch.mbaumeler.jass.core.game.wys.WysStore;
 
-public class ScoreUtil {
+/* REVIEW NEEDED */ public class ScoreUtil {
 
 	private static final int SCORE_FOR_A_MATCH = 100;
 

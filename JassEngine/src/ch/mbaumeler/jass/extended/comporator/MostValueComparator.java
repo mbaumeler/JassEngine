@@ -6,7 +6,7 @@ import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.ScoreRules;
 
-public class MostValueComparator implements Comparator<Card> {
+/* REVIEW NEEDED */ public class MostValueComparator implements Comparator<Card> {
 
 	private final Ansage ansage;
 

@@ -16,7 +16,7 @@ import static ch.mbaumeler.jass.core.card.CardValue.TEN;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 
-public class CardDomain {
+/* REVIEW NEEDED */ public class CardDomain {
 
 	public static final Card DIAMONDS_SIX = new Card(DIAMONDS, SIX, PlayerToken.PLAYER0);
 	public static final Card DIAMONDS_SEVEN = new Card(DIAMONDS, SEVEN, PlayerToken.PLAYER0);

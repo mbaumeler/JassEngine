@@ -9,7 +9,7 @@ import com.google.inject.Injector;
 import com.google.inject.TypeLiteral;
 import com.google.inject.name.Names;
 
-public class SimpleStrategyEngine extends AbstractModule {
+/* REVIEW NEEDED */ public class SimpleStrategyEngine extends AbstractModule {
 
 	public SimpleStrategy create() {
 		Injector injector = Guice.createInjector(this);

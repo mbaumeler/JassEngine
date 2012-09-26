@@ -12,7 +12,7 @@ import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.card.CardValue;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 
-public class PredictableCardFactory implements CardFactory {
+/* REVIEW NEEDED */ public class PredictableCardFactory implements CardFactory {
 
 	private static final long INITVALUE = 4134132L;
 

@@ -1,6 +1,6 @@
 package ch.mbaumeler.jass.core.game;
 
-public class Score {
+/* REVIEW NEEDED */ public class Score {
 
 	private int scoreTeam1;
 	private int scoreTeam2;

@@ -6,7 +6,7 @@ import ch.mbaumeler.jass.core.game.impl.CardFactoryImpl;
 
 import com.google.inject.AbstractModule;
 
-public class JassModule extends AbstractModule {
+/* REVIEW NEEDED */ public class JassModule extends AbstractModule {
 
 	@Override
 	protected void configure() {

@@ -21,7 +21,7 @@ import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.card.CardValue;
 import ch.mbaumeler.jass.core.game.Ansage;
 
-public class WysRules {
+/* REVIEW NEEDED */ public class WysRules {
 
 	public Set<Wys> findWyss(List<Card> cards, Ansage ansage) {
 

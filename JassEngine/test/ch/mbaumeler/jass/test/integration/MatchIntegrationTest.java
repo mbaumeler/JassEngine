@@ -26,7 +26,7 @@ import ch.mbaumeler.jass.core.game.impl.GameImpl;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-public class MatchIntegrationTest {
+/* REVIEW NEEDED */public class MatchIntegrationTest {
 
 	private Match match;
 	private List<PlayerToken> playerList;
@@ -135,7 +135,9 @@ public class MatchIntegrationTest {
 		match.setAnsage(new Ansage(CLUBS));
 		for (int i = 0; i < 36; i++) {
 			PlayerToken player = match.getActivePlayer();
-			if (i % 4 == 0 && i > 4) {
+			if (i % 4 == 0 && i != 0) {
+				match.collectCards();
+				player = match.getActivePlayer();
 				assertEquals(player, scoreUtil.getWinnerCard(match.getCardsFromRound((i - 1) / 4), match.getAnsage())
 						.getPlayer());
 			}

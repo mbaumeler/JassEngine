@@ -17,7 +17,7 @@ import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 
-public class WysStore {
+/* REVIEW NEEDED */ public class WysStore {
 
 	private final Map<PlayerToken, Set<Wys>> wysMap;
 	private PlayerToken stoeckPlayer;

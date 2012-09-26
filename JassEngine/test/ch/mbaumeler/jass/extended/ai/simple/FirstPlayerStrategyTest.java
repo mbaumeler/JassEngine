@@ -25,7 +25,7 @@ import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 
-public class FirstPlayerStrategyTest {
+/* REVIEW NEEDED */ public class FirstPlayerStrategyTest {
 
 	private FirstPlayerStrategy firstPlayerStrategy;
 

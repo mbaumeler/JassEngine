@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ScoreTest {
+/* REVIEW NEEDED */ public class ScoreTest {
 
 	private PlayerTokenRepository players;
 	private PlayerToken team1Player1;

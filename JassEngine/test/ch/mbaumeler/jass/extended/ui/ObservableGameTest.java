@@ -12,7 +12,7 @@ import org.junit.Test;
 import ch.mbaumeler.jass.core.Game;
 import ch.mbaumeler.jass.core.Match;
 
-public class ObservableGameTest {
+/* REVIEW NEEDED */ public class ObservableGameTest {
 
 	private ObservableGame observerableGame;
 	private Game gameMock = mock(Game.class);

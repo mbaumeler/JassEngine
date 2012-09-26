@@ -14,7 +14,7 @@ import org.junit.Test;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.game.Ansage.SpielModi;
 
-public class AnsageTest {
+/* REVIEW NEEDED */ public class AnsageTest {
 
 	@Test
 	public void testIsTrumpf() {

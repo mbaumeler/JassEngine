@@ -24,7 +24,7 @@ import ch.mbaumeler.jass.extended.ai.simple.SimpleStrategyEngine;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-public class AITests {
+/* REVIEW NEEDED */ public class AITests {
 
 	private static final int MATCHES_TO_PLAY = 2000;
 
@@ -66,17 +66,20 @@ public class AITests {
 		boolean changed = currentTeam1Score != scoreTeam1;
 		if (changed) {
 			System.out.println("***************************************************************");
-			System.out.println("* Adjust " + scoreTeam1 + " as new scoreValue and " + scoreTeam2 + " *");
+			System.out.println("* AI Improved: Adjust " + scoreTeam1 + " as new scoreValue and " + scoreTeam2 + " *");
 			System.out.println("***************************************************************");
 		}
 		assertFalse(changed);
 	}
 
-	private void playRound(Match round) {
-		for (int i = 0; i < 36; i++) {
-			PlayerToken player = round.getActivePlayer();
-			ansageStrategy(round, player);
-			playStrategy(round);
+	private void playRound(Match match) {
+		for (int i = 0; i < 9; i++) {
+			for (int m = 0; m < 4; m++) {
+				PlayerToken player = match.getActivePlayer();
+				ansageStrategy(match, player);
+				playStrategy(match);
+			}
+			match.collectCards();
 		}
 		game.createMatch();
 	}

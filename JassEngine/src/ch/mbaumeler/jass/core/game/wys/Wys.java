@@ -6,7 +6,7 @@ import java.util.Set;
 
 import ch.mbaumeler.jass.core.card.Card;
 
-public class Wys {
+/* REVIEW NEEDED */ public class Wys {
 
 	private final Set<Card> cards;
 

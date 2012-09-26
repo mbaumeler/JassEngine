@@ -23,7 +23,7 @@ import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.core.game.wys.Wys;
 
-public class ObserverableMatchTest {
+/* REVIEW NEEDED */ public class ObserverableMatchTest {
 
 	private ObserverableMatch observerableMatch;
 	private Match delegateMock = mock(Match.class);

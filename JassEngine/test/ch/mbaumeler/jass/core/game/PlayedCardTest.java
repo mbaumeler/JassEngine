@@ -13,7 +13,7 @@ import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.card.CardValue;
 
-public class PlayedCardTest {
+/* REVIEW NEEDED */ public class PlayedCardTest {
 
 	private PlayerToken playerToken;
 

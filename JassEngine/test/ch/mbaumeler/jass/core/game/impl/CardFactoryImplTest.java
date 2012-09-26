@@ -11,7 +11,7 @@ import org.junit.Test;
 import ch.mbaumeler.jass.core.CardFactory;
 import ch.mbaumeler.jass.core.card.Card;
 
-public class CardFactoryImplTest {
+/* REVIEW NEEDED */ public class CardFactoryImplTest {
 
 	private CardFactory cardFactory;
 

@@ -7,19 +7,20 @@ import java.util.Set;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayerToken;
+import ch.mbaumeler.jass.core.game.impl.Round;
 import ch.mbaumeler.jass.core.game.wys.Wys;
 
-public class MatchState {
+/* REVIEW NEEDED */ public class MatchState {
 
 	private final Ansage ansage;
 	private final List<Card> cards;
-	private final List<Card> playedCards;
+	private final List<Round> playedCards;
 	private final int startingPlayerOffset;
 	private final boolean geschoben;
 	private final Map<PlayerToken, Set<Wys>> wysMap;
 	private final PlayerToken stoeckPlayer;
 
-	public MatchState(Ansage ansage, List<Card> cards, List<Card> playedCards, int startingPlayerOffset,
+	public MatchState(Ansage ansage, List<Card> cards, List<Round> playedCards, int startingPlayerOffset,
 			boolean geschoben, Map<PlayerToken, Set<Wys>> wysMap, PlayerToken stoeckPlayer) {
 		this.ansage = ansage;
 		this.cards = cards;
@@ -38,7 +39,7 @@ public class MatchState {
 		return cards;
 	}
 
-	public List<Card> getPlayedCards() {
+	public List<Round> getPlayedCards() {
 		return playedCards;
 	}
 

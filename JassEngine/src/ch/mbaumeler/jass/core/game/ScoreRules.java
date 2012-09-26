@@ -4,7 +4,7 @@ import static ch.mbaumeler.jass.core.game.Ansage.SpielModi.OBENABE;
 import static ch.mbaumeler.jass.core.game.Ansage.SpielModi.UNDEUFE;
 import ch.mbaumeler.jass.core.card.Card;
 
-public class ScoreRules {
+/* REVIEW NEEDED */ public class ScoreRules {
 
 	public int getScore(Card card, Ansage ansage) {
 

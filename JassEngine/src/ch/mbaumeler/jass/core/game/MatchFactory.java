@@ -8,7 +8,7 @@ import ch.mbaumeler.jass.core.game.impl.MatchImpl;
 import ch.mbaumeler.jass.core.game.wys.WysRules;
 import ch.mbaumeler.jass.core.game.wys.WysScoreRule;
 
-public class MatchFactory {
+/* REVIEW NEEDED */ public class MatchFactory {
 
 	@Inject
 	PlayerTokenRepository playerRepository;

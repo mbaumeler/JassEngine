@@ -22,7 +22,7 @@ import org.junit.Test;
 
 import ch.mbaumeler.jass.core.card.Card;
 
-public class JassRulesTest {
+/* REVIEW NEEDED */ public class JassRulesTest {
 
 	private JassRules jassRules;
 	private List<Card> cardsOnTable;

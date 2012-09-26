@@ -12,7 +12,7 @@ import static ch.mbaumeler.jass.core.card.CardValue.TEN;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardValue;
 
-public class WysScoreRule {
+/* REVIEW NEEDED */ public class WysScoreRule {
 
 	public int getScoreFore(Wys wys) {
 

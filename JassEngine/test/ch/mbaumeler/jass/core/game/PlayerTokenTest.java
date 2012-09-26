@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-public class PlayerTokenTest {
+/* REVIEW NEEDED */ public class PlayerTokenTest {
 
 	@Test
 	public void testNumberOfTokens() {

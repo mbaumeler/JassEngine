@@ -13,7 +13,7 @@ import java.util.Map;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
 
-public class CardUtil {
+/* REVIEW NEEDED */ public class CardUtil {
 
 	public Map<CardSuit, List<Card>> createCardMap(List<Card> cards) {
 

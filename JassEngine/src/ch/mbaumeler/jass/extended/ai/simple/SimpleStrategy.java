@@ -12,7 +12,7 @@ import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.extended.ai.JassStrategy;
 
-public class SimpleStrategy implements JassStrategy {
+/* REVIEW NEEDED */ public class SimpleStrategy implements JassStrategy {
 
 	@Inject
 	private SelectTrumpfStrategy selectTrumpfStrategy;
