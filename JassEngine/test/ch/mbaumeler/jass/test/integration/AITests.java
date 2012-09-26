@@ -78,6 +78,7 @@ public class AITests {
 			ansageStrategy(round, player);
 			playStrategy(round);
 		}
+		game.createMatch();
 	}
 
 	private void playStrategy(Match match) {

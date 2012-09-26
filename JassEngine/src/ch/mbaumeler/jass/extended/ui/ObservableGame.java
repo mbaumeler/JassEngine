@@ -43,4 +43,10 @@ public class ObservableGame implements Game {
 		observerRepository.notifyObservers();
 	}
 
+	@Override
+	public void createMatch() {
+		delegate.createMatch();
+		observerRepository.notifyObservers();
+	}
+
 }

@@ -14,7 +14,7 @@ import ch.mbaumeler.jass.core.game.Score;
 
 public class GameImpl implements Game {
 
-	private final List<MatchImpl> matchs;
+	private final List<Match> matchs;
 
 	private final PlayerTokenRepository playerRepository;
 
@@ -24,13 +24,20 @@ public class GameImpl implements Game {
 	public GameImpl(PlayerTokenRepository players, MatchFactory matchFactory) {
 		this.matchFactory = matchFactory;
 		this.playerRepository = players;
-		this.matchs = new ArrayList<MatchImpl>();
-		this.matchs.add(createMatch());
+		this.matchs = new ArrayList<Match>();
+		createMatch();
 	}
 
-	private MatchImpl createMatch() {
-		PlayerToken startingPlayer = playerRepository.getAll().get(matchs.size() % 4);
-		return matchFactory.createMatch(startingPlayer);
+	@Override
+	public void createMatch() {
+
+		if (matchs.isEmpty() || getCurrentMatch().isComplete()) {
+			PlayerToken startingPlayer = playerRepository.getAll().get(matchs.size() % 4);
+			Match match = matchFactory.createMatch(startingPlayer);
+			matchs.add(match);
+		} else {
+			throw new IllegalStateException("Current match is not complete.");
+		}
 	}
 
 	@Override
@@ -40,12 +47,7 @@ public class GameImpl implements Game {
 
 	@Override
 	public Match getCurrentMatch() {
-		MatchImpl match = matchs.get(matchs.size() - 1);
-		if (match.isComplete()) {
-			match = createMatch();
-			matchs.add(match);
-		}
-		return match;
+		return matchs.get(matchs.size() - 1);
 	}
 
 	@Override

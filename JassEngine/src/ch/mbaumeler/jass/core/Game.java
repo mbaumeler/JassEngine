@@ -20,6 +20,12 @@ public interface Game {
 	Match getCurrentMatch();
 
 	/**
+	 * Creates a new Match.
+	 * 
+	 */
+	void createMatch();
+
+	/**
 	 * Calculates the score for all matches.
 	 * 
 	 * @return score of all matches.

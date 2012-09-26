@@ -30,6 +30,7 @@ public class GameImplTest {
 	public void testGetCurrentMatch() {
 		Match match = game.getCurrentMatch();
 		playMatch(match);
+		game.createMatch();
 		Match match2 = game.getCurrentMatch();
 		assertNotSame(match, match2);
 	}
@@ -39,15 +40,19 @@ public class GameImplTest {
 		Match match = game.getCurrentMatch();
 		assertEquals(game.getPlayerRepository().getAll().get(0), match.getActivePlayer());
 		playMatch(match);
+		game.createMatch();
 		match = game.getCurrentMatch();
 		assertEquals(game.getPlayerRepository().getAll().get(1), match.getActivePlayer());
 		playMatch(match);
+		game.createMatch();
 		match = game.getCurrentMatch();
 		assertEquals(game.getPlayerRepository().getAll().get(2), match.getActivePlayer());
 		playMatch(match);
+		game.createMatch();
 		match = game.getCurrentMatch();
 		assertEquals(game.getPlayerRepository().getAll().get(3), match.getActivePlayer());
 		playMatch(match);
+		game.createMatch();
 		match = game.getCurrentMatch();
 		assertEquals(game.getPlayerRepository().getAll().get(0), match.getActivePlayer());
 	}
@@ -65,6 +70,7 @@ public class GameImplTest {
 	public void testGetTotalScore() {
 		Match match = game.getCurrentMatch();
 		playMatch(match);
+		game.createMatch();
 		Match match2 = game.getCurrentMatch();
 		playMatch(match2);
 		Score score = game.getTotalScore();
