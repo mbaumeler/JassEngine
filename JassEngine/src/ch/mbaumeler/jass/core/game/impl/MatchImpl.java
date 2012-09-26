@@ -129,36 +129,30 @@ import ch.mbaumeler.jass.core.game.wys.WysStore;
 	@Override
 	public PlayerToken getActivePlayer() {
 		List<PlayerToken> allPlayers = playerTokenRepository.getAll();
+		Round currentRound = getCurrentRound();
 
-		PlayerToken activePlayer;
-		if (getRoundsCompleted() == 0 && getCurrentRound().isEmpty()) {
-			activePlayer = allPlayers.get(startingPlayerOffset);
+		if (getRoundsCompleted() == 0 && currentRound.isEmpty()) {
+			PlayerToken activePlayer = allPlayers.get(startingPlayerOffset);
 			if (ansage == null && isGeschoben()) {
 				return playerTokenRepository.getTeamPlayer(activePlayer);
 			}
 			return activePlayer;
 		} else {
-			if (getCurrentRound().isEmpty()) {
-				// Winner last round
-				return getWinnerlastRound();
+			if (currentRound.isEmpty()) {
+				return scoreUtil.getWinnerCard(getLastRound().getCards(), ansage).getPlayer();
 			} else {
-				Round round = getCurrentRound();
-				PlayerToken player = round.getLastPlayedCard().getPlayer();
+				PlayerToken player = currentRound.getLastPlayedCard().getPlayer();
 				int indexOf = allPlayers.indexOf(player);
 				return allPlayers.get((indexOf + 1) % 4);
 			}
 		}
 	}
 
-	private PlayerToken getWinnerlastRound() {
-		List<Card> cardsFromRound = getLastRound().getCards();
-		return scoreUtil.getWinnerCard(cardsFromRound, ansage).getPlayer();
-	}
-
 	@Override
 	public boolean isCardPlayable(Card card) {
-		return jassRules.isCardPlayable(card, getCards(getActivePlayer()), getCardsOnTable(), ansage,
-				isNewRoundStarted());
+		return !getCurrentRound().isComplete()
+				&& jassRules.isCardPlayable(card, getCards(getActivePlayer()), getCardsOnTable(), ansage,
+						isNewRoundStarted());
 	}
 
 	@Override
