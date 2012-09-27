@@ -1,6 +1,7 @@
 package ch.mbaumeler.jass.core.game.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -10,7 +11,6 @@ import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.JassRules;
 import ch.mbaumeler.jass.core.game.PlayerToken;
-import ch.mbaumeler.jass.core.game.PlayerTokenRepository;
 import ch.mbaumeler.jass.core.game.Score;
 import ch.mbaumeler.jass.core.game.ScoreRules;
 import ch.mbaumeler.jass.core.game.ScoreUtil;
@@ -30,11 +30,6 @@ import ch.mbaumeler.jass.core.game.wys.WysStore;
 	 * Map between players and the cards in their hands.
 	 */
 	private final List<Card> cards;
-
-	/**
-	 * The players of the match.
-	 */
-	private final PlayerTokenRepository playerTokenRepository;
 
 	/**
 	 * Stack of cards which where played.
@@ -57,12 +52,9 @@ import ch.mbaumeler.jass.core.game.wys.WysStore;
 
 	private boolean geschoben;
 
-	public MatchImpl(PlayerTokenRepository playerRepository, PlayerToken startingPlayer, ScoreUtil scoreUtil,
-			JassRules jassRules, List<Card> shuffledDeck, ScoreRules scoreRules, WysRules wysRule,
-			WysScoreRule wysScoreRule) {
-		this.playerTokenRepository = playerRepository;
-		List<PlayerToken> allPlayers = playerTokenRepository.getAll();
-		this.startingPlayerOffset = allPlayers.indexOf(startingPlayer);
+	public MatchImpl(PlayerToken startingPlayer, ScoreUtil scoreUtil, JassRules jassRules, List<Card> shuffledDeck,
+			ScoreRules scoreRules, WysRules wysRule, WysScoreRule wysScoreRule) {
+		this.startingPlayerOffset = Arrays.asList(PlayerToken.values()).indexOf(startingPlayer);
 		this.scoreUtil = scoreUtil;
 		this.jassRules = jassRules;
 		this.wysStore = new WysStore(wysRule, wysScoreRule, this);
@@ -71,9 +63,8 @@ import ch.mbaumeler.jass.core.game.wys.WysStore;
 		this.rounds.add(new Round());
 	}
 
-	public MatchImpl(MatchState matchState, PlayerTokenRepository playerRepository, ScoreUtil scoreUtil,
-			JassRules jassRules, ScoreRules scoreRules, WysRules wysRule, WysScoreRule wysScoreRule) {
-		this.playerTokenRepository = playerRepository;
+	public MatchImpl(MatchState matchState, ScoreUtil scoreUtil, JassRules jassRules, ScoreRules scoreRules,
+			WysRules wysRule, WysScoreRule wysScoreRule) {
 		this.scoreUtil = scoreUtil;
 		this.jassRules = jassRules;
 		this.startingPlayerOffset = matchState.getStartingPlayerOffset();
@@ -128,13 +119,13 @@ import ch.mbaumeler.jass.core.game.wys.WysStore;
 
 	@Override
 	public PlayerToken getActivePlayer() {
-		List<PlayerToken> allPlayers = playerTokenRepository.getAll();
+		List<PlayerToken> allPlayers = Arrays.asList(PlayerToken.values());
 		Round currentRound = getCurrentRound();
 
 		if (getRoundsCompleted() == 0 && currentRound.isEmpty()) {
 			PlayerToken activePlayer = allPlayers.get(startingPlayerOffset);
 			if (ansage == null && isGeschoben()) {
-				return playerTokenRepository.getTeamPlayer(activePlayer);
+				return PlayerToken.getTeamPlayer(activePlayer);
 			}
 			return activePlayer;
 		} else {

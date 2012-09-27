@@ -7,7 +7,7 @@ import ch.mbaumeler.jass.core.game.impl.GameImpl;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-/* REVIEW NEEDED */ public class JassEngine {
+/* REVIEW NEEDED */public class JassEngine {
 
 	private Injector injector;
 	private MatchFactory matchFactory;
@@ -23,5 +23,9 @@ import com.google.inject.Injector;
 
 	public Match createMatchFromMatchState(MatchState matchState) {
 		return matchFactory.createMatch(matchState);
+	}
+
+	public Game createJassGame(GameState gameState) {
+		return new GameImpl(gameState, matchFactory);
 	}
 }

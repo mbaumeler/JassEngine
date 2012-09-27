@@ -1,11 +1,11 @@
 package ch.mbaumeler.jass.extended.ui;
 
 import ch.mbaumeler.jass.core.Game;
+import ch.mbaumeler.jass.core.GameState;
 import ch.mbaumeler.jass.core.Match;
-import ch.mbaumeler.jass.core.game.PlayerTokenRepository;
 import ch.mbaumeler.jass.core.game.Score;
 
-/* REVIEW NEEDED */ public class ObservableGame implements Game {
+/* REVIEW NEEDED */public class ObservableGame implements Game {
 
 	private Game delegate;
 
@@ -14,11 +14,6 @@ import ch.mbaumeler.jass.core.game.Score;
 	public ObservableGame(Game jassGame) {
 		this.delegate = jassGame;
 		this.observerRepository = new ObserverRepository();
-	}
-
-	@Override
-	public PlayerTokenRepository getPlayerRepository() {
-		return delegate.getPlayerRepository();
 	}
 
 	@Override
@@ -47,6 +42,11 @@ import ch.mbaumeler.jass.core.game.Score;
 	public void createMatch() {
 		delegate.createMatch();
 		observerRepository.notifyObservers();
+	}
+
+	@Override
+	public GameState createGameState() {
+		return delegate.createGameState();
 	}
 
 }

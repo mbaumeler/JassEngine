@@ -3,10 +3,11 @@ package ch.mbaumeler.jass.core.game.impl;
 import javax.inject.Inject;
 
 import ch.mbaumeler.jass.core.Game;
+import ch.mbaumeler.jass.core.GameState;
 import ch.mbaumeler.jass.core.Match;
+import ch.mbaumeler.jass.core.MatchState;
 import ch.mbaumeler.jass.core.game.MatchFactory;
 import ch.mbaumeler.jass.core.game.PlayerToken;
-import ch.mbaumeler.jass.core.game.PlayerTokenRepository;
 import ch.mbaumeler.jass.core.game.Score;
 
 /* REVIEW NEEDED */public class GameImpl implements Game {
@@ -15,19 +16,23 @@ import ch.mbaumeler.jass.core.game.Score;
 
 	private final Score totalScore;
 
-	private final PlayerTokenRepository playerRepository;
-
 	private final MatchFactory matchFactory;
 
 	private int startingPlayerIndex = 0;
 
 	@Inject
-	public GameImpl(PlayerTokenRepository players, MatchFactory matchFactory) {
+	public GameImpl(MatchFactory matchFactory) {
 		this.matchFactory = matchFactory;
-		this.playerRepository = players;
-		this.totalScore = new Score(playerRepository);
+		this.totalScore = new Score();
 		createMatch();
 
+	}
+
+	public GameImpl(GameState gameState, MatchFactory matchFactory) {
+		this(matchFactory);
+		totalScore.addScore(PlayerToken.PLAYER0, gameState.getTeam1());
+		totalScore.addScore(PlayerToken.PLAYER1, gameState.getTeam2());
+		currentMatch = matchFactory.createMatch(gameState.getMatchState());
 	}
 
 	@Override
@@ -38,7 +43,7 @@ import ch.mbaumeler.jass.core.game.Score;
 				totalScore.add(getCurrentMatch().getScore());
 			}
 
-			PlayerToken startingPlayer = playerRepository.getAll().get(startingPlayerIndex);
+			PlayerToken startingPlayer = PlayerToken.getAll().get(startingPlayerIndex);
 			Match match = matchFactory.createMatch(startingPlayer);
 			currentMatch = match;
 			startingPlayerIndex = ++startingPlayerIndex % 4;
@@ -48,21 +53,23 @@ import ch.mbaumeler.jass.core.game.Score;
 	}
 
 	@Override
-	public PlayerTokenRepository getPlayerRepository() {
-		return playerRepository;
-	}
-
-	@Override
 	public Match getCurrentMatch() {
 		return currentMatch;
 	}
 
 	@Override
 	public Score getTotalScore() {
-		Score score = new Score(playerRepository);
+		Score score = new Score();
 		score.add(totalScore);
 		score.add(getCurrentMatch().getScore());
 		return score;
 	}
 
+	@Override
+	public GameState createGameState() {
+		int team1 = totalScore.getPlayerScore(PlayerToken.PLAYER0);
+		int team2 = totalScore.getOppositeScore(PlayerToken.PLAYER0);
+		MatchState matchState = currentMatch.createMatchState();
+		return new GameState(team1, team2, matchState);
+	}
 }

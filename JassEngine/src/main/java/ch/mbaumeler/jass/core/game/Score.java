@@ -1,17 +1,15 @@
 package ch.mbaumeler.jass.core.game;
 
-/* REVIEW NEEDED */ public class Score {
+/* REVIEW NEEDED */public class Score {
 
 	private int scoreTeam1;
 	private int scoreTeam2;
-	private final PlayerTokenRepository playerPlayerRepository;
 
-	public Score(PlayerTokenRepository playerRepository) {
-		this.playerPlayerRepository = playerRepository;
+	public Score() {
 	}
 
 	public void addScore(PlayerToken scorer, int score) {
-		if (playerPlayerRepository.isTeam1(scorer)) {
+		if (PlayerToken.isTeam1(scorer)) {
 			scoreTeam1 += score;
 		} else {
 			scoreTeam2 += score;
@@ -19,11 +17,11 @@ package ch.mbaumeler.jass.core.game;
 	}
 
 	public int getPlayerScore(PlayerToken player) {
-		return playerPlayerRepository.isTeam1(player) ? scoreTeam1 : scoreTeam2;
+		return PlayerToken.isTeam1(player) ? scoreTeam1 : scoreTeam2;
 	}
 
 	public int getOppositeScore(PlayerToken player) {
-		return playerPlayerRepository.isTeam1(player) ? scoreTeam2 : scoreTeam1;
+		return PlayerToken.isTeam1(player) ? scoreTeam2 : scoreTeam1;
 	}
 
 	public void add(Score score) {

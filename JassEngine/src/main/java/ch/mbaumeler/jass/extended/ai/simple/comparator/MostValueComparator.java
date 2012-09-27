@@ -1,4 +1,4 @@
-package ch.mbaumeler.jass.extended.comporator;
+package ch.mbaumeler.jass.extended.ai.simple.comparator;
 
 import java.util.Comparator;
 

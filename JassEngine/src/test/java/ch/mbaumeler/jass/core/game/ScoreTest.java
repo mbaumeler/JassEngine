@@ -5,9 +5,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-/* REVIEW NEEDED */ public class ScoreTest {
+/* REVIEW NEEDED */public class ScoreTest {
 
-	private PlayerTokenRepository players;
 	private PlayerToken team1Player1;
 	private PlayerToken team2Player1;
 	private PlayerToken team1Player2;
@@ -15,16 +14,15 @@ import org.junit.Test;
 
 	@Before
 	public void setup() {
-		players = new PlayerTokenRepository();
-		team1Player1 = players.getTeam1().get(0);
-		team2Player1 = players.getTeam2().get(0);
-		team1Player2 = players.getTeam1().get(1);
-		team2Player2 = players.getTeam2().get(1);
+		team1Player1 = PlayerToken.PLAYER0;
+		team2Player1 = PlayerToken.PLAYER1;
+		team1Player2 = PlayerToken.PLAYER2;
+		team2Player2 = PlayerToken.PLAYER3;
 	}
 
 	@Test
 	public void testGetScore() {
-		Score score = new Score(players);
+		Score score = new Score();
 		score.addScore(team1Player1, 20);
 		score.addScore(team2Player1, 30);
 		assertEquals(20, score.getPlayerScore(team1Player1));
@@ -35,7 +33,7 @@ import org.junit.Test;
 
 	@Test
 	public void testGetOppositeScore() {
-		Score score = new Score(players);
+		Score score = new Score();
 		score.addScore(team1Player1, 20);
 		score.addScore(team2Player1, 30);
 		assertEquals(30, score.getOppositeScore(team1Player1));
@@ -46,11 +44,11 @@ import org.junit.Test;
 
 	@Test
 	public void testMerge() {
-		Score score = new Score(players);
+		Score score = new Score();
 		score.addScore(team1Player1, 20);
 		score.addScore(team2Player1, 30);
 
-		Score scoreToAdd = new Score(players);
+		Score scoreToAdd = new Score();
 		scoreToAdd.addScore(team1Player1, 20);
 		scoreToAdd.addScore(team2Player1, 30);
 		score.add(scoreToAdd);

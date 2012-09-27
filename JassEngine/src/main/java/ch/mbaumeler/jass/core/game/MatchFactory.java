@@ -8,10 +8,7 @@ import ch.mbaumeler.jass.core.game.impl.MatchImpl;
 import ch.mbaumeler.jass.core.game.wys.WysRules;
 import ch.mbaumeler.jass.core.game.wys.WysScoreRule;
 
-/* REVIEW NEEDED */ public class MatchFactory {
-
-	@Inject
-	PlayerTokenRepository playerRepository;
+/* REVIEW NEEDED */public class MatchFactory {
 
 	@Inject
 	JassRules jassRules;
@@ -32,12 +29,12 @@ import ch.mbaumeler.jass.core.game.wys.WysScoreRule;
 	CardFactory cardFactory;
 
 	public MatchImpl createMatch(PlayerToken startingPlayer) {
-		return new MatchImpl(playerRepository, startingPlayer, scoreUtil, jassRules, cardFactory.createShuffledCards(),
-				scoreRules, wysRules, wysScoreRule);
+		return new MatchImpl(startingPlayer, scoreUtil, jassRules, cardFactory.createShuffledCards(), scoreRules,
+				wysRules, wysScoreRule);
 	}
 
 	public MatchImpl createMatch(MatchState matchState) {
-		return new MatchImpl(matchState, playerRepository, scoreUtil, jassRules, scoreRules, wysRules, wysScoreRule);
+		return new MatchImpl(matchState, scoreUtil, jassRules, scoreRules, wysRules, wysScoreRule);
 	}
 
 }

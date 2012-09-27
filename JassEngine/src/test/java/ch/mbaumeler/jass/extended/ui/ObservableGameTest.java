@@ -12,7 +12,7 @@ import org.junit.Test;
 import ch.mbaumeler.jass.core.Game;
 import ch.mbaumeler.jass.core.Match;
 
-/* REVIEW NEEDED */ public class ObservableGameTest {
+/* REVIEW NEEDED */public class ObservableGameTest {
 
 	private ObservableGame observerableGame;
 	private Game gameMock = mock(Game.class);
@@ -24,13 +24,6 @@ import ch.mbaumeler.jass.core.Match;
 		observerableGame = new ObservableGame(gameMock);
 		observerableGame.addObserver(observerMock);
 		when(gameMock.getCurrentMatch()).thenReturn(matchMock);
-	}
-
-	@Test
-	public void testGetPlayer() {
-		observerableGame.getPlayerRepository();
-		verify(gameMock).getPlayerRepository();
-		verify(observerMock, times(0)).jassModelChanged();
 	}
 
 	@Test

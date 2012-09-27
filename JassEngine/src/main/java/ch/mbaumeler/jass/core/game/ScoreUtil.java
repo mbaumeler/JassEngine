@@ -15,14 +15,11 @@ import ch.mbaumeler.jass.core.game.wys.WysRules;
 import ch.mbaumeler.jass.core.game.wys.WysScoreRule;
 import ch.mbaumeler.jass.core.game.wys.WysStore;
 
-/* REVIEW NEEDED */ public class ScoreUtil {
+/* REVIEW NEEDED */public class ScoreUtil {
 
 	private static final int SCORE_FOR_A_MATCH = 100;
 
 	private static final int LAST_ROUND_WINNER_POINTS = 5;
-
-	@Inject
-	PlayerTokenRepository playerTokenRepository;
 
 	@Inject
 	ScoreRules scoreRules;
@@ -34,7 +31,7 @@ import ch.mbaumeler.jass.core.game.wys.WysStore;
 	WysScoreRule wysScoreRule;
 
 	public Score calculateScore(Match match, WysStore wysStore) {
-		Score score = new Score(playerTokenRepository);
+		Score score = new Score();
 
 		addScoreForAnsage(match, score);
 
@@ -47,8 +44,8 @@ import ch.mbaumeler.jass.core.game.wys.WysStore;
 	}
 
 	private void addScoreForMatch(Match match, Score score) {
-		PlayerToken team1player = playerTokenRepository.getTeam1().get(0);
-		PlayerToken team2Player = playerTokenRepository.getTeam2().get(0);
+		PlayerToken team1player = PlayerToken.PLAYER0;
+		PlayerToken team2Player = PlayerToken.PLAYER1;
 
 		if (score.getPlayerScore(team1player) == 152) {
 			score.addScore(team1player, SCORE_FOR_A_MATCH);
@@ -61,7 +58,7 @@ import ch.mbaumeler.jass.core.game.wys.WysStore;
 	private void addScoreForWys(WysStore wysStore, Score score, Ansage ansage) {
 		PlayerToken bestWysPlayer = wysStore.getBestWys(ansage);
 		addScore(bestWysPlayer, wysStore, score);
-		PlayerToken teamPlayer = playerTokenRepository.getTeamPlayer(bestWysPlayer);
+		PlayerToken teamPlayer = PlayerToken.getTeamPlayer(bestWysPlayer);
 		addScore(teamPlayer, wysStore, score);
 	}
 

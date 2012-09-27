@@ -18,7 +18,7 @@ import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.core.game.Score;
 
-/* REVIEW NEEDED */ public class GameImplTest {
+/* REVIEW NEEDED */public class GameImplTest {
 
 	private Game game;
 
@@ -39,23 +39,23 @@ import ch.mbaumeler.jass.core.game.Score;
 	@Test
 	public void testStartingPlayer() {
 		Match match = game.getCurrentMatch();
-		assertEquals(game.getPlayerRepository().getAll().get(0), match.getActivePlayer());
+		assertEquals(PlayerToken.PLAYER0, match.getActivePlayer());
 		playMatch(match);
 		game.createMatch();
 		match = game.getCurrentMatch();
-		assertEquals(game.getPlayerRepository().getAll().get(1), match.getActivePlayer());
+		assertEquals(PlayerToken.PLAYER1, match.getActivePlayer());
 		playMatch(match);
 		game.createMatch();
 		match = game.getCurrentMatch();
-		assertEquals(game.getPlayerRepository().getAll().get(2), match.getActivePlayer());
+		assertEquals(PlayerToken.PLAYER2, match.getActivePlayer());
 		playMatch(match);
 		game.createMatch();
 		match = game.getCurrentMatch();
-		assertEquals(game.getPlayerRepository().getAll().get(3), match.getActivePlayer());
+		assertEquals(PlayerToken.PLAYER3, match.getActivePlayer());
 		playMatch(match);
 		game.createMatch();
 		match = game.getCurrentMatch();
-		assertEquals(game.getPlayerRepository().getAll().get(0), match.getActivePlayer());
+		assertEquals(PlayerToken.PLAYER0, match.getActivePlayer());
 	}
 
 	@Test
@@ -65,7 +65,7 @@ import ch.mbaumeler.jass.core.game.Score;
 		assertTrue(match.isComplete());
 		assertEquals(9, match.getRoundsCompleted());
 		Score score = game.getTotalScore();
-		PlayerToken firstPlayer = game.getPlayerRepository().getAll().get(0);
+		PlayerToken firstPlayer = PlayerToken.PLAYER0;
 		assertEquals(157, score.getPlayerScore(firstPlayer) + score.getOppositeScore(firstPlayer));
 	}
 
@@ -77,7 +77,7 @@ import ch.mbaumeler.jass.core.game.Score;
 		Match match2 = game.getCurrentMatch();
 		playMatch(match2);
 		Score score = game.getTotalScore();
-		PlayerToken firstPlayer = game.getPlayerRepository().getAll().get(0);
+		PlayerToken firstPlayer = PlayerToken.PLAYER0;
 		assertEquals(157 * 2, score.getPlayerScore(firstPlayer) + score.getOppositeScore(firstPlayer));
 	}
 

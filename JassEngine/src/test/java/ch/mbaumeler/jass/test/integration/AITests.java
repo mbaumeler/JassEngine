@@ -57,7 +57,7 @@ import com.google.inject.Injector;
 		}
 
 		Score score = game.getTotalScore();
-		PlayerToken firstPlayer = game.getPlayerRepository().getAll().get(0);
+		PlayerToken firstPlayer = PlayerToken.PLAYER0;
 
 		int scoreTeam1 = score.getPlayerScore(firstPlayer);
 		int scoreTeam2 = score.getOppositeScore(firstPlayer);
@@ -87,7 +87,7 @@ import com.google.inject.Injector;
 	}
 
 	private void playStrategy(Match match) {
-		if (game.getPlayerRepository().isTeam1(match.getActivePlayer())) {
+		if (PlayerToken.isTeam1(match.getActivePlayer())) {
 			match.playCard(simpleStrategy.getCardToPlay(match));
 		} else {
 			match.playCard(getFirstPlayableCard(match));
@@ -96,7 +96,7 @@ import com.google.inject.Injector;
 
 	private void ansageStrategy(Match match, PlayerToken player) {
 		if (match.getAnsage() == null) {
-			if (game.getPlayerRepository().isTeam1(player)) {
+			if (PlayerToken.isTeam1(player)) {
 				match.setAnsage(simpleStrategy.getAnsage(match));
 			} else {
 				match.setAnsage(new Ansage(CardSuit.HEARTS));

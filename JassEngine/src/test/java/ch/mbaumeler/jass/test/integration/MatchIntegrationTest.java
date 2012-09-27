@@ -43,7 +43,7 @@ import com.google.inject.Injector;
 		});
 		Game game = injector.getInstance(GameImpl.class);
 		match = game.getCurrentMatch();
-		playerList = game.getPlayerRepository().getAll();
+		playerList = PlayerToken.getAll();
 	}
 
 	@Test

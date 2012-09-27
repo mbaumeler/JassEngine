@@ -46,22 +46,19 @@ import ch.mbaumeler.jass.core.game.wys.WysRules;
 import ch.mbaumeler.jass.core.game.wys.WysScoreRule;
 import ch.mbaumeler.jass.core.game.wys.WysStore;
 
-/* REVIEW NEEDED */ public class ScoreUtilTest {
+/* REVIEW NEEDED */public class ScoreUtilTest {
 
 	private ScoreUtil scoreUtil;
 
 	private Ansage ansage;
 	private Match matchMock;
 	private WysStore wysStoreMock;
-	private PlayerTokenRepository playerTokenRepository;
 
 	@Before
 	public void setUp() throws Exception {
 		matchMock = mock(Match.class);
 		wysStoreMock = mock(WysStore.class);
 		scoreUtil = new ScoreUtil();
-		playerTokenRepository = new PlayerTokenRepository();
-		scoreUtil.playerTokenRepository = playerTokenRepository;
 		scoreUtil.scoreRules = mock(ScoreRules.class);
 		scoreUtil.wysRules = mock(WysRules.class);
 		scoreUtil.wysScoreRule = mock(WysScoreRule.class);
@@ -72,14 +69,14 @@ import ch.mbaumeler.jass.core.game.wys.WysStore;
 	public void testNewMatch() {
 		Score score = scoreUtil.calculateScore(matchMock, wysStoreMock);
 		assertNotNull(score);
-		PlayerToken player = playerTokenRepository.getTeam1().get(0);
+		PlayerToken player = PlayerToken.PLAYER0;
 		assertEquals(0, score.getPlayerScore(player));
 		assertEquals(0, score.getOppositeScore(player));
 	}
 
 	@Test
 	public void testGetStoeck() {
-		PlayerToken player = playerTokenRepository.getTeam1().get(0);
+		PlayerToken player = PlayerToken.PLAYER0;
 
 		when(wysStoreMock.getStoeckFromPlayer()).thenReturn(player);
 		when(scoreUtil.wysScoreRule.getScoreForStoeck()).thenReturn(20);
@@ -93,7 +90,7 @@ import ch.mbaumeler.jass.core.game.wys.WysStore;
 
 	@Test
 	public void testPlayerWys() {
-		PlayerToken player = playerTokenRepository.getTeam1().get(0);
+		PlayerToken player = PlayerToken.PLAYER0;
 
 		when(wysStoreMock.getBestWys(any(Ansage.class))).thenReturn(player);
 		HashSet<Wys> set = new HashSet<Wys>();
@@ -111,8 +108,8 @@ import ch.mbaumeler.jass.core.game.wys.WysStore;
 
 	@Test
 	public void testTeamMemberWys() {
-		PlayerToken player = playerTokenRepository.getTeam1().get(0);
-		PlayerToken teamPlayer = playerTokenRepository.getTeam1().get(1);
+		PlayerToken player = PlayerToken.PLAYER0;
+		PlayerToken teamPlayer = PlayerToken.getTeamPlayer(PlayerToken.PLAYER0);
 
 		when(wysStoreMock.getBestWys(any(Ansage.class))).thenReturn(player);
 		HashSet<Wys> set = new HashSet<Wys>();
@@ -137,7 +134,7 @@ import ch.mbaumeler.jass.core.game.wys.WysStore;
 	@Test
 	public void testScoreForAnsage() {
 		Ansage ansage = new Ansage(HEARTS);
-		PlayerToken player = playerTokenRepository.getTeam1().get(0);
+		PlayerToken player = PlayerToken.PLAYER0;
 		List<Card> cardsFromRound = new ArrayList<Card>();
 		Card winnerCard = CLUBS_JACK;
 		cardsFromRound.add(winnerCard);
@@ -157,7 +154,7 @@ import ch.mbaumeler.jass.core.game.wys.WysStore;
 	@Test
 	public void testScoreForLastRound() {
 		Ansage ansage = new Ansage(HEARTS);
-		PlayerToken player = playerTokenRepository.getTeam1().get(0);
+		PlayerToken player = PlayerToken.PLAYER0;
 		List<Card> cardsFromRound = new ArrayList<Card>();
 		Card winnerCard = CLUBS_JACK;
 		cardsFromRound.add(winnerCard);
@@ -196,7 +193,7 @@ import ch.mbaumeler.jass.core.game.wys.WysStore;
 		when(matchMock.isComplete()).thenReturn(true);
 
 		Score score = scoreUtil.calculateScore(matchMock, wysStoreMock);
-		PlayerToken player = playerTokenRepository.getAll().get(0);
+		PlayerToken player = PlayerToken.PLAYER0;
 		assertEquals(257, score.getPlayerScore(player));
 		assertEquals(0, score.getOppositeScore(player));
 
@@ -223,7 +220,7 @@ import ch.mbaumeler.jass.core.game.wys.WysStore;
 		when(matchMock.isComplete()).thenReturn(true);
 
 		Score score = scoreUtil.calculateScore(matchMock, wysStoreMock);
-		PlayerToken player = playerTokenRepository.getAll().get(1);
+		PlayerToken player = PlayerToken.PLAYER1;
 		assertEquals(257, score.getPlayerScore(player));
 		assertEquals(0, score.getOppositeScore(player));
 

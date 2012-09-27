@@ -18,6 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -31,7 +32,6 @@ import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.Ansage.SpielModi;
 import ch.mbaumeler.jass.core.game.JassRules;
 import ch.mbaumeler.jass.core.game.PlayerToken;
-import ch.mbaumeler.jass.core.game.PlayerTokenRepository;
 import ch.mbaumeler.jass.core.game.ScoreRules;
 import ch.mbaumeler.jass.core.game.ScoreUtil;
 import ch.mbaumeler.jass.core.game.wys.WysRules;
@@ -50,15 +50,14 @@ import ch.mbaumeler.jass.core.game.wys.WysStore;
 
 	@Before
 	public void setup() {
-		PlayerTokenRepository playerRepository = new PlayerTokenRepository();
-		playerList = playerRepository.getAll();
+		playerList = Arrays.asList(PlayerToken.values());
 		scoreUtilMock = mock(ScoreUtil.class);
 		wysRuleMock = mock(WysRules.class);
 		wysScoreRuleMock = mock(WysScoreRule.class);
 		cards = createSortedDeck();
 		jassRulesMock = mock(JassRules.class);
-		match = new MatchImpl(playerRepository, playerList.get(0), scoreUtilMock, jassRulesMock, cards,
-				new ScoreRules(), wysRuleMock, wysScoreRuleMock);
+		match = new MatchImpl(playerList.get(0), scoreUtilMock, jassRulesMock, cards, new ScoreRules(), wysRuleMock,
+				wysScoreRuleMock);
 	}
 
 	private List<Card> createSortedDeck() {
