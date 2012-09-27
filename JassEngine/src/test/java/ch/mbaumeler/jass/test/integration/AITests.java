@@ -24,7 +24,7 @@ import ch.mbaumeler.jass.extended.ai.simple.SimpleStrategyEngine;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-/* REVIEW NEEDED */ public class AITests {
+/* REVIEW NEEDED */public class AITests {
 
 	private static final int MATCHES_TO_PLAY = 2000;
 
@@ -32,8 +32,8 @@ import com.google.inject.Injector;
 
 	private SimpleStrategy simpleStrategy;
 
-	private final int currentTeam1Score = 207284;
-	private final int currentTeam2Score = 120116;
+	private final int CURRENT_TEAM_SCORE_1 = 207284;
+	private final int CURRENT_TEAM_SCORE_2 = 120116;
 
 	@Before
 	public void setup() {
@@ -61,9 +61,11 @@ import com.google.inject.Injector;
 
 		int scoreTeam1 = score.getPlayerScore(firstPlayer);
 		int scoreTeam2 = score.getOppositeScore(firstPlayer);
-		assertTrue("The strategy got worse!", (scoreTeam1 - scoreTeam2 >= (currentTeam1Score - currentTeam2Score)));
+		System.out.println(scoreTeam1 + " " + scoreTeam2);
+		assertTrue("The strategy got worse!",
+				(scoreTeam1 - scoreTeam2 >= (CURRENT_TEAM_SCORE_1 - CURRENT_TEAM_SCORE_2)));
 
-		boolean changed = currentTeam1Score != scoreTeam1;
+		boolean changed = CURRENT_TEAM_SCORE_1 != scoreTeam1;
 		if (changed) {
 			System.out.println("***************************************************************");
 			System.out.println("* AI Improved: Adjust " + scoreTeam1 + " as new scoreValue and " + scoreTeam2 + " *");

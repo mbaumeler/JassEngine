@@ -1,4 +1,4 @@
-package ch.mbaumeler.jass.extended.comporator;
+package ch.mbaumeler.jass.extended.ai.simple.comporator;
 
 import static ch.mbaumeler.jass.core.card.CardSuit.HEARTS;
 import static ch.mbaumeler.jass.test.util.CardDomain.DIAMONDS_ACE;
@@ -17,6 +17,7 @@ import org.junit.Test;
 
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.Ansage;
+import ch.mbaumeler.jass.extended.comporator.MostValueComparator;
 
 /* REVIEW NEEDED */ public class MostValueComporatorTest {
 

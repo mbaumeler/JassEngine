@@ -1,8 +1,5 @@
 package ch.mbaumeler.jass.core.game.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
 import ch.mbaumeler.jass.core.Game;
@@ -12,29 +9,39 @@ import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.core.game.PlayerTokenRepository;
 import ch.mbaumeler.jass.core.game.Score;
 
-/* REVIEW NEEDED */ public class GameImpl implements Game {
+/* REVIEW NEEDED */public class GameImpl implements Game {
 
-	private final List<Match> matchs;
+	private Match currentMatch;
+
+	private final Score totalScore;
 
 	private final PlayerTokenRepository playerRepository;
 
 	private final MatchFactory matchFactory;
 
+	private int startingPlayerIndex = 0;
+
 	@Inject
 	public GameImpl(PlayerTokenRepository players, MatchFactory matchFactory) {
 		this.matchFactory = matchFactory;
 		this.playerRepository = players;
-		this.matchs = new ArrayList<Match>();
+		this.totalScore = new Score(playerRepository);
 		createMatch();
+
 	}
 
 	@Override
 	public void createMatch() {
 
-		if (matchs.isEmpty() || getCurrentMatch().isComplete()) {
-			PlayerToken startingPlayer = playerRepository.getAll().get(matchs.size() % 4);
+		if (currentMatch == null || getCurrentMatch().isComplete()) {
+			if (currentMatch != null) {
+				totalScore.add(getCurrentMatch().getScore());
+			}
+
+			PlayerToken startingPlayer = playerRepository.getAll().get(startingPlayerIndex);
 			Match match = matchFactory.createMatch(startingPlayer);
-			matchs.add(match);
+			currentMatch = match;
+			startingPlayerIndex = ++startingPlayerIndex % 4;
 		} else {
 			throw new IllegalStateException("Current match is not complete.");
 		}
@@ -47,16 +54,15 @@ import ch.mbaumeler.jass.core.game.Score;
 
 	@Override
 	public Match getCurrentMatch() {
-		return matchs.get(matchs.size() - 1);
+		return currentMatch;
 	}
 
 	@Override
 	public Score getTotalScore() {
-		Score totalScore = new Score(playerRepository);
-		for (Match match : matchs) {
-			totalScore.add(match.getScore());
-		}
-		return totalScore;
+		Score score = new Score(playerRepository);
+		score.add(totalScore);
+		score.add(getCurrentMatch().getScore());
+		return score;
 	}
 
 }

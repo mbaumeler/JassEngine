@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: ch.mbaumeler.jass.extended.ai.simple.StrategyUtilTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 sec
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 sec

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.017" errors="0" skipped="0" tests="14" name="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest">
+<testsuite failures="0" time="0.016" errors="0" skipped="0" tests="14" name="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.6.0_29\jre\bin"/>
@@ -19,7 +19,7 @@
     <property name="basedir" value="C:\jhp\bucamp2012\android\repos\jassEngine\JassEngineRepo\JassEngine"/>
     <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.6.0_29\jre\lib\endorsed"/>
     <property name="os.arch" value="amd64"/>
-    <property name="surefire.real.class.path" value="C:\jhp\bucamp2012\android\repos\jassEngine\JassEngineRepo\JassEngine\target\surefire\surefirebooter1761993067311727330.jar"/>
+    <property name="surefire.real.class.path" value="C:\jhp\bucamp2012\android\repos\jassEngine\JassEngineRepo\JassEngine\target\surefire\surefirebooter6655677295240908606.jar"/>
     <property name="java.io.tmpdir" value="C:\Users\mab\AppData\Local\Temp\"/>
     <property name="line.separator" value="
 "/>
@@ -43,7 +43,7 @@
     <property name="java.vm.specification.version" value="1.0"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="C:\Program Files\Java\jdk1.6.0_29\jre"/>
-    <property name="sun.java.command" value="C:\jhp\bucamp2012\android\repos\jassEngine\JassEngineRepo\JassEngine\target\surefire\surefirebooter1761993067311727330.jar C:\jhp\bucamp2012\android\repos\jassEngine\JassEngineRepo\JassEngine\target\surefire\surefire8019963194813977428tmp C:\jhp\bucamp2012\android\repos\jassEngine\JassEngineRepo\JassEngine\target\surefire\surefire1840945158126735917tmp"/>
+    <property name="sun.java.command" value="C:\jhp\bucamp2012\android\repos\jassEngine\JassEngineRepo\JassEngine\target\surefire\surefirebooter6655677295240908606.jar C:\jhp\bucamp2012\android\repos\jassEngine\JassEngineRepo\JassEngine\target\surefire\surefire5071164123570612064tmp C:\jhp\bucamp2012\android\repos\jassEngine\JassEngineRepo\JassEngine\target\surefire\surefire6936931070154143490tmp"/>
     <property name="java.specification.vendor" value="Sun Microsystems Inc."/>
     <property name="user.language" value="de"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -60,18 +60,18 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase time="0" classname="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest" name="testIsCardPlayable"/>
+  <testcase time="0.001" classname="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest" name="testIsCardPlayable"/>
   <testcase time="0.001" classname="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest" name="testGetCardsOnTable"/>
-  <testcase time="0.001" classname="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest" name="testGetActivePlayer"/>
+  <testcase time="0" classname="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest" name="testGetActivePlayer"/>
   <testcase time="0" classname="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest" name="testIsComplete"/>
-  <testcase time="0.001" classname="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest" name="testGetScore"/>
+  <testcase time="0" classname="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest" name="testGetScore"/>
   <testcase time="0" classname="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest" name="testGetCards"/>
-  <testcase time="0" classname="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest" name="testGetTrumpf"/>
-  <testcase time="0.001" classname="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest" name="testSetTrumpf"/>
+  <testcase time="0.001" classname="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest" name="testGetTrumpf"/>
+  <testcase time="0" classname="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest" name="testSetTrumpf"/>
   <testcase time="0" classname="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest" name="testGetCardFromRound"/>
-  <testcase time="0" classname="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest" name="testGetPlayCard"/>
-  <testcase time="0.001" classname="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest" name="testSchiebe"/>
+  <testcase time="0.001" classname="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest" name="testGetPlayCard"/>
+  <testcase time="0" classname="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest" name="testSchiebe"/>
   <testcase time="0" classname="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest" name="testIsGeschoben"/>
-  <testcase time="0" classname="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest" name="testGetRoundsCompleted"/>
-  <testcase time="0.001" classname="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest" name="testWys"/>
+  <testcase time="0.001" classname="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest" name="testGetRoundsCompleted"/>
+  <testcase time="0" classname="ch.mbaumeler.jass.extended.ui.ObserverableMatchTest" name="testWys"/>
 </testsuite>
