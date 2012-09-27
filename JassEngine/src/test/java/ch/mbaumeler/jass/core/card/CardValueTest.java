@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-/* REVIEW NEEDED */ public class CardValueTest {
+public class CardValueTest {
 
 	@Test
 	public void test() {
