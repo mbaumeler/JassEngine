@@ -1,4 +1,4 @@
-package ch.mbaumeler.jass.core.game;
+package ch.mbaumeler.jass.core.card;
 
 import static ch.mbaumeler.jass.test.util.CardDomain.CLUBS_SEVEN;
 import static org.junit.Assert.assertEquals;
@@ -12,8 +12,9 @@ import org.junit.Test;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.card.CardSuit;
 import ch.mbaumeler.jass.core.card.CardValue;
+import ch.mbaumeler.jass.core.game.PlayerToken;
 
-/* REVIEW NEEDED */ public class PlayedCardTest {
+/* REVIEW NEEDED */ public class CardTest {
 
 	private PlayerToken playerToken;
 
