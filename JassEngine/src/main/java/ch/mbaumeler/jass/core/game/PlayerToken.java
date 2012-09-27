@@ -35,13 +35,4 @@ public enum PlayerToken {
 		return Collections.unmodifiableList(Arrays.asList(players));
 	}
 
-	/**
-	 * Deprecated
-	 * 
-	 * @return
-	 */
-	@Deprecated
-	public static List<PlayerToken> getAll() {
-		return Collections.unmodifiableList(Arrays.asList(values()));
-	}
 }

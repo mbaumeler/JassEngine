@@ -27,16 +27,6 @@ import org.junit.Test;
 	}
 
 	@Test
-	public void testAll() {
-		List<PlayerToken> all = PlayerToken.getAll();
-		List<PlayerToken> team1 = PlayerToken.getTeam1();
-		List<PlayerToken> team2 = PlayerToken.getTeam2();
-		assertEquals(4, all.size());
-		assertTrue(all.containsAll(team1));
-		assertTrue(all.containsAll(team2));
-	}
-
-	@Test
 	public void testIsTeam1() {
 		List<PlayerToken> team1 = PlayerToken.getTeam1();
 		List<PlayerToken> team2 = PlayerToken.getTeam2();
@@ -64,16 +54,6 @@ import org.junit.Test;
 		assertEquals(team1.get(0), PlayerToken.getTeamPlayer(team1.get(1)));
 		assertEquals(team2.get(1), PlayerToken.getTeamPlayer(team2.get(0)));
 		assertEquals(team2.get(0), PlayerToken.getTeamPlayer(team2.get(1)));
-	}
-
-	@Test
-	public void testUnmodifiableAll() {
-		try {
-			PlayerToken.getAll().set(0, PlayerToken.PLAYER0);
-			fail();
-		} catch (UnsupportedOperationException e) {
-			// exptected
-		}
 	}
 
 	@Test

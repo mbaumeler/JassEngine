@@ -18,7 +18,7 @@ import ch.mbaumeler.jass.core.game.Score;
 
 	private final MatchFactory matchFactory;
 
-	private int startingPlayerIndex = 0;
+	private PlayerToken startingPlayerIndex = PlayerToken.PLAYER0;
 
 	@Inject
 	public GameImpl(MatchFactory matchFactory) {
@@ -43,10 +43,10 @@ import ch.mbaumeler.jass.core.game.Score;
 				totalScore.add(getCurrentMatch().getScore());
 			}
 
-			PlayerToken startingPlayer = PlayerToken.getAll().get(startingPlayerIndex);
-			Match match = matchFactory.createMatch(startingPlayer);
+			Match match = matchFactory.createMatch(startingPlayerIndex);
 			currentMatch = match;
-			startingPlayerIndex = ++startingPlayerIndex % 4;
+			startingPlayerIndex = PlayerToken.values()[(startingPlayerIndex.ordinal() + 1) % 4];
+
 		} else {
 			throw new IllegalStateException("Current match is not complete.");
 		}

@@ -1,6 +1,10 @@
 package ch.mbaumeler.jass.test.integration;
 
 import static ch.mbaumeler.jass.core.card.CardSuit.CLUBS;
+import static ch.mbaumeler.jass.core.game.PlayerToken.PLAYER0;
+import static ch.mbaumeler.jass.core.game.PlayerToken.PLAYER1;
+import static ch.mbaumeler.jass.core.game.PlayerToken.PLAYER2;
+import static ch.mbaumeler.jass.core.game.PlayerToken.PLAYER3;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -29,7 +33,6 @@ import com.google.inject.Injector;
 /* REVIEW NEEDED */public class MatchIntegrationTest {
 
 	private Match match;
-	private List<PlayerToken> playerList;
 	private static final Ansage DEFAULT_ANSAGE = new Ansage(CLUBS);
 
 	@Before
@@ -43,36 +46,35 @@ import com.google.inject.Injector;
 		});
 		Game game = injector.getInstance(GameImpl.class);
 		match = game.getCurrentMatch();
-		playerList = PlayerToken.getAll();
 	}
 
 	@Test
 	public void testGetCards() {
 
-		assertEquals(9, match.getCards(playerList.get(0)).size());
-		assertEquals(9, match.getCards(playerList.get(0)).size());
-		assertEquals(9, match.getCards(playerList.get(0)).size());
-		assertEquals(9, match.getCards(playerList.get(0)).size());
+		assertEquals(9, match.getCards(PLAYER0).size());
+		assertEquals(9, match.getCards(PLAYER1).size());
+		assertEquals(9, match.getCards(PLAYER2).size());
+		assertEquals(9, match.getCards(PLAYER3).size());
 
-		Card firstP1 = match.getCards(playerList.get(0)).get(0);
-		Card firstP2 = match.getCards(playerList.get(1)).get(0);
+		Card firstP1 = match.getCards(PLAYER0).get(0);
+		Card firstP2 = match.getCards(PLAYER1).get(0);
 		assertFalse(firstP1.equals(firstP2));
 	}
 
 	@Test
 	public void testIsActivePlayer() {
-		assertEquals(playerList.get(0), match.getActivePlayer());
+		assertEquals(PlayerToken.PLAYER0, match.getActivePlayer());
 	}
 
 	@Test
 	public void testPlayFirstCard() {
 		assertEquals(0, match.getCardsOnTable().size());
-		Card cardToPlay = match.getCards(playerList.get(0)).get(0);
+		Card cardToPlay = match.getCards(PlayerToken.PLAYER0).get(0);
 		match.setAnsage(DEFAULT_ANSAGE);
 		match.playCard(cardToPlay);
-		assertEquals(8, match.getCards(playerList.get(0)).size());
+		assertEquals(8, match.getCards(PlayerToken.PLAYER0).size());
 		assertEquals(cardToPlay, match.getCardsOnTable().get(0));
-		assertEquals(playerList.get(1), match.getActivePlayer());
+		assertEquals(PlayerToken.PLAYER1, match.getActivePlayer());
 	}
 
 	@Test
@@ -91,7 +93,7 @@ import com.google.inject.Injector;
 
 	@Test
 	public void testPlayCardFromOtherPlayer() {
-		Card cardFromPlayer2 = match.getCards(playerList.get(2)).get(0);
+		Card cardFromPlayer2 = match.getCards(PlayerToken.PLAYER2).get(0);
 		match.setAnsage(new Ansage(CardSuit.HEARTS));
 
 		try {

@@ -43,10 +43,7 @@ import ch.mbaumeler.jass.core.game.wys.WysStore;
 
 	private final JassRules jassRules;
 
-	/**
-	 * Number between 0 and 3. If one match was played, the offset 1.
-	 */
-	private final int startingPlayerOffset;
+	private final PlayerToken startingPlayer;
 
 	private final WysStore wysStore;
 
@@ -54,7 +51,7 @@ import ch.mbaumeler.jass.core.game.wys.WysStore;
 
 	public MatchImpl(PlayerToken startingPlayer, ScoreUtil scoreUtil, JassRules jassRules, List<Card> shuffledDeck,
 			ScoreRules scoreRules, WysRules wysRule, WysScoreRule wysScoreRule) {
-		this.startingPlayerOffset = Arrays.asList(PlayerToken.values()).indexOf(startingPlayer);
+		this.startingPlayer = startingPlayer;
 		this.scoreUtil = scoreUtil;
 		this.jassRules = jassRules;
 		this.wysStore = new WysStore(wysRule, wysScoreRule, this);
@@ -67,7 +64,7 @@ import ch.mbaumeler.jass.core.game.wys.WysStore;
 			WysRules wysRule, WysScoreRule wysScoreRule) {
 		this.scoreUtil = scoreUtil;
 		this.jassRules = jassRules;
-		this.startingPlayerOffset = matchState.getStartingPlayerOffset();
+		this.startingPlayer = matchState.getStartingPlayer();
 		this.cards = matchState.getCards();
 		this.geschoben = matchState.isGeschoben();
 		this.rounds = matchState.getPlayedCards();
@@ -123,7 +120,7 @@ import ch.mbaumeler.jass.core.game.wys.WysStore;
 		Round currentRound = getCurrentRound();
 
 		if (getRoundsCompleted() == 0 && currentRound.isEmpty()) {
-			PlayerToken activePlayer = allPlayers.get(startingPlayerOffset);
+			PlayerToken activePlayer = startingPlayer;
 			if (ansage == null && isGeschoben()) {
 				return PlayerToken.getTeamPlayer(activePlayer);
 			}
@@ -195,7 +192,7 @@ import ch.mbaumeler.jass.core.game.wys.WysStore;
 
 	@Override
 	public MatchState createMatchState() {
-		return new MatchState(ansage, cards, rounds, startingPlayerOffset, geschoben, wysStore.getWysMap(),
+		return new MatchState(ansage, cards, rounds, startingPlayer, geschoben, wysStore.getWysMap(),
 				wysStore.getStoeckFromPlayer());
 	}
 
