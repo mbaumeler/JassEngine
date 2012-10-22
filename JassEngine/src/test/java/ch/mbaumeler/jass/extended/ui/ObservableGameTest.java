@@ -21,9 +21,9 @@ import ch.mbaumeler.jass.core.Match;
 
 	@Before
 	public void setUp() throws Exception {
-		observerableGame = new ObservableGame(gameMock);
+		observerableGame = new ObservableGame(gameMock, new ObserverRepository());
 		observerableGame.addObserver(observerMock);
-		when(gameMock.getCurrentMatch()).thenReturn(matchMock);
+		when(gameMock.getMatch()).thenReturn(matchMock);
 	}
 
 	@Test
@@ -41,9 +41,9 @@ import ch.mbaumeler.jass.core.Match;
 
 	@Test
 	public void testCurrentMatch() {
-		Match currentMatch = observerableGame.getCurrentMatch();
+		Match currentMatch = observerableGame.getMatch();
 		assertNotSame(currentMatch, matchMock);
-		verify(gameMock).getCurrentMatch();
+		verify(gameMock).getMatch();
 		verify(observerMock, times(0)).jassModelChanged();
 	}
 }

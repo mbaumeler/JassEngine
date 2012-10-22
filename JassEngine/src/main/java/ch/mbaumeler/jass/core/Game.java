@@ -9,7 +9,7 @@ public interface Game {
 	 * 
 	 * @return current played match.
 	 */
-	Match getCurrentMatch();
+	Match getMatch();
 
 	/**
 	 * Creates a new Match.

@@ -1,5 +1,7 @@
 package ch.mbaumeler.jass.core;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -23,11 +25,11 @@ import ch.mbaumeler.jass.core.game.wys.Wys;
 	public MatchState(Ansage ansage, List<Card> cards, List<Round> playedCards, PlayerToken startingPlayer,
 			boolean geschoben, Map<PlayerToken, Set<Wys>> wysMap, PlayerToken stoeckPlayer) {
 		this.ansage = ansage;
-		this.cards = cards;
-		this.playedCards = playedCards;
+		this.cards = new ArrayList<Card>(cards);
+		this.playedCards = new ArrayList<Round>(playedCards);
 		this.startingPlayer = startingPlayer;
 		this.geschoben = geschoben;
-		this.wysMap = wysMap;
+		this.wysMap = new HashMap<PlayerToken, Set<Wys>>(wysMap);
 		this.stoeckPlayer = stoeckPlayer;
 	}
 

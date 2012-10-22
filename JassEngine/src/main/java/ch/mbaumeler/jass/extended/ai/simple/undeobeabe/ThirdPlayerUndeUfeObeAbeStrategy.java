@@ -1,4 +1,4 @@
-package ch.mbaumeler.jass.extended.ai.simple;
+package ch.mbaumeler.jass.extended.ai.simple.undeobeabe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,10 @@ import java.util.List;
 import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.Ansage;
+import ch.mbaumeler.jass.extended.ai.simple.SimpleSelectCardStrategy;
+import ch.mbaumeler.jass.extended.ai.simple.StrategyUtil;
 
-/* REVIEW NEEDED */ public class ThirdPlayerStrategy implements SimpleCardStrategy {
+/* REVIEW NEEDED */public class ThirdPlayerUndeUfeObeAbeStrategy implements SimpleSelectCardStrategy {
 
 	private StrategyUtil util = new StrategyUtil();
 
@@ -30,8 +32,8 @@ import ch.mbaumeler.jass.core.game.Ansage;
 	}
 
 	@Override
-	public boolean isResponsible(List<Card> cardsOnTable) {
-		return cardsOnTable.size() == 2;
+	public boolean isResponsible(Match match) {
+		return match.getCardsOnTable().size() == 2 && !match.getAnsage().isTrumpf();
 	}
 
 }

@@ -45,7 +45,9 @@ import com.google.inject.Injector;
 			}
 		});
 		Game game = injector.getInstance(GameImpl.class);
-		match = game.getCurrentMatch();
+		game.createMatch();
+		match = game.getMatch();
+
 	}
 
 	@Test

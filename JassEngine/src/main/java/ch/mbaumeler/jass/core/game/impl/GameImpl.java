@@ -24,8 +24,6 @@ import ch.mbaumeler.jass.core.game.Score;
 	public GameImpl(MatchFactory matchFactory) {
 		this.matchFactory = matchFactory;
 		this.totalScore = new Score();
-		createMatch();
-
 	}
 
 	public GameImpl(GameState gameState, MatchFactory matchFactory) {
@@ -38,9 +36,9 @@ import ch.mbaumeler.jass.core.game.Score;
 	@Override
 	public void createMatch() {
 
-		if (currentMatch == null || getCurrentMatch().isComplete()) {
+		if (currentMatch == null || getMatch().isComplete()) {
 			if (currentMatch != null) {
-				totalScore.add(getCurrentMatch().getScore());
+				totalScore.add(getMatch().getScore());
 			}
 
 			Match match = matchFactory.createMatch(startingPlayerIndex);
@@ -53,7 +51,7 @@ import ch.mbaumeler.jass.core.game.Score;
 	}
 
 	@Override
-	public Match getCurrentMatch() {
+	public Match getMatch() {
 		return currentMatch;
 	}
 
@@ -61,7 +59,7 @@ import ch.mbaumeler.jass.core.game.Score;
 	public Score getTotalScore() {
 		Score score = new Score();
 		score.add(totalScore);
-		score.add(getCurrentMatch().getScore());
+		score.add(getMatch().getScore());
 		return score;
 	}
 

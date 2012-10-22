@@ -25,42 +25,43 @@ import ch.mbaumeler.jass.core.game.Score;
 	@Before
 	public void setup() {
 		game = new JassEngine().createJassGame();
+		game.createMatch();
 	}
 
 	@Test
 	public void testGetCurrentMatch() {
-		Match match = game.getCurrentMatch();
+		Match match = game.getMatch();
 		playMatch(match);
 		game.createMatch();
-		Match match2 = game.getCurrentMatch();
+		Match match2 = game.getMatch();
 		assertNotSame(match, match2);
 	}
 
 	@Test
 	public void testStartingPlayer() {
-		Match match = game.getCurrentMatch();
+		Match match = game.getMatch();
 		assertEquals(PlayerToken.PLAYER0, match.getActivePlayer());
 		playMatch(match);
 		game.createMatch();
-		match = game.getCurrentMatch();
+		match = game.getMatch();
 		assertEquals(PlayerToken.PLAYER1, match.getActivePlayer());
 		playMatch(match);
 		game.createMatch();
-		match = game.getCurrentMatch();
+		match = game.getMatch();
 		assertEquals(PlayerToken.PLAYER2, match.getActivePlayer());
 		playMatch(match);
 		game.createMatch();
-		match = game.getCurrentMatch();
+		match = game.getMatch();
 		assertEquals(PlayerToken.PLAYER3, match.getActivePlayer());
 		playMatch(match);
 		game.createMatch();
-		match = game.getCurrentMatch();
+		match = game.getMatch();
 		assertEquals(PlayerToken.PLAYER0, match.getActivePlayer());
 	}
 
 	@Test
 	public void testGetTotalScoreOneRound() {
-		Match match = game.getCurrentMatch();
+		Match match = game.getMatch();
 		playMatch(match);
 		assertTrue(match.isComplete());
 		assertEquals(9, match.getRoundsCompleted());
@@ -71,10 +72,10 @@ import ch.mbaumeler.jass.core.game.Score;
 
 	@Test
 	public void testGetTotalScore() {
-		Match match = game.getCurrentMatch();
+		Match match = game.getMatch();
 		playMatch(match);
 		game.createMatch();
-		Match match2 = game.getCurrentMatch();
+		Match match2 = game.getMatch();
 		playMatch(match2);
 		Score score = game.getTotalScore();
 		PlayerToken firstPlayer = PlayerToken.PLAYER0;

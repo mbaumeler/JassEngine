@@ -7,18 +7,18 @@ import ch.mbaumeler.jass.core.game.Score;
 
 /* REVIEW NEEDED */public class ObservableGame implements Game {
 
-	private Game delegate;
+	private final Game delegate;
 
-	private ObserverRepository observerRepository;
+	private final ObserverRepository observerRepository;
 
-	public ObservableGame(Game jassGame) {
-		this.delegate = jassGame;
-		this.observerRepository = new ObserverRepository();
+	public ObservableGame(Game game, ObserverRepository observerRepository) {
+		this.delegate = game;
+		this.observerRepository = observerRepository;
 	}
 
 	@Override
-	public Match getCurrentMatch() {
-		return new ObserverableMatch(delegate.getCurrentMatch(), observerRepository);
+	public Match getMatch() {
+		return new ObserverableMatch(delegate.getMatch(), observerRepository);
 	}
 
 	@Override

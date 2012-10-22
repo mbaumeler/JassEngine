@@ -45,14 +45,14 @@ import com.google.inject.Injector;
 			}
 		});
 		game = injector.getInstance(GameImpl.class);
-
+		game.createMatch();
 		simpleStrategy = new SimpleStrategyEngine().create();
 	}
 
 	@Test
 	public void testGetTotalScore() {
 		for (int i = 0; i < MATCHES_TO_PLAY; i++) {
-			Match match = game.getCurrentMatch();
+			Match match = game.getMatch();
 			playRound(match);
 		}
 

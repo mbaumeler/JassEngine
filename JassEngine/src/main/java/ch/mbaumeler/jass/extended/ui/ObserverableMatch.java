@@ -11,14 +11,10 @@ import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.core.game.Score;
 import ch.mbaumeler.jass.core.game.wys.Wys;
 
-/* REVIEW NEEDED */ public class ObserverableMatch implements Match {
+/* REVIEW NEEDED */public class ObserverableMatch implements Match {
 
 	private Match delegate;
 	private ObserverRepository observerRepository;
-
-	public enum Event {
-		PLAYED_CARD, WYS, ANSAGE
-	};
 
 	public ObserverableMatch(Match match, ObserverRepository observerRepository) {
 		this.delegate = match;

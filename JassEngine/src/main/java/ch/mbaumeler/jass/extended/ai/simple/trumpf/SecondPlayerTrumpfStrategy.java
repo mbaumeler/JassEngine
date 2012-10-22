@@ -1,4 +1,4 @@
-package ch.mbaumeler.jass.extended.ai.simple;
+package ch.mbaumeler.jass.extended.ai.simple.trumpf;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,10 @@ import java.util.List;
 import ch.mbaumeler.jass.core.Match;
 import ch.mbaumeler.jass.core.card.Card;
 import ch.mbaumeler.jass.core.game.Ansage;
+import ch.mbaumeler.jass.extended.ai.simple.SimpleSelectCardStrategy;
+import ch.mbaumeler.jass.extended.ai.simple.StrategyUtil;
 
-/* REVIEW NEEDED */ public class SecondPlayerStrategy implements SimpleCardStrategy {
+/* REVIEW NEEDED */public class SecondPlayerTrumpfStrategy implements SimpleSelectCardStrategy {
 
 	private StrategyUtil strategyUtil = new StrategyUtil();
 
@@ -26,8 +28,8 @@ import ch.mbaumeler.jass.core.game.Ansage;
 	}
 
 	@Override
-	public boolean isResponsible(List<Card> cardsOnTable) {
-		return cardsOnTable.size() == 1;
+	public boolean isResponsible(Match match) {
+		return match.getCardsOnTable().size() == 1 && match.getAnsage().isTrumpf();
 	}
 
 }

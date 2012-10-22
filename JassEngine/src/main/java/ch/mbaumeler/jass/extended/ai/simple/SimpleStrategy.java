@@ -12,22 +12,22 @@ import ch.mbaumeler.jass.core.game.Ansage;
 import ch.mbaumeler.jass.core.game.PlayerToken;
 import ch.mbaumeler.jass.extended.ai.JassStrategy;
 
-/* REVIEW NEEDED */ public class SimpleStrategy implements JassStrategy {
+/* REVIEW NEEDED */public class SimpleStrategy implements JassStrategy {
 
 	@Inject
 	private SelectTrumpfStrategy selectTrumpfStrategy;
 
 	@Inject
 	@Named(value = "strategies")
-	private List<SimpleCardStrategy> strategies;
+	private List<SimpleSelectCardStrategy> strategies;
 
 	@Override
 	public Card getCardToPlay(Match match) {
 		PlayerToken activePlayer = match.getActivePlayer();
 		List<Card> cardsInHand = match.getCards(activePlayer);
 
-		for (SimpleCardStrategy strategy : strategies) {
-			if (strategy.isResponsible(match.getCardsOnTable())) {
+		for (SimpleSelectCardStrategy strategy : strategies) {
+			if (strategy.isResponsible(match)) {
 				return strategy.getPlayableCard(new ArrayList<Card>(cardsInHand), match);
 			}
 		}

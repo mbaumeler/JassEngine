@@ -3,6 +3,11 @@ package ch.mbaumeler.jass.extended.ai.simple;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.mbaumeler.jass.extended.ai.simple.trumpf.FirstPlayerTrumpfStrategy;
+import ch.mbaumeler.jass.extended.ai.simple.trumpf.FourthPlayerTrumpfStrategy;
+import ch.mbaumeler.jass.extended.ai.simple.trumpf.SecondPlayerTrumpfStrategy;
+import ch.mbaumeler.jass.extended.ai.simple.trumpf.ThirdPlayerTrumpfStrategy;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -18,12 +23,12 @@ import com.google.inject.name.Names;
 
 	@Override
 	protected void configure() {
-		List<SimpleCardStrategy> strategies = new ArrayList<SimpleCardStrategy>();
-		strategies.add(new FirstPlayerStrategy());
-		strategies.add(new SecondPlayerStrategy());
-		strategies.add(new ThirdPlayerStrategy());
-		strategies.add(new FourthPlayerStrategy());
-		bind(new TypeLiteral<List<SimpleCardStrategy>>() {
+		List<SimpleSelectCardStrategy> strategies = new ArrayList<SimpleSelectCardStrategy>();
+		strategies.add(new FirstPlayerTrumpfStrategy());
+		strategies.add(new SecondPlayerTrumpfStrategy());
+		strategies.add(new ThirdPlayerTrumpfStrategy());
+		strategies.add(new FourthPlayerTrumpfStrategy());
+		bind(new TypeLiteral<List<SimpleSelectCardStrategy>>() {
 		}).annotatedWith(Names.named("strategies")).toInstance(strategies);
 	}
 
