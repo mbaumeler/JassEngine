@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: ch.mbaumeler.jass.core.game.AnsageTest
 -------------------------------------------------------------------------------
-Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.014 sec
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 sec
